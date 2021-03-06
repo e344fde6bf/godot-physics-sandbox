@@ -1,0 +1,2073 @@
+[gd_scene load_steps=79 format=2]
+
+[ext_resource path="res://test_world/CurvedSlope.gd" type="Script" id=1]
+[ext_resource path="res://assets/kenney_prototypetextures/PNG/Light/texture_08.png" type="Texture" id=2]
+[ext_resource path="res://test_world/MovingPlatform.gd" type="Script" id=3]
+[ext_resource path="res://test_world/SpinningDisk.gd" type="Script" id=4]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://test_world/default_env.tres" type="Environment" id=6]
+[ext_resource path="res://assets/meshes/Linear.mesh" type="ArrayMesh" id=7]
+[ext_resource path="res://assets/meshes/Cubic.mesh" type="ArrayMesh" id=8]
+[ext_resource path="res://assets/meshes/Quadratic.mesh" type="ArrayMesh" id=9]
+[ext_resource path="res://assets/meshes/Sinusoidal10.mesh" type="ArrayMesh" id=10]
+[ext_resource path="res://assets/meshes/Sinusoidal5.mesh" type="ArrayMesh" id=11]
+[ext_resource path="res://assets/meshes/SinusoidalBowl3.mesh" type="ArrayMesh" id=12]
+[ext_resource path="res://assets/meshes/Sinusoidal9.mesh" type="ArrayMesh" id=13]
+[ext_resource path="res://assets/meshes/Sinusoidal3.mesh" type="ArrayMesh" id=14]
+[ext_resource path="res://assets/meshes/SinusoidalBowl2.mesh" type="ArrayMesh" id=15]
+[ext_resource path="res://assets/meshes/Sinusoidal.mesh" type="ArrayMesh" id=16]
+[ext_resource path="res://assets/meshes/Sinusoidal2.mesh" type="ArrayMesh" id=17]
+[ext_resource path="res://assets/meshes/Sinusoidal6.mesh" type="ArrayMesh" id=18]
+[ext_resource path="res://assets/meshes/Sinusoidal8.mesh" type="ArrayMesh" id=19]
+[ext_resource path="res://assets/meshes/Sinusoidal7.mesh" type="ArrayMesh" id=20]
+[ext_resource path="res://assets/meshes/SinusoidalBowl.mesh" type="ArrayMesh" id=21]
+[ext_resource path="res://assets/meshes/Sinusoidal4.mesh" type="ArrayMesh" id=22]
+[ext_resource path="res://test_world/SurfaceMesh.gd" type="Script" id=23]
+[ext_resource path="res://assets/meshes/surf-Linear.mesh" type="ArrayMesh" id=24]
+[ext_resource path="res://assets/meshes/surf-Pyramid.mesh" type="ArrayMesh" id=25]
+[ext_resource path="res://assets/meshes/surf-Sinusoidal.mesh" type="ArrayMesh" id=26]
+[ext_resource path="res://assets/meshes/surf-Quadratic.mesh" type="ArrayMesh" id=27]
+[ext_resource path="res://assets/meshes/surf-Noise2.mesh" type="ArrayMesh" id=28]
+[ext_resource path="res://assets/meshes/surf-Noise.mesh" type="ArrayMesh" id=29]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 200, 200, 200 )
+
+[sub_resource type="PlaneMesh" id=2]
+size = Vector2( 800, 800 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 400, 1, 400 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.992157, 0.741176, 0.741176, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 5, 50, 1 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.992157, 0.741176, 0.741176, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 7.5, 25, 0 )
+uv2_scale = Vector3( 7.5, 25, 0 )
+
+[sub_resource type="CubeMesh" id=6]
+size = Vector3( 10, 2, 50 )
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 5, 1, 25 )
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 10, 10, 1 )
+
+[sub_resource type="StreamTexture" id=9]
+flags = 23
+load_path = "res://.import/texture_08.png-ee93ef84c6b600ea619d18904a29b20a.s3tc.stex"
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_color = Color( 1, 0, 1, 1 )
+albedo_texture = SubResource( 9 )
+uv1_scale = Vector3( 5, 5, 5 )
+
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 10, 1, 10 )
+
+[sub_resource type="CylinderMesh" id=12]
+top_radius = 10.0
+bottom_radius = 10.0
+
+[sub_resource type="SpatialMaterial" id=13]
+albedo_color = Color( 1, 0, 1, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 10, 10, 10 )
+
+[sub_resource type="CylinderShape" id=14]
+radius = 10.0
+
+[sub_resource type="CylinderMesh" id=15]
+top_radius = 0.5
+bottom_radius = 0.5
+height = 15.0
+
+[sub_resource type="SpatialMaterial" id=16]
+albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="CylinderMesh" id=17]
+top_radius = 40.0
+bottom_radius = 40.0
+
+[sub_resource type="SpatialMaterial" id=18]
+albedo_color = Color( 1, 0, 0, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 40, 40, 40 )
+
+[sub_resource type="CylinderShape" id=19]
+radius = 40.0
+
+[sub_resource type="SpatialMaterial" id=20]
+albedo_color = Color( 1, 1, 0, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 40, 40, 40 )
+
+[sub_resource type="SpatialMaterial" id=21]
+albedo_color = Color( 0, 0, 1, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 40, 40, 40 )
+
+[sub_resource type="SpatialMaterial" id=22]
+albedo_color = Color( 0, 1, 1, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 10, 10, 10 )
+
+[sub_resource type="SpatialMaterial" id=23]
+albedo_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 5, 5, 5 )
+
+[sub_resource type="CylinderMesh" id=24]
+top_radius = 80.0
+bottom_radius = 80.0
+
+[sub_resource type="SpatialMaterial" id=25]
+albedo_color = Color( 0, 0, 1, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 80, 80, 80 )
+
+[sub_resource type="CylinderShape" id=26]
+radius = 80.0
+
+[sub_resource type="CylinderMesh" id=27]
+top_radius = 40.0
+bottom_radius = 40.0
+
+[sub_resource type="SpatialMaterial" id=28]
+albedo_color = Color( 0, 1, 1, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 40, 40, 40 )
+
+[sub_resource type="CylinderShape" id=29]
+radius = 40.0
+
+[sub_resource type="CylinderMesh" id=30]
+top_radius = 20.0
+bottom_radius = 20.0
+
+[sub_resource type="SpatialMaterial" id=31]
+albedo_color = Color( 0, 0.501961, 1, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 20, 20, 20 )
+
+[sub_resource type="CylinderShape" id=32]
+radius = 20.0
+
+[sub_resource type="SpatialMaterial" id=33]
+albedo_color = Color( 0, 0.501961, 0.501961, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 10, 10, 10 )
+
+[sub_resource type="SpatialMaterial" id=34]
+albedo_color = Color( 0, 1, 0, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 40, 40, 40 )
+
+[sub_resource type="CylinderMesh" id=35]
+top_radius = 40.0
+bottom_radius = 40.0
+height = 10.0
+
+[sub_resource type="CylinderShape" id=36]
+radius = 40.0
+height = 10.0
+
+[sub_resource type="CubeMesh" id=37]
+size = Vector3( 10, 6, 50 )
+
+[sub_resource type="BoxShape" id=38]
+extents = Vector3( 5, 3, 25 )
+
+[sub_resource type="CubeMesh" id=39]
+size = Vector3( 10, 10, 50 )
+
+[sub_resource type="BoxShape" id=40]
+extents = Vector3( 5, 5, 25 )
+
+[sub_resource type="SpatialMaterial" id=41]
+albedo_color = Color( 1, 0.498039, 0, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 5, 5, 5 )
+
+[sub_resource type="SpatialMaterial" id=42]
+albedo_color = Color( 0, 1, 1, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 5, 5, 5 )
+
+[sub_resource type="SpatialMaterial" id=43]
+albedo_color = Color( 1, 0, 0, 1 )
+albedo_texture = SubResource( 9 )
+uv1_scale = Vector3( 5, 5, 5 )
+
+[sub_resource type="SpatialMaterial" id=44]
+albedo_color = Color( 0, 1, 0, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 25, 5, 1 )
+
+[sub_resource type="BoxShape" id=45]
+extents = Vector3( 10, 1, 60 )
+
+[sub_resource type="SpatialMaterial" id=46]
+albedo_color = Color( 0, 0, 1, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 5, 5, 1 )
+
+[sub_resource type="SpatialMaterial" id=47]
+albedo_color = Color( 1, 0.56, 0.970667, 1 )
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 1.5, 1, 1 )
+
+[sub_resource type="CubeMesh" id=48]
+size = Vector3( 4, 4, 4 )
+
+[sub_resource type="BoxShape" id=49]
+extents = Vector3( 2, 2, 2 )
+
+[node name="TestWorld" type="Spatial"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 6 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="WorldEnvironment"]
+transform = Transform( -0.999998, -5.82076e-11, 0.00178006, 0.000985227, 0.832863, 0.553478, -0.00148255, 0.553479, -0.832862, 0, 86.4, 0 )
+visible = false
+light_energy = 0.55
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody" parent="."]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="PlaneMesh" type="MeshInstance" parent="Floor"]
+material_override = SubResource( 1 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Floor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+shape = SubResource( 3 )
+
+[node name="Curves" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -200, 0, 0 )
+
+[node name="Linear" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.01, -70 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 1.0
+slope_type = "linear"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/Linear"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 7 )
+material/0 = null
+
+[node name="Quadratic" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.01, -50 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/Quadratic"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 9 )
+material/0 = null
+
+[node name="Cubic" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.01, -30 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 0.001
+slope_type = "cubic"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/Cubic"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 8 )
+material/0 = null
+
+[node name="Sinusoidal" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.01, -10 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 10.0
+slope_type = "sinusoidal"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/Sinusoidal"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 16 )
+material/0 = null
+
+[node name="Sinusoidal2" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.01, 10 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 15.0
+slope_type = "sinusoidal"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/Sinusoidal2"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 17 )
+material/0 = null
+
+[node name="Sinusoidal3" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.01, 30 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 22.5
+slope_type = "sinusoidal"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/Sinusoidal3"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 14 )
+material/0 = null
+
+[node name="Sinusoidal4" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.01, 50 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 30.0
+slope_type = "sinusoidal"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/Sinusoidal4"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 22 )
+material/0 = null
+
+[node name="Sinusoidal5" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.01, 70 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 40.0
+slope_type = "sinusoidal"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/Sinusoidal5"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 11 )
+material/0 = null
+
+[node name="Sinusoidal6" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.01, 90 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 50.0
+slope_type = "sinusoidal"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/Sinusoidal6"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 18 )
+material/0 = null
+
+[node name="Sinusoidal7" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.01, 110 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 60.0
+slope_type = "sinusoidal"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/Sinusoidal7"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 20 )
+material/0 = null
+
+[node name="Sinusoidal8" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.01, 130 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 70.0
+slope_type = "sinusoidal"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/Sinusoidal8"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 19 )
+material/0 = null
+
+[node name="Sinusoidal9" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.01, 150 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 80.0
+slope_type = "sinusoidal"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/Sinusoidal9"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 13 )
+material/0 = null
+
+[node name="Sinusoidal10" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.01, 170 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 90.0
+slope_type = "sinusoidal"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/Sinusoidal10"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 10 )
+material/0 = null
+
+[node name="SinusoidalBowl" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.1, 190 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 90.0
+width = 50.0
+slope_type = "sinusoidal_inv"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/SinusoidalBowl"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 21 )
+material/0 = null
+
+[node name="SinusoidalBowl2" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.1, 240 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 40.0
+width = 50.0
+slope_type = "sinusoidal_inv"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/SinusoidalBowl2"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 15 )
+material/0 = null
+
+[node name="SinusoidalBowl3" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0.1, 290 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 20.0
+width = 50.0
+slope_type = "sinusoidal_inv"
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/SinusoidalBowl3"]
+material_override = SubResource( 4 )
+mesh = ExtResource( 12 )
+material/0 = null
+
+[node name="StandingPlatform" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 355, 99.006, -53 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/StandingPlatform"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Curves/StandingPlatform"]
+shape = SubResource( 7 )
+
+[node name="StandingPlatform2" type="StaticBody" parent="Curves"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 355, 999, -21 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Curves/StandingPlatform2"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Curves/StandingPlatform2"]
+shape = SubResource( 7 )
+
+[node name="Surfaces" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 550, 0, 0 )
+
+[node name="Linear" type="StaticBody" parent="Surfaces"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -311.5, 12, 314 )
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_group_": true
+}
+a = 0.3
+b = 0.3
+range_x = Vector2( -20, 20 )
+range_y = Vector2( -20, 20 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Surfaces/Linear"]
+material_override = SubResource( 8 )
+mesh = ExtResource( 24 )
+material/0 = null
+
+[node name="Pyramid" type="StaticBody" parent="Surfaces"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -311.5, 12, 251.2 )
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_group_": true
+}
+a = 20.0
+b = 20.0
+c = 0.5
+d = 0.5
+range_x = Vector2( -40, 40 )
+range_y = Vector2( -40, 40 )
+surface_type = "pyramid"
+
+[node name="MeshInstance" type="MeshInstance" parent="Surfaces/Pyramid"]
+material_override = SubResource( 8 )
+mesh = ExtResource( 25 )
+material/0 = null
+
+[node name="Sinusoidal" type="StaticBody" parent="Surfaces"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -311.5, 9.2, 158.8 )
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_group_": true
+}
+a = 3.0
+b = 3.0
+c = 3.0
+d = 3.0
+range_x = Vector2( -40, 40 )
+range_y = Vector2( -40, 40 )
+surface_type = "sinusoidal"
+
+[node name="MeshInstance" type="MeshInstance" parent="Surfaces/Sinusoidal"]
+material_override = SubResource( 8 )
+mesh = ExtResource( 26 )
+material/0 = null
+
+[node name="Quadratic" type="StaticBody" parent="Surfaces"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -311.5, 9.2, 90.6 )
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_group_": true
+}
+b = 0.0
+c = -1.0
+d = 0.0
+range_x = Vector2( -20, 20 )
+range_y = Vector2( -20, 20 )
+surface_type = "quadratic"
+
+[node name="MeshInstance" type="MeshInstance" parent="Surfaces/Quadratic"]
+material_override = SubResource( 8 )
+mesh = ExtResource( 27 )
+material/0 = null
+
+[node name="Noise" type="StaticBody" parent="Surfaces"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -311.5, 5, 26.8 )
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_group_": true
+}
+a = 5.0
+d = 0.0
+range_x = Vector2( -40, 40 )
+range_y = Vector2( -40, 40 )
+surface_type = "simplex"
+
+[node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise"]
+material_override = SubResource( 8 )
+mesh = ExtResource( 29 )
+material/0 = null
+
+[node name="Noise2" type="StaticBody" parent="Surfaces"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -311.5, 5, -63.8 )
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_group_": true
+}
+a = 5.0
+b = 0.5
+c = 0.5
+d = 0.0
+range_x = Vector2( -40, 40 )
+range_y = Vector2( -40, 40 )
+surface_type = "simplex"
+
+[node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise2"]
+material_override = SubResource( 8 )
+mesh = ExtResource( 28 )
+material/0 = null
+
+[node name="Ramps" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -200, 0, 0 )
+
+[node name="Ramp5Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.0871557, -0.996195, 0, 0.996195, -0.0871557, 1, -1.41995e-08, -1.62301e-07, 280, 1.2, -301 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp5Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp5Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp10Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.173648, -0.984808, 0, 0.984808, -0.173648, 1, -2.82909e-08, -1.60446e-07, 280, 3.3, -289 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp10Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp10Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp15Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.258819, -0.965926, 0, 0.965926, -0.258819, 1, -4.2167e-08, -1.57369e-07, 280, 5.5, -277 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp15Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp15Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp20Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.34202, -0.939692, 0, 0.939692, -0.34202, 1, -5.57221e-08, -1.53095e-07, 280, 7.6, -265 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp20Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp20Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp25Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.422618, -0.906308, 0, 0.906308, -0.422618, 1, -6.88533e-08, -1.47656e-07, 280, 9.6, -253 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp25Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp25Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp30Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.5, -0.866025, 0, 0.866025, -0.5, 1, -8.14603e-08, -1.41093e-07, 280, 11.5, -241 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp30Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp30Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp35Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.573576, -0.819152, 0, 0.819152, -0.573576, 1, -9.34475e-08, -1.33457e-07, 280, 13.5, -229 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp35Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp35Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp40Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.642787, -0.766044, 0, 0.766044, -0.642787, 1, -1.04723e-07, -1.24804e-07, 280, 15.2, -217 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp40Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp40Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp45Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.707107, -0.707107, 0, 0.707107, -0.707107, 1, -1.15202e-07, -1.15202e-07, 280, 16.9, -205 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp45Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp45Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp50Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.766044, -0.642787, 0, 0.642787, -0.766044, 1, -1.24804e-07, -1.04723e-07, 280, 18.5, -193 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp50Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp50Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp55Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.819152, -0.573576, 0, 0.573576, -0.819152, 1, -1.33457e-07, -9.34474e-08, 280, 19.8, -181 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp55Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp55Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp60Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.866025, -0.5, 0, 0.5, -0.866025, 1, -1.41093e-07, -8.14603e-08, 280, 21.1, -169 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp60Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp60Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp65Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.906308, -0.422618, 0, 0.422618, -0.906308, 1, -1.47656e-07, -6.88532e-08, 280, 22.1, -157 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp65Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp65Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp70Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.939692, -0.34202, 0, 0.34202, -0.939692, 1, -1.53095e-07, -5.57221e-08, 280, 23.1, -145 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp70Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp70Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp75Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.965926, -0.258819, 0, 0.258819, -0.965926, 1, -1.57369e-07, -4.21669e-08, 280, 23.9, -133 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp75Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp75Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp80Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.984808, -0.173648, 0, 0.173648, -0.984808, 1, -1.60446e-07, -2.82909e-08, 280, 24.4, -121 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp80Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp80Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp85Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -0.996194, -0.0871555, 0, 0.0871555, -0.996194, 1, -1.62301e-07, -1.41994e-08, 280, 24.8, -109 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp85Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp85Deg"]
+shape = SubResource( 7 )
+
+[node name="Ramp90Deg" type="StaticBody" parent="Ramps"]
+transform = Transform( -1.62921e-07, -1, 1.62921e-07, 0, -1.62921e-07, -1, 1, -1.62921e-07, 2.65431e-14, 280, 25, -97 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/Ramp90Deg"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/Ramp90Deg"]
+shape = SubResource( 7 )
+
+[node name="DrawBridge" type="Spatial" parent="Ramps"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 280, -0.95, -85 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.025
+rotation_axis = Vector3( 0, 0, 1 )
+rotate_limit = 90
+
+[node name="DrawBridge" type="KinematicBody" parent="Ramps/DrawBridge"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 25, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramps/DrawBridge/DrawBridge"]
+material_override = SubResource( 5 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramps/DrawBridge/DrawBridge"]
+shape = SubResource( 7 )
+
+[node name="Disks" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -200, 0, 0 )
+
+[node name="VerticalDiskPlatform" type="KinematicBody" parent="Disks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 158, -23, -80 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+move_dir = Vector3( 0, -1, 0 )
+move_limit = 20.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/VerticalDiskPlatform"]
+material_override = SubResource( 10 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/VerticalDiskPlatform"]
+shape = SubResource( 11 )
+
+[node name="VerticalDisk" type="KinematicBody" parent="Disks/VerticalDiskPlatform"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 45, 2 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = -0.25
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/VerticalDiskPlatform/VerticalDisk"]
+mesh = SubResource( 12 )
+material = SubResource( 13 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/VerticalDiskPlatform/VerticalDisk"]
+shape = SubResource( 14 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/VerticalDiskPlatform/VerticalDisk"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/VerticalDiskPlatform/VerticalDisk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="VerticalDiskPlatform2" type="KinematicBody" parent="Disks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 187, -23, -80 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+move_dir = Vector3( 0, -1, 0 )
+move_limit = 20.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/VerticalDiskPlatform2"]
+material_override = SubResource( 10 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/VerticalDiskPlatform2"]
+shape = SubResource( 11 )
+
+[node name="VerticalDisk" type="KinematicBody" parent="Disks/VerticalDiskPlatform2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 45, 2 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+rotation_axis = Vector3( 1, 0, 0 )
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/VerticalDiskPlatform2/VerticalDisk"]
+mesh = SubResource( 12 )
+material = SubResource( 13 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/VerticalDiskPlatform2/VerticalDisk"]
+shape = SubResource( 14 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/VerticalDiskPlatform2/VerticalDisk"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/VerticalDiskPlatform2/VerticalDisk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="VerticalDiskPlatform3" type="KinematicBody" parent="Disks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 215, -23, -80 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+move_dir = Vector3( 0, -1, 0 )
+move_limit = 20.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/VerticalDiskPlatform3"]
+material_override = SubResource( 10 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/VerticalDiskPlatform3"]
+shape = SubResource( 11 )
+
+[node name="VerticalDisk" type="KinematicBody" parent="Disks/VerticalDiskPlatform3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 45, 2 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+rotation_axis = Vector3( 1, 0, 1 )
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/VerticalDiskPlatform3/VerticalDisk"]
+mesh = SubResource( 12 )
+material = SubResource( 13 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/VerticalDiskPlatform3/VerticalDisk"]
+shape = SubResource( 14 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/VerticalDiskPlatform3/VerticalDisk"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/VerticalDiskPlatform3/VerticalDisk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="VerticalDiagonalDiskPlatform2" type="KinematicBody" parent="Disks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 158, -25, -108 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+move_dir = Vector3( 1, -1, 0 )
+move_limit = 25.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/VerticalDiagonalDiskPlatform2"]
+material_override = SubResource( 10 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/VerticalDiagonalDiskPlatform2"]
+shape = SubResource( 11 )
+
+[node name="VerticalDiskDiagonal" type="KinematicBody" parent="Disks/VerticalDiagonalDiskPlatform2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 45, 2 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = -0.25
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/VerticalDiagonalDiskPlatform2/VerticalDiskDiagonal"]
+mesh = SubResource( 12 )
+material = SubResource( 13 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/VerticalDiagonalDiskPlatform2/VerticalDiskDiagonal"]
+shape = SubResource( 14 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/VerticalDiagonalDiskPlatform2/VerticalDiskDiagonal"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/VerticalDiagonalDiskPlatform2/VerticalDiskDiagonal"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="RedDisk" type="KinematicBody" parent="Disks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 1, -50 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 1.0
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/RedDisk"]
+mesh = SubResource( 17 )
+material = SubResource( 18 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/RedDisk"]
+shape = SubResource( 19 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/RedDisk"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/RedDisk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="YellowDisk" type="KinematicBody" parent="Disks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 1, 40 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/YellowDisk"]
+mesh = SubResource( 17 )
+material = SubResource( 20 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/YellowDisk"]
+shape = SubResource( 19 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/YellowDisk"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/YellowDisk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="BlueDisk" type="KinematicBody" parent="Disks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 1, -150 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/BlueDisk"]
+mesh = SubResource( 17 )
+material = SubResource( 21 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/BlueDisk"]
+shape = SubResource( 19 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/BlueDisk"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/BlueDisk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="CyanDisk" type="KinematicBody" parent="Disks/BlueDisk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 30 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = -0.25
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/BlueDisk/CyanDisk"]
+mesh = SubResource( 12 )
+material = SubResource( 22 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/BlueDisk/CyanDisk"]
+shape = SubResource( 14 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/BlueDisk/CyanDisk"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/BlueDisk/CyanDisk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="FerrisWheel" type="KinematicBody" parent="Disks"]
+transform = Transform( -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0, 1, 203, 41, -150 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+rotation_axis = Vector3( 1, 0, 0 )
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/FerrisWheel"]
+mesh = SubResource( 17 )
+material = SubResource( 21 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/FerrisWheel"]
+shape = SubResource( 19 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/FerrisWheel"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/FerrisWheel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="CyanDisk" type="KinematicBody" parent="Disks/FerrisWheel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 30 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/FerrisWheel/CyanDisk"]
+mesh = SubResource( 12 )
+material = SubResource( 22 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/FerrisWheel/CyanDisk"]
+shape = SubResource( 14 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/FerrisWheel/CyanDisk"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/FerrisWheel/CyanDisk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="PlatformStatic" type="KinematicBody" parent="Disks/FerrisWheel/CyanDisk"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -5, 0, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/FerrisWheel/CyanDisk/PlatformStatic"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/FerrisWheel/CyanDisk/PlatformStatic"]
+shape = SubResource( 11 )
+
+[node name="CyanDisk2" type="KinematicBody" parent="Disks/FerrisWheel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -30 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/FerrisWheel/CyanDisk2"]
+mesh = SubResource( 12 )
+material = SubResource( 22 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/FerrisWheel/CyanDisk2"]
+shape = SubResource( 14 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/FerrisWheel/CyanDisk2"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/FerrisWheel/CyanDisk2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="PlatformStatic" type="KinematicBody" parent="Disks/FerrisWheel/CyanDisk2"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -5, 0, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/FerrisWheel/CyanDisk2/PlatformStatic"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/FerrisWheel/CyanDisk2/PlatformStatic"]
+shape = SubResource( 11 )
+
+[node name="PlatformStatic" type="KinematicBody" parent="Disks/FerrisWheel"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -38, 0, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/FerrisWheel/PlatformStatic"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/FerrisWheel/PlatformStatic"]
+shape = SubResource( 11 )
+
+[node name="PlatformStatic2" type="KinematicBody" parent="Disks/FerrisWheel"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, 38, 0, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/FerrisWheel/PlatformStatic2"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/FerrisWheel/PlatformStatic2"]
+shape = SubResource( 11 )
+
+[node name="CrazyFerrisWheel" type="KinematicBody" parent="Disks"]
+transform = Transform( -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0, 1, 203, 41, -239 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+rotation_axis = Vector3( 1, 1, 0 )
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/CrazyFerrisWheel"]
+mesh = SubResource( 17 )
+material = SubResource( 21 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/CrazyFerrisWheel"]
+shape = SubResource( 19 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/CrazyFerrisWheel"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/CrazyFerrisWheel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="CyanDisk" type="KinematicBody" parent="Disks/CrazyFerrisWheel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 30 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/CrazyFerrisWheel/CyanDisk"]
+mesh = SubResource( 12 )
+material = SubResource( 22 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/CrazyFerrisWheel/CyanDisk"]
+shape = SubResource( 14 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/CrazyFerrisWheel/CyanDisk"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/CrazyFerrisWheel/CyanDisk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="PlatformStatic" type="KinematicBody" parent="Disks/CrazyFerrisWheel/CyanDisk"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -5, 0, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/CrazyFerrisWheel/CyanDisk/PlatformStatic"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/CrazyFerrisWheel/CyanDisk/PlatformStatic"]
+shape = SubResource( 11 )
+
+[node name="CyanDisk2" type="KinematicBody" parent="Disks/CrazyFerrisWheel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -30 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/CrazyFerrisWheel/CyanDisk2"]
+mesh = SubResource( 12 )
+material = SubResource( 22 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/CrazyFerrisWheel/CyanDisk2"]
+shape = SubResource( 14 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/CrazyFerrisWheel/CyanDisk2"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/CrazyFerrisWheel/CyanDisk2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="PlatformStatic" type="KinematicBody" parent="Disks/CrazyFerrisWheel/CyanDisk2"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -5, 0, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/CrazyFerrisWheel/CyanDisk2/PlatformStatic"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/CrazyFerrisWheel/CyanDisk2/PlatformStatic"]
+shape = SubResource( 11 )
+
+[node name="PlatformStatic" type="KinematicBody" parent="Disks/CrazyFerrisWheel"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -38, 0, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/CrazyFerrisWheel/PlatformStatic"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/CrazyFerrisWheel/PlatformStatic"]
+shape = SubResource( 11 )
+
+[node name="PlatformStatic2" type="KinematicBody" parent="Disks/CrazyFerrisWheel"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, 38, 0, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/CrazyFerrisWheel/PlatformStatic2"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/CrazyFerrisWheel/PlatformStatic2"]
+shape = SubResource( 11 )
+
+[node name="DiskTower" type="KinematicBody" parent="Disks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -293 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/DiskTower"]
+mesh = SubResource( 24 )
+material = SubResource( 25 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/DiskTower"]
+shape = SubResource( 26 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/DiskTower"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/DiskTower"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 79.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="DiskLevel1" type="KinematicBody" parent="Disks/DiskTower"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 40 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = -0.5
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/DiskTower/DiskLevel1"]
+mesh = SubResource( 27 )
+material = SubResource( 28 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/DiskTower/DiskLevel1"]
+shape = SubResource( 29 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/DiskTower/DiskLevel1"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/DiskTower/DiskLevel1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="MovingPlatformSine" type="KinematicBody" parent="Disks/DiskTower/DiskLevel1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -15 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 1.0
+move_dir = Vector3( 1, 0, 0 )
+move_limit = 20.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/DiskTower/DiskLevel1/MovingPlatformSine"]
+material_override = SubResource( 10 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/DiskTower/DiskLevel1/MovingPlatformSine"]
+shape = SubResource( 11 )
+
+[node name="DiskLevel2" type="KinematicBody" parent="Disks/DiskTower/DiskLevel1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 20 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = -0.75
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/DiskTower/DiskLevel1/DiskLevel2"]
+mesh = SubResource( 30 )
+material = SubResource( 31 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/DiskTower/DiskLevel1/DiskLevel2"]
+shape = SubResource( 32 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/DiskTower/DiskLevel1/DiskLevel2"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/DiskTower/DiskLevel1/DiskLevel2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="DiskLevel3" type="KinematicBody" parent="Disks/DiskTower/DiskLevel1/DiskLevel2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 10 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = -0.25
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/DiskTower/DiskLevel1/DiskLevel2/DiskLevel3"]
+mesh = SubResource( 12 )
+material = SubResource( 33 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/DiskTower/DiskLevel1/DiskLevel2/DiskLevel3"]
+shape = SubResource( 14 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/DiskTower/DiskLevel1/DiskLevel2/DiskLevel3"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/DiskTower/DiskLevel1/DiskLevel2/DiskLevel3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="PlatformWithDisk" type="KinematicBody" parent="Disks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -150, -2.492, -50 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+move_limit = 90.0
+
+[node name="CSGBox" type="CSGBox" parent="Disks/PlatformWithDisk"]
+material_override = SubResource( 10 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/PlatformWithDisk"]
+shape = SubResource( 11 )
+
+[node name="GreenDisk" type="KinematicBody" parent="Disks/PlatformWithDisk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CSGMesh" type="CSGMesh" parent="Disks/PlatformWithDisk/GreenDisk"]
+mesh = SubResource( 17 )
+material = SubResource( 34 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/PlatformWithDisk/GreenDisk"]
+shape = SubResource( 19 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/PlatformWithDisk/GreenDisk"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/PlatformWithDisk/GreenDisk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="Rollers" type="Spatial" parent="."]
+
+[node name="RollerDiskFast" type="KinematicBody" parent="Rollers"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 149.442, -27.381, -297 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+rotation_axis = Vector3( 0, 0, 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Rollers/RollerDiskFast"]
+material_override = SubResource( 5 )
+mesh = SubResource( 35 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Rollers/RollerDiskFast"]
+shape = SubResource( 36 )
+
+[node name="CentrePole" type="MeshInstance" parent="Rollers/RollerDiskFast"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Rollers/RollerDiskFast"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="RollerDiskMedium" type="KinematicBody" parent="Rollers"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 149.442, -27.381, -308 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+rotation_axis = Vector3( 0, 0, 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Rollers/RollerDiskMedium"]
+material_override = SubResource( 5 )
+mesh = SubResource( 35 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Rollers/RollerDiskMedium"]
+shape = SubResource( 36 )
+
+[node name="CentrePole" type="MeshInstance" parent="Rollers/RollerDiskMedium"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Rollers/RollerDiskMedium"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="RollerDiskSlow" type="KinematicBody" parent="Rollers"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 149.442, -27.381, -319 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.06
+rotation_axis = Vector3( 0, 0, 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Rollers/RollerDiskSlow"]
+material_override = SubResource( 5 )
+mesh = SubResource( 35 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Rollers/RollerDiskSlow"]
+shape = SubResource( 36 )
+
+[node name="CentrePole" type="MeshInstance" parent="Rollers/RollerDiskSlow"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Rollers/RollerDiskSlow"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="RollerDiskSlower" type="KinematicBody" parent="Rollers"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 149.442, -27.381, -330 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.01
+rotation_axis = Vector3( 0, 0, 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Rollers/RollerDiskSlower"]
+material_override = SubResource( 5 )
+mesh = SubResource( 35 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Rollers/RollerDiskSlower"]
+shape = SubResource( 36 )
+
+[node name="CentrePole" type="MeshInstance" parent="Rollers/RollerDiskSlower"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="EdgePole" type="MeshInstance" parent="Rollers/RollerDiskSlower"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 0 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="Spinner2" type="KinematicBody" parent="Rollers"]
+transform = Transform( 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 140, 5, -193.5 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.1
+
+[node name="MeshInstance" type="MeshInstance" parent="Rollers/Spinner2"]
+material_override = SubResource( 5 )
+mesh = SubResource( 37 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Rollers/Spinner2"]
+shape = SubResource( 38 )
+
+[node name="Spinner" type="KinematicBody" parent="Rollers"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 141.134, 3, -253.68 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.1
+
+[node name="MeshInstance" type="MeshInstance" parent="Rollers/Spinner"]
+material_override = SubResource( 5 )
+mesh = SubResource( 37 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Rollers/Spinner"]
+shape = SubResource( 38 )
+
+[node name="RollerSlow" type="KinematicBody" parent="Rollers"]
+transform = Transform( 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 157, -0.95, -127 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.1
+rotation_axis = Vector3( 0, 0, 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Rollers/RollerSlow"]
+material_override = SubResource( 5 )
+mesh = SubResource( 39 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Rollers/RollerSlow"]
+shape = SubResource( 40 )
+
+[node name="RollerMedium" type="KinematicBody" parent="Rollers"]
+transform = Transform( 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 140, -0.95, -127 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+rotation_axis = Vector3( 0, 0, 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Rollers/RollerMedium"]
+material_override = SubResource( 5 )
+mesh = SubResource( 39 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Rollers/RollerMedium"]
+shape = SubResource( 40 )
+
+[node name="RollerFast" type="KinematicBody" parent="Rollers"]
+transform = Transform( 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 123, -0.95, -127 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.5
+rotation_axis = Vector3( 0, 0, 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Rollers/RollerFast"]
+material_override = SubResource( 5 )
+mesh = SubResource( 39 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Rollers/RollerFast"]
+shape = SubResource( 40 )
+
+[node name="Platforms" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -200, 0, 0 )
+
+[node name="MovingPlatformLinear" type="KinematicBody" parent="Platforms"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 140, 1, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 10.0
+motion_type = 0
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/MovingPlatformLinear"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/MovingPlatformLinear"]
+shape = SubResource( 11 )
+
+[node name="MovingPlatformLinearStep" type="KinematicBody" parent="Platforms"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 169, 1, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+motion_type = 1
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/MovingPlatformLinearStep"]
+material_override = SubResource( 41 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/MovingPlatformLinearStep"]
+shape = SubResource( 11 )
+
+[node name="MovingPlatformQuadratic" type="KinematicBody" parent="Platforms"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 1, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 10.0
+motion_type = 2
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/MovingPlatformQuadratic"]
+material_override = SubResource( 42 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/MovingPlatformQuadratic"]
+shape = SubResource( 11 )
+
+[node name="MovingPlatformSineFast" type="KinematicBody" parent="Platforms"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 1, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 4.0
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/MovingPlatformSineFast"]
+material_override = SubResource( 43 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/MovingPlatformSineFast"]
+shape = SubResource( 11 )
+
+[node name="MovingPlatformSine" type="KinematicBody" parent="Platforms"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 1, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 1.0
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/MovingPlatformSine"]
+material_override = SubResource( 10 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/MovingPlatformSine"]
+shape = SubResource( 11 )
+
+[node name="MovingPlatformVerticalDiagonalLinear" type="KinematicBody" parent="Platforms"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 17, -163.914 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 15.0
+motion_type = 0
+move_dir = Vector3( -1, -1, 0 )
+move_limit = 20.0
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/MovingPlatformVerticalDiagonalLinear"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/MovingPlatformVerticalDiagonalLinear"]
+shape = SubResource( 11 )
+
+[node name="MovingPlatformGentleDiagonal" type="KinematicBody" parent="Platforms"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 134, 12, -147.914 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 15.0
+motion_type = 0
+move_dir = Vector3( 0, 0.1, 1 )
+move_limit = 70.0
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/MovingPlatformGentleDiagonal"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/MovingPlatformGentleDiagonal"]
+shape = SubResource( 11 )
+
+[node name="PlatformStaticAir" type="KinematicBody" parent="Platforms"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 12, -217.914 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/PlatformStaticAir"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/PlatformStaticAir"]
+shape = SubResource( 11 )
+
+[node name="PlatformStaticAir2" type="KinematicBody" parent="Platforms"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 7, -217.914 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/PlatformStaticAir2"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/PlatformStaticAir2"]
+shape = SubResource( 11 )
+
+[node name="MovingPlatformVerticalLinear" type="KinematicBody" parent="Platforms"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 21, -135 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 15.0
+motion_type = 0
+move_dir = Vector3( 0, -1, 0 )
+move_limit = 20.0
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/MovingPlatformVerticalLinear"]
+material_override = SubResource( 23 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/MovingPlatformVerticalLinear"]
+shape = SubResource( 11 )
+
+[node name="MovingPlatformVerticalDiagonalSinusodial" type="KinematicBody" parent="Platforms"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 15.14, -108.914 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+move_dir = Vector3( -1, -1, 0 )
+move_limit = 20.0
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/MovingPlatformVerticalDiagonalSinusodial"]
+material_override = SubResource( 10 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/MovingPlatformVerticalDiagonalSinusodial"]
+shape = SubResource( 11 )
+
+[node name="MovingPlatformVerticalDownSinusodial" type="KinematicBody" parent="Platforms"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 21, -80 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+move_dir = Vector3( 0, -1, 0 )
+move_limit = 20.0
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/MovingPlatformVerticalDownSinusodial"]
+material_override = SubResource( 10 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/MovingPlatformVerticalDownSinusodial"]
+shape = SubResource( 11 )
+
+[node name="MovingBar" type="KinematicBody" parent="Platforms"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 1, 142 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.25
+move_dir = Vector3( 1, 0, 0 )
+move_limit = 100.0
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/MovingBar"]
+material_override = SubResource( 44 )
+width = 20.0
+depth = 120.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/MovingBar"]
+shape = SubResource( 45 )
+
+[node name="MovingPlatform3" type="KinematicBody" parent="Platforms/MovingBar"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.75
+
+[node name="CSGBox" type="CSGBox" parent="Platforms/MovingBar/MovingPlatform3"]
+material_override = SubResource( 46 )
+width = 20.0
+depth = 20.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Platforms/MovingBar/MovingPlatform3"]
+shape = SubResource( 11 )
+
+[node name="RigidBodyZone" type="Spatial" parent="."]
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 149.1, 25, -236.205 )
+collision/safe_margin = 0.01
+camera_follows_rotation = true
+
+[node name="CompanionCube" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 252.4, 3.09978, -220.013 )
+mass = 2.0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="CompanionCube"]
+material_override = SubResource( 47 )
+mesh = SubResource( 48 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="CompanionCube"]
+shape = SubResource( 49 )

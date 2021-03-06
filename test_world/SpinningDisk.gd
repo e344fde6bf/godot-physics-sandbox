@@ -14,7 +14,6 @@ func _ready():
 	start_pos = self.transform.origin
 	rotation_axis = rotation_axis.normalized()
 
-
 func _physics_process(delta):
 	t += delta
 	

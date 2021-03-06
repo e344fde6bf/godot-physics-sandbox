@@ -1,8 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
-[ext_resource path="res://debug_tools/DebugInfo.tscn" type="PackedScene" id=2]
-
+[ext_resource path="res://debug_tools/DebugDrawer.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
 height = 2.0
@@ -40,6 +39,4 @@ enabled = true
 [node name="Camera" type="Camera" parent="CameraHelper/CameraPosition"]
 far = 400.0
 
-[node name="DebugInfo" parent="." instance=ExtResource( 2 )]
-rect_scale = Vector2( 1.8, 1.8 )
-rect_pivot_offset = Vector2( 0, -1.671 )
+[node name="DebugDrawer" parent="." instance=ExtResource( 3 )]

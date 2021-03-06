@@ -2,15 +2,23 @@ extends StaticBody
 
 export var gradient: float = 0.01
 export var width: float = 20.0
+# export var length: float = 100.0
 export var length: float = 100.0
 export var thick: float = 5.0
 export var steps: int = 200
 export var slope_type: String = "quadratic"
+export var a = 1.0
+export var b = 1.0
+export var c = 1.0
 
 export var save_to_file: bool = true
 
 func linear(x):
 	return gradient*x
+
+func steps(x):
+	return b*floor(gradient*x/a)
+
 
 func quadratic(x):
 	return gradient*x*x

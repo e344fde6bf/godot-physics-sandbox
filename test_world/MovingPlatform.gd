@@ -18,14 +18,14 @@ export var is_printing: bool = false
 
 var vel = 0.0
 var start_pos: Vector3
+var last_pos
 var t = 0.0
 
 func _ready():
 	start_pos = transform.origin
+	last_pos = global_transform.origin
 	move_dir = move_dir.normalized()
 	
-	
-
 func _physics_process(delta):
 	if !enabled:
 		return
@@ -51,3 +51,9 @@ func _physics_process(delta):
 		else:
 			vel_step = floor(vel / step) * step 
 		transform.origin += move_dir * vel_step * delta
+	
+	if is_printing:
+		var this_pos = global_transform.origin
+		var speed = ((this_pos - last_pos)/delta).length()
+		DebugInfo.plot_float("platform speed", speed)
+		last_pos = this_pos

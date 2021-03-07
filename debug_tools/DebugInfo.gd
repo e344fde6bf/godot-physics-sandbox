@@ -7,6 +7,12 @@ enum UpdateMethod {
 	NONE,
 }
 
+const bool_plot = preload("plot/BoolPlot.tscn")
+const float_plot = preload("plot/FloatPlot.tscn")
+
+const debug_helpers = preload("helpers.gd")
+const OrderedMap = debug_helpers.OrderedMap
+
 export var label_min_width: float = 100.0
 
 var active_node = null
@@ -15,13 +21,6 @@ var is_singleton = false
 var text_info_node: Node = null
 var item_list_node: Node = null
 var update_method
-
-const bool_plot = preload("plot/BoolPlot.tscn")
-const float_plot = preload("plot/FloatPlot.tscn")
-
-const debug_helpers = preload("helpers.gd")
-const OrderedMap = debug_helpers.OrderedMap
-
 var info_data
 var plot_data
 
@@ -29,8 +28,8 @@ func _ready():
 	# check if this script is autoloaded / the global singleton
 	if get_parent() == get_tree().root and self != get_tree().current_scene:
 		is_singleton = true
-
-	if not is_singleton:
+		set_process_method(UpdateMethod.PHYSICS_PROCESS)
+	else:
 		text_info_node = $TextInfo
 		item_list_node = $DebugPlots
 		set_process_method(UpdateMethod.NONE)
@@ -39,8 +38,6 @@ func _ready():
 		if get_tree().root.get_node("DebugInfo") != null:
 			DebugInfo.active_node = self
 		self.active_node = self
-	else:
-		set_process_method(UpdateMethod.PHYSICS_PROCESS)
 		
 	info_data = OrderedMap.new()
 	plot_data = OrderedMap.new()
@@ -82,13 +79,16 @@ func plot_bool(label: String, value: bool):
 		
 func plot_float(label: String, value: float, y_min = 0.0, y_max = 1.0):
 	if plot_data.has_label(label):
-		plot_data.get(label).add_data_point(value, y_min, y_max)
+		var plot = plot_data.get(label)
+		plot.set_default_bounds(y_min, y_max)
+		plot.add_data_point(value)
 	else:
 		var plot = float_plot.instance()
 		plot.label = label
 		plot.name_min_width = label_min_width
+		plot.set_default_bounds(y_min, y_max)
 		active_node.item_list_node.add_child(plot)
-		plot.add_data_point(value, y_min, y_max)
+		plot.add_data_point(value)
 		plot_data.add(label, plot)
 		
 func plot_vec3(label: String, value: Vector3, y_min = 0.0, y_max = 1.0):

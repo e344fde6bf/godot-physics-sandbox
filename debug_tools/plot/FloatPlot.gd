@@ -1,6 +1,4 @@
-extends Control
-
-export var label = "variable"
+extends "Plot.gd"
 
 onready var graph = $HBoxContainer/Graph
 onready var name_node = $HBoxContainer/VBoxContainer/VariableName
@@ -8,28 +6,15 @@ onready var current_value_label = $HBoxContainer/VBoxContainer/CurrentValue
 onready var min_label = $HBoxContainer/VBoxMinMax/MinLabel
 onready var max_label = $HBoxContainer/VBoxMinMax/MaxLabel
 
-var data: Array
-
-export var line_color = Color(1.0, 1.0, 1.0, 1)
-export var rect_color = Color(0.0, 0.0, 0.0, 0.5) 
-export var name_min_width: float = 0.0
-
-var TOP_Y = 2
-var BOT_Y = 40
-var write_pos = 0
-var max_size = 120
-var num_data_points_collected = 0
-
-
-var y_min = 0.0
-var y_max = 1.0
-var plot_min = y_min
-var plot_max = y_max
+const PLOT_SIZE_MIN = 35
 
 func _ready():
 	name_node.text = label
 	name_node.rect_min_size.x = max(name_node.rect_min_size.x, name_min_width)
-	graph.rect_min_size = Vector2(max_size, BOT_Y)
+	
+	if bot_y < PLOT_SIZE_MIN:
+		bot_y = PLOT_SIZE_MIN
+	graph.rect_min_size = Vector2(max_size, bot_y)
 	self.rect_min_size = graph.rect_min_size
 	
 	min_label.text = "-"
@@ -39,19 +24,15 @@ func _ready():
 	for i in range(max_size):
 		data[i] = null
 	
-func add_data_point(value: float, y_min_ = 0.0, y_max_ = 1.0):
-	data[write_pos] = value
-	write_pos = (write_pos + 1) % max_size
-	self.y_min = y_min_
-	self.y_max = y_max_
-	num_data_points_collected += 1
-
+	plot_min = y_min
+	plot_max = y_max
+	
 func _draw():
 	var last_i = 0
 	var last_val = data[(write_pos - 1) % max_size]
 	var min_value = INF
 	var max_value = -INF
-	var scale = BOT_Y / (plot_max - plot_min)
+	var scale = bot_y / (plot_max - plot_min)
 	var rec = graph.rect_position
 	var final_i
 	if num_data_points_collected < max_size:
@@ -75,8 +56,8 @@ func _draw():
 		if this_val == null:
 			break
 
-		var y1 = BOT_Y + -(clamp(last_val, plot_min, plot_max) - plot_min) * scale
-		var y2 = BOT_Y + -(clamp(this_val, plot_min, plot_max) - plot_min) * scale
+		var y1 = bot_y + -(clamp(last_val, plot_min, plot_max) - plot_min) * scale
+		var y2 = bot_y + -(clamp(this_val, plot_min, plot_max) - plot_min) * scale
 		if i - last_i > 1:
 			draw_line(rec+Vector2(last_i, y1), rec+Vector2(i, y1), line_color)
 		draw_line(rec+Vector2(i-1, y1), rec+Vector2(i, y2), line_color)

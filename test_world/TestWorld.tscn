@@ -240,7 +240,6 @@ extents = Vector3( 2, 2, 2 )
 [node name="TestWorld" type="Spatial"]
 
 [node name="DebugInfo" parent="." instance=ExtResource( 30 )]
-rect_scale = Vector2( 1.75, 1.75 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 6 )

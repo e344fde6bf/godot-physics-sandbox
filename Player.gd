@@ -6,7 +6,7 @@ enum MOVE_MODE {
 }
 
 const FPS = 60
-const JUMP_BUFFER_FRAME_COUNT = int(FPS * 0.1)
+const JUMP_BUFFER_FRAME_COUNT = int(FPS * 0.08)
 const FLOOR_BUFFER_FRAME_COUNT = int(FPS * 0.2)
 
 const PHYSICS_SPEED = 1
@@ -21,8 +21,7 @@ var mouse_sensitivity = 0.01
 
 export(float, 0.1, 100.0) var camera_distance = 12.0
 export var camera_follows_rotation: bool = false
-
-var use_improved_approximation = true
+export var use_pos_marker = false
 
 onready var player = $"."
 onready var player_body = $PlayerBody
@@ -56,7 +55,6 @@ func _ready():
 	DebugInfo.add("fps", 0)
 	DebugInfo.add("time", 0)
 	DebugInfo.add("move_mode", move_mode)
-	DebugInfo.add("improved_velocity_calc", use_improved_approximation)
 	
 	process_priority = 100
 
@@ -67,8 +65,7 @@ func _physics_process(delta):
 	DebugInfo.add("fps", Engine.get_frames_per_second())
 	DebugInfo.add("time", OS.get_ticks_msec() / 1000.0)
 	DebugInfo.add("move_mode", MOVE_MODE.keys()[move_mode])
-	DebugInfo.add("improved_velocity_calc", str(use_improved_approximation) + " (Press Q to toggle)") 
-	process_input(delta)
+	# process_input(delta)
 	process_movement(delta)
 	add_position_marker(delta)
 	
@@ -138,31 +135,20 @@ func get_floor_node():
 			continue
 		return collision.collider
 	assert(false)
-	
-func get_ceiling_collision() -> KinematicCollision:
-	""" a hacky function to find the floor node """
-	assert(is_on_ceiling())
-	for i in range(get_slide_count()):
-		var collision = get_slide_collision(i)
-		if collision.normal == get_floor_normal():
-			continue
-		if collision.normal.dot(Vector3.UP) >= 0:
-			continue
-		return collision
-	assert(false)
-	return null
 
 func apply_rotations(delta, player_dir: Vector3):
 	if player_dir != Vector3():
 		var basis = Basis()
 		var dir_planar = Plane(Vector3.UP, 0).project(player_dir).normalized()
 		if dir_planar != Vector3():
-#			basis.y = -dir_planar
-#			basis.z = Vector3.UP
-#			basis.x = basis.y.cross(basis.z)
-			basis.z = -dir_planar
-			basis.y = Vector3.UP
+			# if capsule shape
+			basis.y = -dir_planar
+			basis.z = Vector3.UP
 			basis.x = basis.y.cross(basis.z)
+			# if cylinder/sphere shape
+#			basis.z = -dir_planar
+#			basis.y = Vector3.UP
+#			basis.x = basis.y.cross(basis.z)
 			player_body.global_transform.basis = basis
 		
 	if !is_on_floor() or move_mode != MOVE_MODE.BASIC:
@@ -184,70 +170,27 @@ func apply_rotations(delta, player_dir: Vector3):
 		camera_rotation += ang_vel.project(Vector3.UP)*delta
 		camera_helper.rotation = camera_rotation
 
-func choose_floor_normal():
-	assert(is_on_floor())
-	var chosen_normal = Vector3.UP
-	var collision_normal = get_floor_normal()
-	if not ground_ray.is_colliding():
-		return collision_normal
-	var center_normal = ground_ray.get_collision_normal()
-	if collision_normal.dot(Vector3.UP) > center_normal.dot(Vector3.UP):
-		chosen_normal = collision_normal
-	else:
-		chosen_normal = center_normal
-	return chosen_normal
-
-#func first_collision_normal():
-#	assert(is_on_floor())
-#	var collision
-#	for i in range(get_slide_count()):
-#		var col = get_slide_collision(i)
-#		if col.collider == floor_node:
-#			collision = col
-#			break
-#	var space_state = get_world().direct_space_state
-#	var margin = 0.1
-#	var result = space_state.intersect_ray(collision.position + Vector3.UP*margin, collision.position - Vector3.UP*margin, [self])
-#	# for key in result:
-#	if result:
-#		return result.normal
-#	else:
-#		return null
-
 func move_basic(delta):
 	var cam_basis = camera.get_global_transform().basis
 	dir = Vector3.ZERO
 	
-#	var my_normal
-#	if is_on_floor():
-#		my_normal = first_collision_normal()
-	
+	# compute the players movement unit vector
 	if input_movement_vector != Vector2():
+		# players desired direction in xz plane
+		dir += cam_basis.x * input_movement_vector[0]
+		dir += -cam_basis.z * input_movement_vector[1]
+		dir.y = 0
+		dir = dir.normalized()
+		
 		if is_on_floor():
-			var norm
-			if ground_ray.is_colliding():
-				norm = ground_ray.get_collision_normal()
-			else:
-				norm = get_floor_normal()
-			var floor_plane = Plane(norm, 0)
-			
+			var floor_plane = Plane(get_floor_normal(), 0)
 			# players desired direction in xz plane
-			var d = cam_basis.x * input_movement_vector[0] \
-					+ -cam_basis.z * input_movement_vector[1]
-			d.y = 0
-			d = d.normalized()
-			
+			var d = dir
 			# use partial derivatives of floor plane to figure out the change in altitude
 			var dydx = -floor_plane.x / floor_plane.y
 			var dydz = -floor_plane.z / floor_plane.y
 			dir = Vector3(d.x, dydx * d.x + dydz * d.z, d.z)
 			dir = dir.normalized()
-		else:
-			dir += cam_basis.x * input_movement_vector[0]
-			dir += -cam_basis.z * input_movement_vector[1]
-			dir.y = 0
-			dir = dir.normalized()
-		
 		last_dir = dir
 
 	var player_vel = dir * PLAYER_SPEED
@@ -269,43 +212,26 @@ func move_basic(delta):
 		var chosen_normal = Vector3.UP
 		if is_on_floor():
 			chosen_normal = get_floor_normal()
-		DebugInfo.plot_float("floor angle", rad2deg(acos(chosen_normal.dot(Vector3.UP))))
 		gravity_vel += chosen_normal * delta * GRAVITY
 		jump_frame_buffering -= 1
-	
-	
+		
 	if !is_on_floor() and is_on_ceiling():
-		var ceil_collision = get_ceiling_collision()
-		# gravity_vel = 0.5 * ceil_collision.normal * gravity_vel.length()
-		gravity_vel = 0.5 * -Vector3.UP * gravity_vel.length()
-#	if !is_on_floor() and !is_on_ceiling() and is_on_wall():
-#		player_vel = player_vel - player_vel.project(get_slide_collision(0).normal)
+		gravity_vel = 0.1 * -Vector3.UP * gravity_vel.length()
 
-	vel = player_vel + gravity_vel + floor_vel_adjust * int(use_improved_approximation)
+	vel = player_vel + gravity_vel + floor_vel_adjust
 	vel = player.move_and_slide(vel, Vector3.UP, false, MAX_SLIDES, MAX_SLOPE_ANGLE, false)
 	
 	if is_on_floor():
 		floor_node = get_floor_node()
 		buffered_is_on_floor = FLOOR_BUFFER_FRAME_COUNT
-		if use_improved_approximation:
-			if floor_node is RigidBody:
-				self.transform.origin -= get_floor_displacement()
-			else:
-				self.transform.origin += get_floor_displacement()
+		if floor_node is RigidBody:
+			self.transform.origin -= get_floor_displacement()
+		else:
+			self.transform.origin += get_floor_displacement()
 		gravity_vel = Vector3()
 	else:
 		buffered_is_on_floor -= 1
 		floor_node = null
-
-func get_last_collision_with_floor_normal():
-	for i in range(get_slide_count()):
-		var collision = get_slide_collision(i)
-		if collision.collider == floor_node:
-			var angle = rad2deg(acos(collision.normal.dot(Vector3.UP)))
-			DebugInfo.plot_float("slide_normal(%d)angle" % i, angle, 0, 90)
-	for i in range(get_slide_count(), MAX_SLIDES):
-		DebugInfo.plot_float("slide_normal(%d)angle" % i, 0, 0, 90)
-		
 
 func move_no_clip(delta):
 	var cam_transform = self.transform.inverse() * camera.global_transform
@@ -334,39 +260,40 @@ func process_movement(delta):
 		MOVE_MODE.NO_CLIP:
 			move_no_clip(delta)
 
-	
 	if cube_hold_mode:
-		var forward = -player_body.global_transform.basis.z
+		var forward = -camera_helper.global_transform.basis.z
+		forward.y = 0
+		forward = forward.normalized()
 		var cube_pos = self.global_transform.translated(forward * 5)
 		cube_pos.basis = self.player_body.transform.basis
 		companion_cube.global_transform = cube_pos
 
 	apply_rotations(delta, dir)
 	
-	debug_drawer.draw_vector("dir", self, dir, Vector3(0, 2.5, 0))
+	# debug_drawer.draw_vector("dir", self, dir, Vector3(0, 2.5, 0))
 	DebugInfo.add("floor_node", floor_node.name if floor_node!=null else null)
+	
 	# floor_angle behaviour seems weird when the ray cast hits a moving object
+	var floor_angle = rad2deg(acos(get_floor_normal().dot(Vector3.UP))) if is_on_floor() else 0.0
+	DebugInfo.plot_float("floor angle", floor_angle, 0, 90)
+	
 	DebugInfo.plot_float("slide count", get_slide_count(), 0, 4)
 	DebugInfo.plot_bool("is_on_floor", is_on_floor())
 	# DebugInfo.plot_bool("is_on_ceiling", is_on_ceiling())
 	# DebugInfo.plot_bool("is_on_wall", is_on_wall())
 	# DebugInfo.plot_float("floor speed", get_floor_velocity().length())
 	DebugInfo.plot_float("player speed", get_linear_velocity(self, delta).length())
+	#DebugInfo.plot_float("buffered on floor", clamp(buffered_is_on_floor, 0, FLOOR_BUFFER_FRAME_COUNT))
+	#DebugInfo.plot_float("buffered jump", clamp(jump_frame_buffering, 0, JUMP_BUFFER_FRAME_COUNT))
 	
-	DebugInfo.plot_float("buffered on floor", clamp(buffered_is_on_floor, 0, FLOOR_BUFFER_FRAME_COUNT))
-	DebugInfo.plot_float("buffered jump", clamp(jump_frame_buffering, 0, JUMP_BUFFER_FRAME_COUNT))
 	
-	
-func process_input(_delta):
+func process_input():
 	if Input.is_action_just_pressed("ui_cancel"):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
-	if Input.is_action_just_pressed("toggle_vel_func"):
-		use_improved_approximation = !use_improved_approximation
-		
 	if Input.is_action_just_pressed("cube_hold_mode"):
 		cube_hold_mode = !cube_hold_mode
 		if cube_hold_mode:
@@ -405,6 +332,8 @@ func process_input(_delta):
 	if Input.is_action_just_pressed("debug_button_2"):
 		camera_rotation.y = PI/2 * floor((camera_rotation.y + PI/4) / (PI/2))
 		camera_helper.rotation = camera_rotation
+	if Input.is_action_just_pressed("debug_button_3"):
+		use_pos_marker = !use_pos_marker
 
 var marker_timer: float = 0.0
 var last_marker_state = false
@@ -412,7 +341,7 @@ func add_position_marker(delta):
 	marker_timer += delta
 	var this_state = is_on_floor()
 	var should_add_marker = marker_timer > 0.1 or (last_marker_state != this_state)
-	if should_add_marker and move_mode != MOVE_MODE.NO_CLIP:
+	if should_add_marker and move_mode != MOVE_MODE.NO_CLIP and use_pos_marker:
 	
 		var new_marker = pos_marker.instance()
 		new_marker.transform = self.transform
@@ -424,7 +353,6 @@ func add_position_marker(delta):
 		marker_timer = 0.0
 	last_marker_state = this_state
 
-
 func _input(event):
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		var yaw = camera_rotation.y + event.relative.x * mouse_sensitivity * -1
@@ -434,3 +362,4 @@ func _input(event):
 		camera_rotation = Vector3(pitch, yaw, 0)
 		
 		camera_helper.rotation = camera_rotation
+	process_input()

@@ -8,11 +8,12 @@ func get_displacement():
 	return global_transform.origin - physics_pos
 
 func _physics_process(_delta):
-	DebugInfo.plot_bool("sleeping", sleeping)
-	DebugInfo.plot_float("cube speed", linear_velocity.length())
+	# DebugInfo.plot_bool("sleeping", sleeping)
+	# DebugInfo.plot_float("cube speed", linear_velocity.length())
 	# DebugInfo.plot_float("cube speed.z", linear_velocity.z)
 	# var disp = get_displacement()
 	# DebugInfo.plot_float("disp cube", disp.z)
+	pass
 
 func set_behavior(behavior):
 	match behavior:

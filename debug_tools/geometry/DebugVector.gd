@@ -10,7 +10,7 @@ func _ready():
 	cylinder.material_override = material
 	arrow_head.material_override = material
 
-func orient_vector(vector: Vector3, offset=Vector3(), scale=1.0, max_size=null, color=null):
+func orient_vector(vector: Vector3, offset=Vector3(), color=null, scale=1.0, max_size=null):
 	var unit_vec = vector.normalized()
 	if vector == Vector3():
 		hide()

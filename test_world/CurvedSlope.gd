@@ -5,7 +5,7 @@ export var width: float = 20.0
 # export var length: float = 100.0
 export var length: float = 100.0
 export var thick: float = 5.0
-export var steps: int = 200
+export var point_count: int = 200
 export var slope_type: String = "quadratic"
 export var a = 1.0
 export var b = 1.0
@@ -18,7 +18,6 @@ func linear(x):
 
 func steps(x):
 	return b*floor(gradient*x/a)
-
 
 func quadratic(x):
 	return gradient*x*x
@@ -56,7 +55,7 @@ func build_and_save_meshes():
 func create_mesh(height_func):
 	var st = SurfaceTool.new()
 
-	var h = float(length) / steps
+	var h = float(length) / point_count
 	var x = 0
 	var z0 = call(height_func, x)
 	var z1 = call(height_func, x+h)
@@ -85,13 +84,13 @@ func create_mesh(height_func):
 	st.add_uv(Vector2(1, 1))
 	st.add_vertex(Vector3(x, z0-thick, width))
 
-	for i in steps:
+	for i in point_count:
 		x = i * h
 		z0 = call(height_func, x)
 		z1 = call(height_func, x + h)
 		
-		var v0 = float(i) / steps
-		var v1 = float(i+1) / steps
+		var v0 = float(i) / point_count
+		var v1 = float(i+1) / point_count
 		var u0 = 0.0
 		var u1 = 1.0
 		

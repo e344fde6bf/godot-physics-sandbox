@@ -15,7 +15,7 @@ func _ready():
 	data.resize(max_size)
 	for i in range(max_size):
 		data[i] = null
-	
+
 func _draw():
 	var last_i = 0
 	var last_val = data[(write_pos - 1) % max_size]
@@ -23,7 +23,8 @@ func _draw():
 	var pulse_started = false
 	var rec = graph.rect_position
 	
-	draw_rect(Rect2(rec, graph.rect_min_size), rect_color)
+	draw_rect(Rect2(rec, graph.rect_min_size), bg_color)
+
 	
 	for i in range(data.size()):
 		var this_val = data[(write_pos - i - 1) % max_size]

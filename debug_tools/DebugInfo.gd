@@ -14,12 +14,15 @@ const debug_helpers = preload("helpers.gd")
 const OrderedMap = debug_helpers.OrderedMap
 
 export var label_min_width: float = 100.0
+export var text_bg_color = Color(0.0, 0.0, 0.0, 0.2)
 
 var active_node = null
 var is_in_tree = false
 var is_singleton = false
+var text_bg_node: Node = null
 var text_info_node: Node = null
 var item_list_node: Node = null
+var panel_style: StyleBoxFlat
 var update_method
 var info_data
 var plot_data
@@ -30,8 +33,12 @@ func _ready():
 		is_singleton = true
 		set_process_method(UpdateMethod.PHYSICS_PROCESS)
 	else:
-		text_info_node = $TextInfo
-		item_list_node = $DebugPlots
+		panel_style = StyleBoxFlat.new()
+		panel_style.bg_color = text_bg_color
+		text_bg_node = $TextPanel
+		text_bg_node.add_stylebox_override("panel", panel_style)
+		text_info_node = $TextPanel/VBoxContainer/TextInfo
+		item_list_node = $TextPanel/VBoxContainer/DebugPlots
 		set_process_method(UpdateMethod.NONE)
 		
 		# if we aren't the singleton and it exists, add ourself as its active node
@@ -118,11 +125,18 @@ func plot_vec3(label: String, value: Vector3, y_min = 0.0, y_max = 1.0):
 
 func update():
 	var result = ""
-	for i in info_data.data.size():
-		var label = info_data.index_to_label[i]
-		result += "%s: %s\n" % [label, info_data.data[info_data.label_to_index[label]]]
+	if info_data.data.size() >= 1:
+		var label = info_data.index_to_label[0]
+		result += "%s: %s" % [label, info_data.data[info_data.label_to_index[label]]]
+	for i in info_data.data.size()-1:
+		var label = info_data.index_to_label[i+1]
+		result += "\n%s: %s" % [label, info_data.data[info_data.label_to_index[label]]]
 	
+
 	active_node.text_info_node.text = result
+	# active_node.text_bg_node.rect_size = active_node.text_info_node.rect_size
+	# active_node.text_bg_node.rect_min_size = active_node.text_bg_node.rect_size
+	# active_node.text_bg_node.rect_size.y += 3
 	
 	for i in plot_data.data.size():
 		plot_data.data[i].update()

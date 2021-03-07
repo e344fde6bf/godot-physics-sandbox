@@ -2185,7 +2185,7 @@ depth = 20.0
 shape = SubResource( 10 )
 
 [node name="MovingPlatformVerticalDiagonalLinear" type="KinematicBody" parent="Platforms"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 17, -163.914 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 17, -173.914 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
@@ -2204,7 +2204,7 @@ depth = 20.0
 shape = SubResource( 10 )
 
 [node name="MovingPlatformGentleDiagonal" type="KinematicBody" parent="Platforms"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 134, 12, -147.914 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 134, 12, -157.914 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
@@ -2261,7 +2261,7 @@ depth = 20.0
 shape = SubResource( 10 )
 
 [node name="MovingPlatformVerticalLinear" type="KinematicBody" parent="Platforms"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 21, -135 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 21, -145 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
@@ -2280,7 +2280,7 @@ depth = 20.0
 shape = SubResource( 10 )
 
 [node name="MovingPlatformVerticalDiagonalSinusodial" type="KinematicBody" parent="Platforms"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 15.14, -108.914 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 15.14, -118.914 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
@@ -2297,7 +2297,7 @@ depth = 20.0
 shape = SubResource( 10 )
 
 [node name="MovingPlatformVerticalDownSinusodial" type="KinematicBody" parent="Platforms"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 21, -80 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 21, -90 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
@@ -2350,7 +2350,7 @@ shape = SubResource( 10 )
 [node name="RigidBodyZone" type="Spatial" parent="."]
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -79.9, 13, 157.795 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
 collision/safe_margin = 0.01
 camera_follows_rotation = true
 

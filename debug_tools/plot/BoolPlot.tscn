@@ -2,14 +2,13 @@
 
 [ext_resource path="res://debug_tools/plot/BoolPlot.gd" type="Script" id=1]
 
-[node name="BoolPlot" type="Control"]
+[node name="BoolPlot" type="HBoxContainer"]
 size_flags_vertical = 3
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 47.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false

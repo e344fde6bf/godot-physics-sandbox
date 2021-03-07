@@ -1,5 +1,6 @@
 extends "Plot.gd"
 
+onready var container = $"."
 onready var graph = $HBoxContainer/Graph
 onready var name_node = $HBoxContainer/VBoxContainer/VariableName
 onready var current_value_label = $HBoxContainer/VBoxContainer/CurrentValue
@@ -15,7 +16,8 @@ func _ready():
 	if bot_y < PLOT_SIZE_MIN:
 		bot_y = PLOT_SIZE_MIN
 	graph.rect_min_size = Vector2(max_size, bot_y)
-	self.rect_min_size = graph.rect_min_size
+	graph.rect_size = graph.rect_min_size
+
 	
 	min_label.text = "-"
 	max_label.text = "-"
@@ -46,7 +48,7 @@ func _draw():
 	
 	current_value_label.text = str(last_val)
 	
-	draw_rect(Rect2(rec, graph.rect_min_size), rect_color)
+	draw_rect(Rect2(rec, graph.rect_min_size), bg_color)
 	
 	for i in range(data.size()):
 		var this_val = data[(write_pos - i - 1) % max_size]

@@ -1,10 +1,10 @@
-extends Control
+extends Container
 
 var data: Array
 
 export var label = "variable"
 export var line_color = Color(1.0, 1.0, 1.0, 1)
-export var rect_color = Color(0.0, 0.0, 0.0, 0.5) 
+export var bg_color = Color(0.0, 0.0, 0.0, 0.5)
 export var name_min_width: float = 0.0
 
 var top_y = 2

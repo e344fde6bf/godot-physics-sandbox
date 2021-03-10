@@ -37,7 +37,7 @@ onready var companion_cube = $".."/CompanionCube
 const pos_marker = preload("res://PosMarker.tscn")
 
 var dir: Vector3
-var last_dir: Vector3 = Vector3(0, 0, 1)
+var last_dir: Vector3 = Vector3(0, 0, 0)
 var input_movement_vector: Vector2
 var vel: Vector3 = Vector3()
 var camera_rotation = Vector3()
@@ -50,8 +50,10 @@ var cube_hold_mode = false
 var move_mode = MOVE_MODE.BASIC
 var buffered_is_on_floor: int = 0
 var is_squished
-
 var last_floor_rotation: Basis
+
+var marker_timer: float = 0.0
+var last_marker_state = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -65,7 +67,6 @@ func _ready():
 func set_camera_distance(new_distance):
 	assert(new_distance > 0)
 	camera_distance = new_distance
-	print(camera_position)
 	if camera_position != null:
 		camera_position.transform.origin.z = camera_distance
 	return camera_distance
@@ -125,19 +126,27 @@ func get_floor_node():
 	assert(false)
 
 func apply_rotations(delta, player_dir: Vector3):
-	if player_dir != Vector3():
+	var start_rot = Quat(player_body.transform.basis)
+	var desired_rot
+	if player_dir == Vector3() or abs(player_dir.dot(Vector3.UP))>= 0.99:
+		desired_rot = start_rot
+	elif player_dir != Vector3():
 		var basis = Basis()
 		var dir_planar = Plane(Vector3.UP, 0).project(player_dir).normalized()
 		if dir_planar != Vector3():
 			# if capsule shape
 			basis.y = -dir_planar
-			basis.z = Vector3.UP
+			basis.z = -Vector3.UP
 			basis.x = basis.y.cross(basis.z)
 			# if cylinder/sphere shape
 #			basis.z = -dir_planar
 #			basis.y = Vector3.UP
 #			basis.x = basis.y.cross(basis.z)
-			player_body.global_transform.basis = basis
+		desired_rot = Quat(basis)
+	
+	player_body.transform.basis = Basis(start_rot.slerp(desired_rot, 20*delta))
+	
+	# player_body.global_transform.basis = basis
 		
 	if !is_on_floor() or move_mode != MOVE_MODE.BASIC:
 		return
@@ -350,8 +359,6 @@ func process_input():
 	if Input.is_action_just_pressed("debug_button_3"):
 		use_pos_marker = !use_pos_marker
 
-var marker_timer: float = 0.0
-var last_marker_state = false
 func add_position_marker(delta):
 	marker_timer += delta
 	var this_state = is_on_floor()

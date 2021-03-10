@@ -228,8 +228,11 @@ shape = SubResource( 3 )
 [node name="Disks" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -200, 0, 0 )
 
-[node name="VerticalDisk1" type="KinematicBody" parent="Disks"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 158, 10, -54 )
+[node name="VerticalDisks" type="Spatial" parent="Disks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 132.837, 0, -58 )
+
+[node name="VerticalDisk1" type="KinematicBody" parent="Disks/VerticalDisks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 25 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
@@ -238,7 +241,7 @@ accel = 1.0
 move_dir = Vector3( 1, -1, 0 )
 move_limit = 12.5
 
-[node name="VerticalDiskDiagonal" type="KinematicBody" parent="Disks/VerticalDisk1"]
+[node name="VerticalDiskDiagonal" type="KinematicBody" parent="Disks/VerticalDisks/VerticalDisk1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 script = ExtResource( 4 )
 __meta__ = {
@@ -246,19 +249,126 @@ __meta__ = {
 }
 angular_velocity = 0.4
 
-[node name="CSGMesh" type="MeshInstance" parent="Disks/VerticalDisk1/VerticalDiskDiagonal"]
+[node name="CSGMesh" type="MeshInstance" parent="Disks/VerticalDisks/VerticalDisk1/VerticalDiskDiagonal"]
 material_override = ExtResource( 39 )
 mesh = SubResource( 4 )
 material/0 = null
 
-[node name="CollisionShape" type="CollisionShape" parent="Disks/VerticalDisk1/VerticalDiskDiagonal"]
+[node name="CollisionShape" type="CollisionShape" parent="Disks/VerticalDisks/VerticalDisk1/VerticalDiskDiagonal"]
 shape = SubResource( 5 )
 
-[node name="CentrePole" type="MeshInstance" parent="Disks/VerticalDisk1/VerticalDiskDiagonal"]
+[node name="CentrePole" type="MeshInstance" parent="Disks/VerticalDisks/VerticalDisk1/VerticalDiskDiagonal"]
 mesh = SubResource( 6 )
 material/0 = SubResource( 7 )
 
-[node name="EdgePole" type="MeshInstance" parent="Disks/VerticalDisk1/VerticalDiskDiagonal"]
+[node name="EdgePole" type="MeshInstance" parent="Disks/VerticalDisks/VerticalDisk1/VerticalDiskDiagonal"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 0 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )
+
+[node name="VerticalDisk2" type="KinematicBody" parent="Disks/VerticalDisks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 13 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 1.0
+move_dir = Vector3( 0, -1, 0 )
+move_limit = 9.5
+
+[node name="VerticalDiskDiagonal" type="KinematicBody" parent="Disks/VerticalDisks/VerticalDisk2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.4
+
+[node name="CSGMesh" type="MeshInstance" parent="Disks/VerticalDisks/VerticalDisk2/VerticalDiskDiagonal"]
+material_override = ExtResource( 39 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/VerticalDisks/VerticalDisk2/VerticalDiskDiagonal"]
+shape = SubResource( 5 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/VerticalDisks/VerticalDisk2/VerticalDiskDiagonal"]
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/VerticalDisks/VerticalDisk2/VerticalDiskDiagonal"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 0 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )
+
+[node name="VerticalDisk3" type="KinematicBody" parent="Disks/VerticalDisks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 2 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 5.0
+motion_type = 0
+move_dir = Vector3( 1, -1, 0 )
+move_limit = 12.5
+
+[node name="VerticalDiskDiagonal" type="KinematicBody" parent="Disks/VerticalDisks/VerticalDisk3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.4
+
+[node name="CSGMesh" type="MeshInstance" parent="Disks/VerticalDisks/VerticalDisk3/VerticalDiskDiagonal"]
+material_override = ExtResource( 41 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/VerticalDisks/VerticalDisk3/VerticalDiskDiagonal"]
+shape = SubResource( 5 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/VerticalDisks/VerticalDisk3/VerticalDiskDiagonal"]
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/VerticalDisks/VerticalDisk3/VerticalDiskDiagonal"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 0 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )
+
+[node name="VerticalDisk4" type="KinematicBody" parent="Disks/VerticalDisks"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -10 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 5.0
+motion_type = 0
+move_dir = Vector3( 0, -1, 0 )
+move_limit = 9.5
+
+[node name="VerticalDiskDiagonal" type="KinematicBody" parent="Disks/VerticalDisks/VerticalDisk4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.4
+
+[node name="CSGMesh" type="MeshInstance" parent="Disks/VerticalDisks/VerticalDisk4/VerticalDiskDiagonal"]
+material_override = ExtResource( 41 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Disks/VerticalDisks/VerticalDisk4/VerticalDiskDiagonal"]
+shape = SubResource( 5 )
+
+[node name="CentrePole" type="MeshInstance" parent="Disks/VerticalDisks/VerticalDisk4/VerticalDiskDiagonal"]
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )
+
+[node name="EdgePole" type="MeshInstance" parent="Disks/VerticalDisks/VerticalDisk4/VerticalDiskDiagonal"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 0 )
 mesh = SubResource( 6 )
 material/0 = SubResource( 7 )
@@ -1033,7 +1143,6 @@ range_x = Vector2( -200, 200 )
 range_y = Vector2( -100, 100 )
 steps_x = 200
 steps_y = 200
-rebuild = true
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise8"]
@@ -1065,7 +1174,7 @@ move_dir = Vector3( 0, 1, 0 )
 move_limit = 20.0
 
 [node name="Ramps6" parent="." instance=ExtResource( 8 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 85, 10, 153 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 85, 17.7369, 167 )
 script = ExtResource( 4 )
 rotation_axis = Vector3( 1, 0, 0 )
 
@@ -1088,7 +1197,7 @@ material/0 = null
 shape = SubResource( 39 )
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 5, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5, 127, 3 )
 collision/safe_margin = 0.01
 camera_follows_rotation = true
 

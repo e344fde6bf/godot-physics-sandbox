@@ -80,7 +80,7 @@ func get_mesh_resource_path():
 	return "res://assets/meshes/" + "surf-" + self.name + ".mesh"
 
 func _rebuild_now(should_build):
-	if not Engine.editor_hint:
+	if not Engine.editor_hint or get_tree() == null:
 		return
 		
 	if should_build:

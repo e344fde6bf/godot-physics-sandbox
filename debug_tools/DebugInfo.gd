@@ -124,6 +124,10 @@ func plot_vec3(label: String, value: Vector3, y_min = 0.0, y_max = 1.0):
 		plot_data.add(label+".z", plot_z)
 
 func update():
+	if active_node == null:
+		# assert(false)
+		return
+	
 	var result = ""
 	if info_data.data.size() >= 1:
 		var label = info_data.index_to_label[0]

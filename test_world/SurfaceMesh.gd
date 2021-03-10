@@ -1,3 +1,5 @@
+tool
+
 extends StaticBody
 
 export var a: float = 1.0
@@ -10,13 +12,18 @@ export var range_y: Vector2 = Vector2(-10, 10)
 export var steps_x: int = 100
 export var steps_y: int = 100
 export var thick: float = 5.0
+export var rebuild: bool = false setget _rebuild_now
 export var surface_type: String = "linear"
+
+const material_path = "res://assets/materials/surface_material.tres"
 
 export var save_to_file: bool = true
 
 var noise: OpenSimplexNoise
 var size_x
 var size_y
+
+var last_edited_time
 
 func linear(x, y):
 	return a*x + b*y
@@ -37,6 +44,17 @@ func sinusoidal(x, y):
 	return c*sin(2*PI*a*((x-range_x[0]) / size_x)) + d*cos(2*PI*b*((y-range_y[0])/size_y))
 
 func _ready():
+	setup_common()
+	if Engine.editor_hint:
+		return
+	print("_ready() SurfaceMesh: ", OS.get_time())
+	var collision_shape = CollisionShape.new()
+	collision_shape.name = "CollisionShape"
+	collision_shape.shape = $MeshInstance.mesh.create_trimesh_shape()
+	add_child(collision_shape, true)
+	
+	# build_and_save_meshes()
+func setup_common():
 	size_x = range_x[1] - range_x[0] 
 	size_y = range_y[1] - range_y[0]
 	
@@ -47,28 +65,59 @@ func _ready():
 	noise.octaves = 4
 	noise.period = 20.0
 	noise.persistence = 0.8
+
+func add_node_for_editor(node_name, node_type):
+	var node = get_node_or_null("./" + node_name)
+	if node == null:
+		print("adding node: ", node_name)
+		var new_node = node_type.new()
+		new_node.set_name(node_name)
+		self.add_child(new_node)
+		new_node.owner = get_tree().edited_scene_root
+		return new_node
+
+func get_mesh_resource_path():
+	return "res://assets/meshes/" + "surf-" + self.name + ".mesh"
+
+func _rebuild_now(should_build):
+	if not Engine.editor_hint:
+		return
+		
+	if should_build:
+		print("ToolScript: rebuilding mesh " + get_mesh_resource_path())
+		var _new_mesh = add_node_for_editor("MeshInstance", MeshInstance)
+#		if new_mesh != null:
+#			var new_collision = add_node_for_editor("CollisionShape", CollisionShape)
+		build_and_save_meshes()
+		$MeshInstance.mesh = load(get_mesh_resource_path())
+		$MeshInstance.material_override = load(material_path)
+
+	rebuild = should_build
 	
-	build_and_save_meshes()
+	return rebuild
 
 func build_and_save_meshes():
+	setup_common()
 	#var new_mesh = create_mesh(length, width, slope_type, thickness, steps)
 	var new_mesh = create_mesh(surface_type)
-	$MeshInstance.mesh = new_mesh
+	
+	# https://github.com/godotengine/godot/issues/24646
+	var res
+	if ResourceLoader.exists(get_mesh_resource_path()):
+		res = ResourceLoader.load(get_mesh_resource_path())
+	res = new_mesh
 	
 	if save_to_file:
-		var fname = "res://assets/meshes/" + "surf-" + self.name + ".mesh"
+		var fname = get_mesh_resource_path()
+		new_mesh.take_over_path(fname)
 		var flags = ResourceSaver.FLAG_OMIT_EDITOR_PROPERTIES | \
 				ResourceSaver.FLAG_COMPRESS
-		var err = ResourceSaver.save(fname, new_mesh, flags)
+		var err = ResourceSaver.save(fname, res, flags)
 		if err:
 			printerr("Error %d: Failed to save mesh %s" % [err, fname])
-	
-	var collosion_shape = CollisionShape.new()
-	collosion_shape.shape = new_mesh.create_trimesh_shape()
-	self.add_child(collosion_shape)
 
 #func create_mesh(length, width, height_func, thick, steps=100):
-func create_mesh(height_func):
+func create_mesh(height_func) -> MeshInstance:
 	var st = SurfaceTool.new()
 
 	var dx = size_x / steps_x 
@@ -148,11 +197,9 @@ func create_mesh(height_func):
 			st.add_uv(Vector2(u0, v1))
 			st.add_vertex(p01)
 
-	
 	# Create indices, indices are optional.
 	st.index()
 
 	# Commit to a mesh.
-	# var mesh = st.commit()
 	var mesh = st.commit()
 	return mesh

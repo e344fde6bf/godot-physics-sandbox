@@ -10,16 +10,17 @@ const JUMP_BUFFER_FRAME_COUNT = int(FPS * 0.08)
 const FLOOR_BUFFER_FRAME_COUNT = int(FPS * 0.2)
 
 const PHYSICS_SPEED = 1
-const GRAVITY = -120 * PHYSICS_SPEED
-const JUMP_SPEED = 50 * PHYSICS_SPEED
-const PLAYER_SPEED = 30 * PHYSICS_SPEED
+const GRAVITY = -60 * PHYSICS_SPEED
+const JUMP_SPEED = 25 * PHYSICS_SPEED
+const PLAYER_SPEED = 15 * PHYSICS_SPEED
 const SPEED_NO_CLIP = 100
-const MAX_SLOPE_ANGLE = deg2rad(50)
+# const MAX_SLOPE_ANGLE = deg2rad(50)
+const MAX_SLOPE_ANGLE = deg2rad(60)
 const CAMERA_CLAMP_ANGLE = deg2rad(89)
 const MAX_SLIDES = 4
 var mouse_sensitivity = 0.01
 
-export(float, 0.1, 100.0) var camera_distance = 12.0
+export(float, 0.1, 300.0) var camera_distance = 8.0 setget set_camera_distance
 export var camera_follows_rotation: bool = false
 export var use_pos_marker = false
 
@@ -48,15 +49,26 @@ var floor_node = null
 var cube_hold_mode = false
 var move_mode = MOVE_MODE.BASIC
 var buffered_is_on_floor: int = 0
+var is_squished
+
+var last_floor_rotation: Basis
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	camera_position.translate_object_local(Vector3(0, 0, camera_distance))
+	call_deferred("set_camera_distance", camera_distance)
 	DebugInfo.add("fps", 0)
 	DebugInfo.add("time", 0)
 	DebugInfo.add("move_mode", move_mode)
 	
 	process_priority = 100
+
+func set_camera_distance(new_distance):
+	assert(new_distance > 0)
+	camera_distance = new_distance
+	print(camera_position)
+	if camera_position != null:
+		camera_position.transform.origin.z = camera_distance
+	return camera_distance
 
 func _process(_delta):
 	pass
@@ -68,61 +80,37 @@ func _physics_process(delta):
 	# process_input(delta)
 	process_movement(delta)
 	add_position_marker(delta)
-	
-func improved_floor_velocity_estimate(delta):
-	"""
-	This function returns an estimate of the floor velocity for use in
-	move_and_slide(). The result should be added to the `velocity` argument of
-	`move_and_slide()`.
-	
-	NOTE: since `move_and_slide()` adds `get_floor_velocity()` internally,
-	this function includes `-get_floor_velocity()` in the result to cancel this
-	out.
-	"""
-	if !is_on_floor():
-		DebugInfo.add("angular_velocity", null)
-		return Vector3()
-	
-	return -get_floor_velocity() + floor_velocity_due_to_rotation(delta) # + get_rigid_velocity(delta)
 
 func get_rigid_velocity(_delta):
 	if not floor_node is RigidBody:
 		return Vector3()
 	return PhysicsServer.body_get_direct_state(floor_node.get_rid()).linear_velocity
 
-func get_displacement(node):
+func get_linear_displacement(node):
 	var start_pos = PhysicsServer.body_get_direct_state(node.get_rid()).transform.origin
 	return node.global_transform.origin - start_pos
+	
+func get_rotation_difference(node):
+	var start_basis = PhysicsServer.body_get_direct_state(node.get_rid()).transform.basis
+	var end_basis = node.global_transform.basis
+	return end_basis.orthonormalized() * start_basis.orthonormalized().transposed() 
+
+func get_rotation_displacement(node):
+	var rot = get_rotation_difference(node)
+	
+	# centre of rotation at start of frame
+	var rotation_origin = PhysicsServer.body_get_direct_state(node.get_rid()).transform.origin
+	# our current position
+	var current_collision_pos = self.global_transform.origin
+	var collision_pos_relative = current_collision_pos - rotation_origin
+	var collision_pos_relative_next = rot.xform(collision_pos_relative)
+	return collision_pos_relative_next - collision_pos_relative
+
+func get_total_displacement(node):
+	return get_linear_displacement(node) + get_rotation_displacement(node)
 
 func get_linear_velocity(node, delta):
-	return get_displacement(node) / delta
-
-func get_floor_displacement():
-	"""
-	This function returns how much the floor has moved since the start of the frame
-	"""
-	return get_displacement(floor_node)
-		
-func floor_velocity_due_to_rotation(delta):
-	"""
-	This function returns the velocity due to the rotation of the current floor node.
-	"""
-	var ang_vel = PhysicsServer.body_get_direct_state(floor_node.get_rid()).angular_velocity
-	DebugInfo.add("angular_velocity", ang_vel)
-	
-	if ang_vel == Vector3():
-		return Vector3()
-	
-	# the origin point in global coordinates
-	var rotation_origin = floor_node.global_transform.origin
-	# rotate based on where our character is this frame,
-	# updated based on how much the floor has moved already this frame
-	var current_collision_pos = self.global_transform.origin + get_floor_displacement()
-	var collision_pos_relative = current_collision_pos - rotation_origin
-	var next_rotated_xform = Transform().rotated(ang_vel.normalized(), ang_vel.length()*delta)
-	var collision_pos_relative_next = next_rotated_xform.xform(collision_pos_relative)
-	var v_avg = (collision_pos_relative_next - collision_pos_relative) / delta
-	return v_avg
+	return get_linear_displacement(node) / delta
 
 func get_floor_node():
 	""" a hacky function to find the floor node """
@@ -183,7 +171,7 @@ func move_basic(delta):
 		dir = dir.normalized()
 		
 		if is_on_floor():
-			var floor_plane = Plane(get_floor_normal(), 0)
+			var floor_plane = last_floor_rotation.xform(get_floor_normal())
 			# players desired direction in xz plane
 			var d = dir
 			# use partial derivatives of floor plane to figure out the change in altitude
@@ -194,24 +182,16 @@ func move_basic(delta):
 		last_dir = dir
 
 	var player_vel = dir * PLAYER_SPEED
-	var floor_vel_adjust = improved_floor_velocity_estimate(delta)
+	var floor_vel_adjust = -get_floor_velocity()
 		
 	if buffered_is_on_floor > 0 and jump_frame_buffering > 0:
 		gravity_vel.y = JUMP_SPEED
-		if get_floor_velocity().y > 0:
-			gravity_vel.y += 0.3*get_floor_velocity().y
-		# `move_and_slide()` adds `get_floor_velocity()` internally so we add
-		# `-get_floor_velocity()` to counteract this in `floor_vel_adjust`.
-		# However, now we are goin to jump, we won't collide with the floor,
-		# so `move_and_slide()` won't add this value internally, so we don't
-		# need to cancel it out this time
-		floor_vel_adjust += get_floor_velocity()
 		jump_frame_buffering = 0
 		buffered_is_on_floor = 0
 	else:
 		var chosen_normal = Vector3.UP
 		if is_on_floor():
-			chosen_normal = get_floor_normal()
+			chosen_normal = last_floor_rotation.xform(get_floor_normal())
 		gravity_vel += chosen_normal * delta * GRAVITY
 		jump_frame_buffering -= 1
 		
@@ -219,17 +199,51 @@ func move_basic(delta):
 		gravity_vel = 0.1 * -Vector3.UP * gravity_vel.length()
 
 	vel = player_vel + gravity_vel + floor_vel_adjust
-	vel = player.move_and_slide(vel, Vector3.UP, false, MAX_SLIDES, MAX_SLOPE_ANGLE, false)
+	var stop_on_slope = !is_on_floor()
+	var start_transform = global_transform
+	vel = player.move_and_slide(vel, Vector3.UP, stop_on_slope, MAX_SLIDES, MAX_SLOPE_ANGLE, false)
+	
+	var retry_without_vel_adjust = !is_on_floor() and floor_node != null
+	DebugInfo.plot_bool("retrying", retry_without_vel_adjust)
+	if retry_without_vel_adjust:
+		# `move_and_slide()` adds `get_floor_velocity()` internally so we add
+		# `-get_floor_velocity()` to counteract this in `floor_vel_adjust`.
+		# However, we aren't on the floor anymore, so we need to retry without setting this
+		global_transform = start_transform
+		vel = player_vel + gravity_vel
+		vel = player.move_and_slide(vel, Vector3.UP, stop_on_slope, MAX_SLIDES, MAX_SLOPE_ANGLE, false)
+#
+#	DebugInfo.plot_float("vel1", vel.length(), 0, 30)
+#	if is_on_floor() or floor_node != null:
+#		DebugInfo.plot_float("vel2", ((vel - player_vel - Plane(get_floor_normal(),0).project(floor_vel_adjust))).length(), 0, 30)
+#	else:
+#		DebugInfo.plot_float("vel2", 0.0, 0, 30)
+	
+	var follow_platform = (floor_node != null) or is_on_floor()
 	
 	if is_on_floor():
 		floor_node = get_floor_node()
-		buffered_is_on_floor = FLOOR_BUFFER_FRAME_COUNT
-		if floor_node is RigidBody:
-			self.transform.origin -= get_floor_displacement()
-		else:
-			self.transform.origin += get_floor_displacement()
 		gravity_vel = Vector3()
-	else:
+	
+	is_squished = false
+	if follow_platform:
+		last_floor_rotation = get_rotation_difference(floor_node)
+		buffered_is_on_floor = FLOOR_BUFFER_FRAME_COUNT
+		var disp
+		if floor_node is RigidBody:
+			disp = -get_total_displacement(floor_node)
+		else:
+			disp = +get_total_displacement(floor_node)
+		add_collision_exception_with(floor_node)
+		var collision = move_and_collide(disp, false)
+		remove_collision_exception_with(floor_node)
+	
+		if is_on_floor() and collision != null:
+			var col_dot_prod = collision.normal.dot(last_floor_rotation * get_floor_normal())
+			is_squished = bool(col_dot_prod < -0.9) and \
+					(collision.collider_velocity-get_floor_velocity()).length_squared() > 0.01
+		
+	if !is_on_floor():
 		buffered_is_on_floor -= 1
 		floor_node = null
 
@@ -279,6 +293,7 @@ func process_movement(delta):
 	
 	DebugInfo.plot_float("slide count", get_slide_count(), 0, 4)
 	DebugInfo.plot_bool("is_on_floor", is_on_floor())
+	DebugInfo.plot_bool("is_squished", is_squished)
 	# DebugInfo.plot_bool("is_on_ceiling", is_on_ceiling())
 	# DebugInfo.plot_bool("is_on_wall", is_on_wall())
 	# DebugInfo.plot_float("floor speed", get_floor_velocity().length())

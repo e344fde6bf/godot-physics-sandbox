@@ -1,10 +1,10 @@
 extends StaticBody
 
 export var gradient: float = 0.01
-export var width: float = 20.0
+export var width: float = 10.0
 # export var length: float = 100.0
-export var length: float = 100.0
-export var thick: float = 5.0
+export var length: float = 50.0
+export var thick: float = 2.5
 export var point_count: int = 200
 export var slope_type: String = "quadratic"
 export var a = 1.0
@@ -32,6 +32,7 @@ func sinusoidal_inv(x):
 	return gradient*(1 - abs(sin(PI*x/length)))
 
 func _ready():
+	print("_ready() CurvedSlope: ", OS.get_time())
 	# todo
 	build_and_save_meshes()
 

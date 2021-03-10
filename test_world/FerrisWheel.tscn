@@ -1,0 +1,202 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://test_world/MovingPlatform.gd" type="Script" id=1]
+[ext_resource path="res://test_world/SpinningDisk.gd" type="Script" id=2]
+[ext_resource path="res://assets/kenney_prototypetextures/PNG/Light/texture_08.png" type="Texture" id=3]
+
+[sub_resource type="CylinderMesh" id=1]
+top_radius = 20.0
+bottom_radius = 20.0
+height = 1.0
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0, 0, 1, 1 )
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 40, 40, 40 )
+
+[sub_resource type="CylinderShape" id=3]
+radius = 20.0
+height = 1.0
+
+[sub_resource type="CylinderMesh" id=4]
+top_radius = 0.5
+bottom_radius = 0.5
+height = 5.0
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="CylinderMesh" id=6]
+top_radius = 5.0
+bottom_radius = 5.0
+height = 1.0
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0, 1, 1, 1 )
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 10, 10, 10 )
+
+[sub_resource type="CylinderShape" id=8]
+radius = 5.0
+height = 1.0
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 5, 5, 5 )
+
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 5, 0.5, 5 )
+
+[node name="FerrisWheel" type="KinematicBody"]
+transform = Transform( -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0, 1, 0, 0, 0 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+rotation_axis = Vector3( 1, 0, 0 )
+
+[node name="CSGMesh" type="CSGMesh" parent="."]
+mesh = SubResource( 1 )
+material = SubResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 3 )
+
+[node name="CentrePole" type="MeshInstance" parent="."]
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="EdgePole" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5, 0, 0 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="CyanDisk" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 15 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+
+[node name="CSGMesh" type="CSGMesh" parent="CyanDisk"]
+mesh = SubResource( 6 )
+material = SubResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="CyanDisk"]
+shape = SubResource( 8 )
+
+[node name="CentrePole" type="MeshInstance" parent="CyanDisk"]
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="EdgePole" type="MeshInstance" parent="CyanDisk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 0 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="PlatformStatic" type="KinematicBody" parent="CyanDisk"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -2.5, 0, 0 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="CyanDisk/PlatformStatic"]
+material_override = SubResource( 9 )
+width = 10.0
+height = 1.0
+depth = 10.0
+
+[node name="CollisionShape" type="CollisionShape" parent="CyanDisk/PlatformStatic"]
+shape = SubResource( 10 )
+
+[node name="CyanDisk2" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -15 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+angular_velocity = 0.125
+
+[node name="CSGMesh" type="CSGMesh" parent="CyanDisk2"]
+mesh = SubResource( 6 )
+material = SubResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="CyanDisk2"]
+shape = SubResource( 8 )
+
+[node name="CentrePole" type="MeshInstance" parent="CyanDisk2"]
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="EdgePole" type="MeshInstance" parent="CyanDisk2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 0 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="PlatformStatic" type="KinematicBody" parent="CyanDisk2"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -2.5, 0, 0 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="CyanDisk2/PlatformStatic"]
+material_override = SubResource( 9 )
+width = 10.0
+height = 1.0
+depth = 10.0
+
+[node name="CollisionShape" type="CollisionShape" parent="CyanDisk2/PlatformStatic"]
+shape = SubResource( 10 )
+
+[node name="PlatformStatic" type="KinematicBody" parent="."]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -19, 0, 0 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="PlatformStatic"]
+material_override = SubResource( 9 )
+width = 10.0
+height = 1.0
+depth = 10.0
+
+[node name="CollisionShape" type="CollisionShape" parent="PlatformStatic"]
+shape = SubResource( 10 )
+
+[node name="PlatformStatic2" type="KinematicBody" parent="."]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, 19, 0, 0 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 0
+move_dir = Vector3( -1, 0, 0 )
+move_limit = 0.0
+
+[node name="CSGBox" type="CSGBox" parent="PlatformStatic2"]
+material_override = SubResource( 9 )
+width = 10.0
+height = 1.0
+depth = 10.0
+
+[node name="CollisionShape" type="CollisionShape" parent="PlatformStatic2"]
+shape = SubResource( 10 )

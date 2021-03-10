@@ -5,6 +5,7 @@ enum MOTION_TYPE {
 	STEP,
 	QUADRATIC,
 	SINUSOIDAL,
+	STATIC,
 }
 
 export var accel: float = 2.0
@@ -25,6 +26,9 @@ func _ready():
 	start_pos = transform.origin
 	last_pos = global_transform.origin
 	move_dir = move_dir.normalized()
+	
+	if motion_type == MOTION_TYPE.STATIC:
+		set_physics_process(false)
 	
 func _physics_process(delta):
 	if !enabled:

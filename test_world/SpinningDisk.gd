@@ -1,4 +1,4 @@
-extends Spatial
+extends KinematicBody
 
 export var angular_velocity: float = 0.25
 export var rotation_axis: Vector3 = Vector3.UP

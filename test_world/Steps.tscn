@@ -1,0 +1,117 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://test_world/CurvedSlope.gd" type="Script" id=1]
+[ext_resource path="res://assets/meshes/Steps5.mesh" type="ArrayMesh" id=2]
+[ext_resource path="res://assets/kenney_prototypetextures/PNG/Light/texture_08.png" type="Texture" id=3]
+[ext_resource path="res://assets/meshes/Steps1.mesh" type="ArrayMesh" id=4]
+[ext_resource path="res://assets/meshes/Steps2.mesh" type="ArrayMesh" id=5]
+[ext_resource path="res://assets/meshes/Steps4.mesh" type="ArrayMesh" id=6]
+[ext_resource path="res://assets/meshes/Steps0.mesh" type="ArrayMesh" id=7]
+[ext_resource path="res://assets/meshes/Steps3.mesh" type="ArrayMesh" id=8]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.992157, 0.741176, 0.741176, 1 )
+albedo_texture = ExtResource( 3 )
+metallic_specular = 0.1
+uv1_scale = Vector3( 5, 50, 1 )
+
+[node name="Steps" type="Spatial"]
+
+[node name="Steps0" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -30 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 1.0
+length = 10.0
+point_count = 400
+slope_type = "steps"
+b = 0.125
+
+[node name="MeshInstance" type="MeshInstance" parent="Steps0"]
+material_override = SubResource( 1 )
+mesh = ExtResource( 7 )
+material/0 = null
+
+[node name="Steps1" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -20 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 1.0
+length = 10.0
+point_count = 400
+slope_type = "steps"
+b = 0.25
+
+[node name="MeshInstance" type="MeshInstance" parent="Steps1"]
+material_override = SubResource( 1 )
+mesh = ExtResource( 4 )
+material/0 = null
+
+[node name="Steps2" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -10 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 1.0
+length = 10.0
+point_count = 400
+slope_type = "steps"
+b = 0.375
+
+[node name="MeshInstance" type="MeshInstance" parent="Steps2"]
+material_override = SubResource( 1 )
+mesh = ExtResource( 5 )
+material/0 = null
+
+[node name="Steps3" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 1.0
+length = 10.0
+slope_type = "steps"
+b = 0.5
+
+[node name="MeshInstance" type="MeshInstance" parent="Steps3"]
+material_override = SubResource( 1 )
+mesh = ExtResource( 8 )
+material/0 = null
+
+[node name="Steps4" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 10 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 1.0
+length = 10.0
+slope_type = "steps"
+b = 0.625
+
+[node name="MeshInstance" type="MeshInstance" parent="Steps4"]
+material_override = SubResource( 1 )
+mesh = ExtResource( 6 )
+material/0 = null
+
+[node name="Steps5" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 20 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+gradient = 1.0
+length = 10.0
+slope_type = "steps"
+b = 0.75
+
+[node name="MeshInstance" type="MeshInstance" parent="Steps5"]
+material_override = SubResource( 1 )
+mesh = ExtResource( 2 )
+material/0 = null

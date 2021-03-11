@@ -910,11 +910,8 @@ shape = SubResource( 29 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 539, 0, -52 )
 
 [node name="Linear" type="StaticBody" parent="Surfaces"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -394.5, 19, 116 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -394.5, 19, 122.19 )
 script = ExtResource( 23 )
-__meta__ = {
-"_edit_group_": true
-}
 a = 0.3
 b = 0.3
 range_x = Vector2( -35, 35 )

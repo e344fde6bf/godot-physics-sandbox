@@ -9,10 +9,11 @@ const FPS = 60
 const JUMP_BUFFER_FRAME_COUNT = int(FPS * 0.08)
 const FLOOR_BUFFER_FRAME_COUNT = int(FPS * 0.2)
 
-const PHYSICS_SPEED = 1
+const PHYSICS_SPEED = 1.0
 const GRAVITY = -60 * PHYSICS_SPEED
 const JUMP_SPEED = 25 * PHYSICS_SPEED
 const PLAYER_SPEED = 15 * PHYSICS_SPEED
+const PLAYER_ACCEL = 30 * PHYSICS_SPEED
 const SPEED_NO_CLIP = 100
 # const MAX_SLOPE_ANGLE = deg2rad(50)
 const MAX_SLOPE_ANGLE = deg2rad(60)
@@ -39,9 +40,9 @@ const pos_marker = preload("res://PosMarker.tscn")
 var dir: Vector3
 var last_dir: Vector3 = Vector3(0, 0, 0)
 var input_movement_vector: Vector2
-var vel: Vector3 = Vector3()
-var camera_rotation = Vector3()
+var player_speed: float = 0.0
 var gravity_vel: Vector3 = Vector3()
+var camera_rotation = Vector3()
 var jump_pressed: bool = false
 var run_pressed: bool = false
 var jump_frame_buffering: int = 0
@@ -61,6 +62,9 @@ func _ready():
 	DebugInfo.add("fps", 0)
 	DebugInfo.add("time", 0)
 	DebugInfo.add("move_mode", move_mode)
+	
+	var steepness_mat = load("res://assets/materials/steepness_material.tres")
+	steepness_mat.set_shader_param("limit_angle_deg", rad2deg(MAX_SLOPE_ANGLE)+0.5)
 	
 	process_priority = 100
 
@@ -189,10 +193,8 @@ func move_basic(delta):
 			dir = Vector3(d.x, dydx * d.x + dydz * d.z, d.z)
 			dir = dir.normalized()
 		last_dir = dir
-
-	var player_vel = dir * PLAYER_SPEED
-	var floor_vel_adjust = -get_floor_velocity()
 		
+	# var gravity_accel = Vector3()
 	if buffered_is_on_floor > 0 and jump_frame_buffering > 0:
 		gravity_vel.y = JUMP_SPEED
 		jump_frame_buffering = 0
@@ -202,15 +204,29 @@ func move_basic(delta):
 		if is_on_floor():
 			chosen_normal = last_floor_rotation.xform(get_floor_normal())
 		gravity_vel += chosen_normal * delta * GRAVITY
+		# gravity_accel = chosen_normal * GRAVITY
 		jump_frame_buffering -= 1
 		
 	if !is_on_floor() and is_on_ceiling():
 		gravity_vel = 0.1 * -Vector3.UP * gravity_vel.length()
 
-	vel = player_vel + gravity_vel + floor_vel_adjust
 	var stop_on_slope = !is_on_floor()
 	var start_transform = global_transform
-	vel = player.move_and_slide(vel, Vector3.UP, stop_on_slope, MAX_SLIDES, MAX_SLOPE_ANGLE, false)
+	
+	var floor_vel_adjust = -get_floor_velocity()
+	if is_on_floor():
+		player_speed *= pow(0.1, delta)
+	else:
+		player_speed *= pow(0.1, delta)
+	DebugInfo.plot_float("fake_speed", player_speed, 0, 20)
+	if dir != Vector3():
+		player_speed += PLAYER_ACCEL * delta 
+	var player_vel = player_speed * dir
+#	if not is_on_floor():
+#		player_vel *= 0.8
+	var start_vel = player_vel + gravity_vel
+	var vel = start_vel + floor_vel_adjust
+	var _ignored = player.move_and_slide(vel, Vector3.UP, stop_on_slope, MAX_SLIDES, MAX_SLOPE_ANGLE, false)
 	
 	var retry_without_vel_adjust = !is_on_floor() and floor_node != null
 	DebugInfo.plot_bool("retrying", retry_without_vel_adjust)
@@ -219,8 +235,12 @@ func move_basic(delta):
 		# `-get_floor_velocity()` to counteract this in `floor_vel_adjust`.
 		# However, we aren't on the floor anymore, so we need to retry without setting this
 		global_transform = start_transform
-		vel = player_vel + gravity_vel
-		vel = player.move_and_slide(vel, Vector3.UP, stop_on_slope, MAX_SLIDES, MAX_SLOPE_ANGLE, false)
+		floor_vel_adjust = Vector3()
+		vel = start_vel
+		_ignored = player.move_and_slide(vel, Vector3.UP, stop_on_slope, MAX_SLIDES, MAX_SLOPE_ANGLE, false)
+	
+	# we 'corrupted' the velocity value with floor_vel_adjust, so remove its effect here
+	# velocity += -Plane(get_floor_normal(),0).project(floor_vel_adjust)
 #
 #	DebugInfo.plot_float("vel1", vel.length(), 0, 30)
 #	if is_on_floor() or floor_node != null:
@@ -306,7 +326,7 @@ func process_movement(delta):
 	# DebugInfo.plot_bool("is_on_ceiling", is_on_ceiling())
 	# DebugInfo.plot_bool("is_on_wall", is_on_wall())
 	# DebugInfo.plot_float("floor speed", get_floor_velocity().length())
-	DebugInfo.plot_float("player speed", get_linear_velocity(self, delta).length())
+	DebugInfo.plot_float("player speed", get_linear_velocity(self, delta).length(), 0, 30)
 	#DebugInfo.plot_float("buffered on floor", clamp(buffered_is_on_floor, 0, FLOOR_BUFFER_FRAME_COUNT))
 	#DebugInfo.plot_float("buffered jump", clamp(jump_frame_buffering, 0, JUMP_BUFFER_FRAME_COUNT))
 	

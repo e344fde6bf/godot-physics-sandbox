@@ -1,6 +1,6 @@
 tool
 
-extends StaticBody
+extends Spatial
 
 export var a: float = 1.0
 export var b: float = 1.0

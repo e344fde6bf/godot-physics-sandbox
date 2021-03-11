@@ -93,6 +93,7 @@ func plot_float(label: String, value: float, y_min = 0.0, y_max = 1.0):
 		var plot = float_plot.instance()
 		plot.label = label
 		plot.name_min_width = label_min_width
+		plot.bot_y = 50
 		plot.set_default_bounds(y_min, y_max)
 		active_node.item_list_node.add_child(plot)
 		plot.add_data_point(value)

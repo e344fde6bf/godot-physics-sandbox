@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://test_world/platforms/LinearPlatform.tscn" type="PackedScene" id=1]
+[ext_resource path="res://test_world/platforms/LinearStepPlatform.tscn" type="PackedScene" id=2]
+[ext_resource path="res://test_world/platforms/SinePlatform.tscn" type="PackedScene" id=4]
+[ext_resource path="res://test_world/platforms/LongPlatform.tscn" type="PackedScene" id=5]
+[ext_resource path="res://test_world/platforms/QuadraticPlatform.tscn" type="PackedScene" id=6]
+
+[node name="Platforms" type="Spatial"]
+
+[node name="MovingPlatformLinearStep" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.5, 0 )
+accel = 5.0
+
+[node name="PlatformQuadratic" parent="." instance=ExtResource( 6 )]
+
+[node name="PlatformSine" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0.5, 0 )
+move_dir = Vector3( 0, 0, 1 )
+move_limit = 25.0
+
+[node name="PlatformSineFast" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0.5, 0 )
+accel = 4.0
+move_dir = Vector3( 0, 0, 1 )
+move_limit = 25.0
+
+[node name="PlatformLinear" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.5, 0 )
+move_dir = Vector3( 0, 0, 1 )
+move_limit = 25.0
+
+[node name="LongPlatform" parent="." instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -70 )
+accel = 5.0
+move_dir = Vector3( 0, 0, 1 )
+move_limit = 35.0

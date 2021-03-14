@@ -18,10 +18,11 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 1.0
-length = 20.0
-point_count = 40
+length = 30.0
+point_count = 1
 slope_type = "steps_2"
 b = 0.125
+c = 5.0
 step_mode = true
 
 [node name="MeshInstance" type="MeshInstance" parent="Steps0"]
@@ -36,10 +37,11 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 1.0
-length = 20.0
-point_count = 40
+length = 30.0
+point_count = 1
 slope_type = "steps_2"
 b = 0.25
+c = 5.0
 step_mode = true
 
 [node name="MeshInstance" type="MeshInstance" parent="Steps1"]
@@ -54,10 +56,11 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 1.0
-length = 20.0
-point_count = 40
+length = 30.0
+point_count = 1
 slope_type = "steps_2"
 b = 0.375
+c = 5.0
 step_mode = true
 
 [node name="MeshInstance" type="MeshInstance" parent="Steps2"]
@@ -72,10 +75,11 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 1.0
-length = 20.0
-point_count = 40
+length = 30.0
+point_count = 1
 slope_type = "steps_2"
 b = 0.5
+c = 5.0
 step_mode = true
 
 [node name="MeshInstance" type="MeshInstance" parent="Steps3"]
@@ -90,10 +94,11 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 1.0
-length = 20.0
-point_count = 40
+length = 30.0
+point_count = 1
 slope_type = "steps_2"
 b = 0.625
+c = 5.0
 step_mode = true
 
 [node name="MeshInstance" type="MeshInstance" parent="Steps4"]
@@ -108,8 +113,8 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 1.0
-length = 20.0
-point_count = 40
+length = 30.0
+point_count = 1
 slope_type = "steps_2"
 b = 0.75
 step_mode = true

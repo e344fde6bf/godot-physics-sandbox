@@ -5,7 +5,7 @@
 [ext_resource path="res://test_world/platforms/StaticPlatform.tscn" type="PackedScene" id=3]
 
 [node name="PlatformsVertical" type="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -57, 10.5, 59 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5, 0 )
 
 [node name="StaticPlatform" parent="." instance=ExtResource( 3 )]
 
@@ -13,9 +13,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -57, 10.5, 59 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -4, -11 )
 
 [node name="VerticalLinearDiagonal" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11 )
 
 [node name="VerticalLinear" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 move_dir = Vector3( 0, 1, 0 )
 move_limit = 10.0
 
@@ -26,6 +26,7 @@ move_dir = Vector3( 0, 0.1, 1 )
 move_limit = 35.0
 
 [node name="VerticalSine" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 22 )
 accel = 1.5
 
 [node name="VerticalSineDiagonal" parent="." instance=ExtResource( 1 )]

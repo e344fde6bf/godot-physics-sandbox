@@ -6,12 +6,18 @@ class_name ProcMesh
 export var rebuild: bool = false setget _rebuild_now
 export var convex_collision_shape: bool = false
 
+# TODO: find out how to stop instances from running this script, yet still
+# allow the master copy to run this script
+export var instance_locked: bool = false
+
 func _enter_tree():
-	_rebuild_now(not ResourceLoader.exists(get_mesh_resource_path()))
+	if Engine.editor_hint:
+		_rebuild_now(not ResourceLoader.exists(get_mesh_resource_path()))
 
 func _ready():
 	setup_common()
 	if Engine.editor_hint:
+		_rebuild_now(not ResourceLoader.exists(get_mesh_resource_path()))
 		return
 	create_collision_mesh()
 
@@ -42,23 +48,27 @@ func create_collision_mesh():
 	add_child(collision_shape, true)
 	
 func add_node_for_editor(node_name, node_type):
+	if get_tree() == null:
+		return
 	var node = get_node_or_null("./" + node_name)
 	if node == null:
 		var new_node = node_type.new()
 		new_node.set_name(node_name)
 		self.add_child(new_node)
 		new_node.owner = get_tree().edited_scene_root
+		# new_node.owner = self
 		return new_node
 
 func _rebuild_now(should_build):
 	if not Engine.editor_hint: # or get_tree() == null:
 		return
 	
-	if should_build \
+	if (should_build \
 			or not ResourceLoader.exists(get_mesh_resource_path()) \
 			or get_node_or_null("MeshInstance") == null \
 			or $MeshInstance.mesh == null \
-			or $MeshInstance.mesh.get_path() != get_mesh_resource_path():
+			or $MeshInstance.mesh.get_path() != get_mesh_resource_path() \
+			) and (not instance_locked):
 		setup_common()
 		print("ToolScript: rebuilding mesh " + get_mesh_resource_path())
 		var _new_mesh = add_node_for_editor("MeshInstance", MeshInstance)
@@ -69,7 +79,7 @@ func _rebuild_now(should_build):
 		$MeshInstance.material_override = load(get_material_path())
 
 	# rebuild = should_build
-	rebuild=false
+	# rebuild=false
 	
 	return rebuild
 

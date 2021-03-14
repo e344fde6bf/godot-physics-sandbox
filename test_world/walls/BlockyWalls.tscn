@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://test_world/proc_mesh/CurvedSlope.gd" type="Script" id=1]
+[ext_resource path="res://assets/materials/curve-material.tres" type="Material" id=2]
+[ext_resource path="res://assets/proc_meshes/curve-BlockWallsA.mesh" type="ArrayMesh" id=3]
+
+[node name="BlockyWallsA" type="Spatial"]
+
+[node name="BlockWallsA" type="StaticBody" parent="."]
+script = ExtResource( 1 )
+width = 5.0
+length = 25.0
+thick = 5.0
+slope_type = "steps_pulses"
+a = 5.0
+b = 5.0
+step_mode = true
+
+[node name="MeshInstance" type="MeshInstance" parent="BlockWallsA"]
+material_override = ExtResource( 2 )
+mesh = ExtResource( 3 )
+material/0 = null

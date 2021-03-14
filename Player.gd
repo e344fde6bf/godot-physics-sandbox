@@ -68,7 +68,7 @@ func _ready():
 	
 	var steepness_mat = load("res://assets/materials/steepness_material.tres")
 	steepness_mat.set_shader_param("limit_angle_deg", rad2deg(MAX_SLOPE_ANGLE + FLOOR_ANGLE_THRESHOLD))
-	DebugInfo.add("rad", rad2deg(MAX_SLOPE_ANGLE + FLOOR_ANGLE_THRESHOLD))
+	DebugInfo.add("max slope deg", rad2deg(MAX_SLOPE_ANGLE + FLOOR_ANGLE_THRESHOLD))
 	
 	process_priority = 100
 
@@ -89,6 +89,9 @@ func _physics_process(delta):
 	# process_input(delta)
 	process_movement(delta)
 	add_position_marker(delta)
+
+func get_angular_velocity(node):
+	return PhysicsServer.body_get_direct_state(node.get_rid()).angular_velocity
 
 func get_rigid_velocity(_delta):
 	if not floor_node is RigidBody:
@@ -236,7 +239,7 @@ func move_basic(delta):
 #		player_vel *= 0.8
 	var start_vel = player_vel + gravity_vel
 	var vel = start_vel + floor_vel_adjust
-	var out_vel = player.move_and_slide(vel, Vector3.UP, stop_on_slope, MAX_SLIDES, MAX_SLOPE_ANGLE, false)
+	var _out_vel = player.move_and_slide(vel, Vector3.UP, stop_on_slope, MAX_SLIDES, MAX_SLOPE_ANGLE, false)
 	
 	var retry_without_vel_adjust = !is_on_floor() and floor_node != null
 	# DebugInfo.plot_bool("retrying", retry_without_vel_adjust)
@@ -247,10 +250,10 @@ func move_basic(delta):
 		global_transform = start_transform
 		floor_vel_adjust = Vector3()
 		vel = start_vel
-		out_vel = player.move_and_slide(vel, Vector3.UP, stop_on_slope, MAX_SLIDES, MAX_SLOPE_ANGLE, false)#		out_vel = player.move_and_slidevel, Vector3.UP, stop_on_slope, MAX_SLIDES, MAX_SLOPE_ANGLE, false)
+		_out_vel = player.move_and_slide(vel, Vector3.UP, stop_on_slope, MAX_SLIDES, MAX_SLOPE_ANGLE, false)#		out_vel = player.move_and_slidevel, Vector3.UP, stop_on_slope, MAX_SLIDES, MAX_SLOPE_ANGLE, false)
 	
 	# we 'corrupted' the velocity value with floor_vel_adjust, so remove its effect here
-	out_vel += -Plane(get_floor_normal(),0).project(floor_vel_adjust)
+	_out_vel += -Plane(get_floor_normal(),0).project(floor_vel_adjust)
 	
 	var follow_platform = (floor_node != null) or is_on_floor()
 	
@@ -319,6 +322,11 @@ func process_movement(delta):
 	
 	# debug_drawer.draw_vector("dir", self, dir, Vector3(0, 2.5, 0))
 	DebugInfo.add("floor_node", floor_node.name if floor_node!=null else null)
+	if floor_node != null:
+		DebugInfo.plot_float("floor angular vel", get_angular_velocity(floor_node).length(), 0, 20)
+	else:
+		DebugInfo.plot_float("floor angular vel", 0.0, 0, 20)
+		
 	
 	# floor_angle behaviour seems weird when the ray cast hits a moving object
 	var floor_angle = rad2deg(acos(get_floor_normal().dot(Vector3.UP))) if is_on_floor() else 0.0
@@ -329,7 +337,7 @@ func process_movement(delta):
 #	DebugInfo.plot_bool("is_squished", is_squished)
 	DebugInfo.plot_bool("is_on_ceiling", is_on_ceiling())
 	DebugInfo.plot_bool("is_on_wall", is_on_wall())
-#	DebugInfo.plot_float("floor speed", get_floor_velocity().length())
+	DebugInfo.plot_float("floor speed", get_floor_velocity().length())
 	DebugInfo.plot_float("fake_speed", fake_speed, 0, 20)
 	DebugInfo.plot_float("player speed", get_linear_velocity(self, delta).length(), 0, 30)
 #	DebugInfo.plot_float("buffered on floor", clamp(buffered_is_on_floor, 0, FLOOR_BUFFER_FRAME_COUNT))

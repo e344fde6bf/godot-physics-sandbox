@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://test_world/linear-material.tres" type="Material" id=1]
+[ext_resource path="res://test_world/platforms/materials/quadratic_material.tres" type="Material" id=1]
 [ext_resource path="res://test_world/MovingPlatform.gd" type="Script" id=2]
 
 [sub_resource type="CubeMesh" id=1]
@@ -9,15 +9,15 @@ size = Vector3( 10, 1, 10 )
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 5, 0.5, 5 )
 
-[node name="LinearPlatform" type="KinematicBody"]
+[node name="PlatformQuadratic" type="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-accel = 10.0
-motion_type = 0
-move_dir = Vector3( 1, 1, 0 )
-move_limit = 14.0
+accel = 5.0
+motion_type = 2
+move_limit = 25.0
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 material_override = ExtResource( 1 )

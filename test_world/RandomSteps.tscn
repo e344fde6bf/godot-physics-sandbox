@@ -1,0 +1,214 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://test_world/proc_mesh/CurvedSlope.gd" type="Script" id=1]
+[ext_resource path="res://assets/materials/curve-material.tres" type="Material" id=2]
+[ext_resource path="res://assets/proc_meshes/curve-RandomStepTerrain.mesh" type="ArrayMesh" id=3]
+[ext_resource path="res://assets/proc_meshes/curve-RandomStepTerrain2.mesh" type="ArrayMesh" id=4]
+[ext_resource path="res://assets/proc_meshes/curve-RandomStepTerrain4.mesh" type="ArrayMesh" id=5]
+[ext_resource path="res://assets/proc_meshes/curve-RandomStepTerrain3.mesh" type="ArrayMesh" id=6]
+[ext_resource path="res://assets/proc_meshes/curve-RandomStepTerrain6.mesh" type="ArrayMesh" id=7]
+[ext_resource path="res://assets/proc_meshes/curve-RandomStepTerrain5.mesh" type="ArrayMesh" id=8]
+[ext_resource path="res://assets/proc_meshes/curve-RandomStepTerrain7.mesh" type="ArrayMesh" id=9]
+[ext_resource path="res://assets/proc_meshes/curve-RandomStepTerrain8.mesh" type="ArrayMesh" id=10]
+[ext_resource path="res://assets/proc_meshes/curve-RandomStepTerrain9.mesh" type="ArrayMesh" id=11]
+[ext_resource path="res://assets/proc_meshes/curve-RandomStepTerrain10.mesh" type="ArrayMesh" id=12]
+
+[node name="RandomSteps" type="Spatial"]
+
+[node name="RandomStepTerrain" type="StaticBody" parent="."]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+width = 6.0
+length = 50.0
+thick = 21.0
+point_count = 203
+slope_type = "steps_rand"
+a = 6.0
+b = 20.0
+random_seed = 1331387734
+step_mode = true
+
+[node name="MeshInstance" type="MeshInstance" parent="RandomStepTerrain"]
+material_override = ExtResource( 2 )
+mesh = ExtResource( 3 )
+material/0 = null
+
+[node name="RandomStepTerrain2" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+width = 6.0
+length = 50.0
+thick = 21.0
+slope_type = "steps_rand"
+a = 6.0
+b = 20.0
+random_seed = 1633037080
+step_mode = true
+
+[node name="MeshInstance" type="MeshInstance" parent="RandomStepTerrain2"]
+material_override = ExtResource( 2 )
+mesh = ExtResource( 4 )
+material/0 = null
+
+[node name="RandomStepTerrain3" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+width = 6.0
+length = 50.0
+thick = 21.0
+slope_type = "steps_rand"
+a = 6.0
+b = 20.0
+random_seed = 1653169736
+step_mode = true
+
+[node name="MeshInstance" type="MeshInstance" parent="RandomStepTerrain3"]
+material_override = ExtResource( 2 )
+mesh = ExtResource( 6 )
+material/0 = null
+
+[node name="RandomStepTerrain4" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 18 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+width = 6.0
+length = 50.0
+thick = 21.0
+slope_type = "steps_rand"
+a = 6.0
+b = 20.0
+random_seed = 426843876
+step_mode = true
+
+[node name="MeshInstance" type="MeshInstance" parent="RandomStepTerrain4"]
+material_override = ExtResource( 2 )
+mesh = ExtResource( 5 )
+material/0 = null
+
+[node name="RandomStepTerrain5" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+width = 6.0
+length = 50.0
+thick = 21.0
+slope_type = "steps_rand"
+a = 6.0
+b = 20.0
+random_seed = 1453819361
+step_mode = true
+
+[node name="MeshInstance" type="MeshInstance" parent="RandomStepTerrain5"]
+material_override = ExtResource( 2 )
+mesh = ExtResource( 8 )
+material/0 = null
+
+[node name="RandomStepTerrain6" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 30 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+width = 6.0
+length = 50.0
+thick = 21.0
+slope_type = "steps_rand"
+a = 6.0
+b = 20.0
+random_seed = 1780051309
+step_mode = true
+
+[node name="MeshInstance" type="MeshInstance" parent="RandomStepTerrain6"]
+material_override = ExtResource( 2 )
+mesh = ExtResource( 7 )
+material/0 = null
+
+[node name="RandomStepTerrain7" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 36 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+width = 6.0
+length = 50.0
+thick = 21.0
+slope_type = "steps_rand"
+a = 6.0
+b = 20.0
+random_seed = 641008732
+step_mode = true
+
+[node name="MeshInstance" type="MeshInstance" parent="RandomStepTerrain7"]
+material_override = ExtResource( 2 )
+mesh = ExtResource( 9 )
+material/0 = null
+
+[node name="RandomStepTerrain8" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 42 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+width = 6.0
+length = 50.0
+thick = 21.0
+slope_type = "steps_rand"
+a = 6.0
+b = 20.0
+random_seed = 1588096389
+step_mode = true
+
+[node name="MeshInstance" type="MeshInstance" parent="RandomStepTerrain8"]
+material_override = ExtResource( 2 )
+mesh = ExtResource( 10 )
+material/0 = null
+
+[node name="RandomStepTerrain9" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 48 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+width = 6.0
+length = 50.0
+thick = 51.0
+slope_type = "steps_pulses"
+a = 6.0
+b = 20.0
+step_mode = true
+
+[node name="MeshInstance" type="MeshInstance" parent="RandomStepTerrain9"]
+material_override = ExtResource( 2 )
+mesh = ExtResource( 11 )
+material/0 = null
+
+[node name="RandomStepTerrain10" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 54 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+width = 6.0
+length = 50.0
+thick = 51.0
+slope_type = "steps_pulses"
+a = 6.0
+b = 25.0
+step_mode = true
+
+[node name="MeshInstance" type="MeshInstance" parent="RandomStepTerrain10"]
+material_override = ExtResource( 2 )
+mesh = ExtResource( 12 )
+material/0 = null

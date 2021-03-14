@@ -74,14 +74,18 @@ func create_mesh() -> MeshInstance:
 	for i in segments_x:
 		var x0 = range_x[0] + dx*i
 		var x1 = range_x[0] + dx*(i+1)
-		var u0 = float(i) / segments_x
-		var u1 = float(i+1) / segments_x
+		# var u0 = float(i) / segments_x
+		# var u1 = float(i+1) / segments_x
+		var u0 = x0
+		var u1 = x1
 		
 		for j in segments_y:
 			var y0 = range_y[0] + dy*j
 			var y1 = range_y[0] + dy*(j+1)
-			var v0 = float(j) / segments_y
-			var v1 = float(j+1) / segments_y
+			# var v0 = float(j) / segments_y
+			# var v1 = float(j+1) / segments_y
+			var v0 = y0
+			var v1 = y1
 			
 			var z00 = call(height_func, x0, y0)
 			var z10 = call(height_func, x1, y0)
@@ -117,7 +121,6 @@ func create_mesh() -> MeshInstance:
 			st.add_normal(normal)
 			st.add_uv(Vector2(u0, v1))
 			st.add_vertex(p01)
-			normal = -normal
 
 	# Create indices, indices are optional.
 	st.index()

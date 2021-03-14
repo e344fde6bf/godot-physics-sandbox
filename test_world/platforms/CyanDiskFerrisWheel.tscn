@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://test_world/MovingPlatform.gd" type="Script" id=1]
+[ext_resource path="res://test_world/SpinningDisk.gd" type="Script" id=2]
+[ext_resource path="res://test_world/platforms/LinearPlatform.tscn" type="PackedScene" id=3]
+[ext_resource path="res://test_world/platforms/materials/cyan_disk_material.tres" type="Material" id=4]
+
+[sub_resource type="CylinderMesh" id=6]
+top_radius = 5.0
+bottom_radius = 5.0
+height = 1.0
+
+[sub_resource type="CylinderShape" id=8]
+radius = 5.0
+height = 1.0
+
+[sub_resource type="CylinderMesh" id=4]
+top_radius = 0.5
+bottom_radius = 0.5
+height = 5.0
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0, 0, 0, 1 )
+
+[node name="CyanDisk3" type="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 15 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+material_override = ExtResource( 4 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 8 )
+
+[node name="CentrePole" type="MeshInstance" parent="."]
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="EdgePole" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 0 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="FerrisWheelPlatform" type="KinematicBody" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -2.5, 0, 0 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 0.0
+motion_type = 4
+move_dir = Vector3( 0, 0, 0 )
+move_limit = 14.0

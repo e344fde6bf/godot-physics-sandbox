@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://test_world/proc_mesh/CurvedSlope.gd" type="Script" id=1]
+[ext_resource path="res://assets/materials/curve-material.tres" type="Material" id=2]
+[ext_resource path="res://assets/proc_meshes/curve-CurvedWallA.mesh" type="ArrayMesh" id=3]
+
+[node name="CurvedWallA" type="Spatial"]
+
+[node name="CurvedWallA" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1.47027e-07, 1, 0, -1, 1.47027e-07, -5, 0, -2 )
+script = ExtResource( 1 )
+gradient = 10.0
+width = 5.0
+length = 10.0
+point_count = 20
+slope_type = "sinusoidal"
+
+[node name="MeshInstance" type="MeshInstance" parent="CurvedWallA"]
+material_override = ExtResource( 2 )
+mesh = ExtResource( 3 )
+material/0 = null

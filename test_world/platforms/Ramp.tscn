@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/materials/ramp_material.tres" type="Material" id=1]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 5, 1, 25 )
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 2.5, 0.5, 12.5 )
+
+[node name="Ramp" type="KinematicBody"]
+transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 0, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+material_override = ExtResource( 1 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 2 )

@@ -1,5 +1,7 @@
 extends Container
 
+# TODO: make this work properly when changing scenes
+
 enum UpdateMethod {
 	PHYSICS_PROCESS,
 	PROCESS,

@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://test_world/MovingPlatform.gd" type="Script" id=1]
+
+[sub_resource type="StreamTexture" id=2]
+flags = 23
+load_path = "res://.import/texture_08.png-ee93ef84c6b600ea619d18904a29b20a.s3tc.stex"
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 1, 0, 1, 1 )
+albedo_texture = SubResource( 2 )
+uv1_scale = Vector3( 5, 5, 5 )
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 5, 0.5, 5 )
+
+[node name="VerticalSine" type="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 22 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+accel = 1.0
+move_dir = Vector3( 0, 1, 0 )
+move_limit = 10.0
+
+[node name="CSGBox" type="CSGBox" parent="."]
+material_override = SubResource( 3 )
+width = 10.0
+height = 1.0
+depth = 10.0
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )

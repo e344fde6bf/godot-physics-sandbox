@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node",
+"class": "ProcMesh",
+"language": "GDScript",
+"path": "res://test_world/proc_mesh/proc_mesh.gd"
+} ]
 _global_script_class_icons={
-
+"ProcMesh": ""
 }
 
 [application]

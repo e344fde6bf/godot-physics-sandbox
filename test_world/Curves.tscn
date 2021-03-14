@@ -1,23 +1,23 @@
 [gd_scene load_steps=19 format=2]
 
-[ext_resource path="res://assets/meshes/Sinusoidal.mesh" type="ArrayMesh" id=1]
-[ext_resource path="res://assets/meshes/Sinusoidal10.mesh" type="ArrayMesh" id=2]
-[ext_resource path="res://assets/meshes/Quadratic.mesh" type="ArrayMesh" id=3]
-[ext_resource path="res://assets/meshes/Cubic.mesh" type="ArrayMesh" id=4]
-[ext_resource path="res://assets/meshes/Sinusoidal9.mesh" type="ArrayMesh" id=5]
-[ext_resource path="res://assets/meshes/Sinusoidal4.mesh" type="ArrayMesh" id=6]
-[ext_resource path="res://assets/meshes/Sinusoidal8.mesh" type="ArrayMesh" id=7]
-[ext_resource path="res://assets/meshes/Sinusoidal2.mesh" type="ArrayMesh" id=8]
-[ext_resource path="res://assets/meshes/SinusoidalBowl2.mesh" type="ArrayMesh" id=9]
-[ext_resource path="res://assets/meshes/SinusoidalBowl3.mesh" type="ArrayMesh" id=10]
-[ext_resource path="res://assets/meshes/Sinusoidal7.mesh" type="ArrayMesh" id=11]
-[ext_resource path="res://test_world/CurvedSlope.gd" type="Script" id=12]
-[ext_resource path="res://assets/meshes/Linear.mesh" type="ArrayMesh" id=13]
-[ext_resource path="res://assets/meshes/Sinusoidal5.mesh" type="ArrayMesh" id=14]
-[ext_resource path="res://assets/meshes/Sinusoidal6.mesh" type="ArrayMesh" id=15]
-[ext_resource path="res://assets/meshes/SinusoidalBowl.mesh" type="ArrayMesh" id=16]
-[ext_resource path="res://test_world/curve-material.tres" type="Material" id=17]
-[ext_resource path="res://assets/meshes/Sinusoidal3.mesh" type="ArrayMesh" id=18]
+[ext_resource path="res://assets/materials/curve-material.tres" type="Material" id=1]
+[ext_resource path="res://assets/proc_meshes/curve-SinusoidalBowl2.mesh" type="ArrayMesh" id=2]
+[ext_resource path="res://assets/proc_meshes/curve-Sinusoidal7.mesh" type="ArrayMesh" id=3]
+[ext_resource path="res://assets/proc_meshes/curve-Sinusoidal5.mesh" type="ArrayMesh" id=4]
+[ext_resource path="res://assets/proc_meshes/curve-Sinusoidal9.mesh" type="ArrayMesh" id=5]
+[ext_resource path="res://assets/proc_meshes/curve-Quadratic.mesh" type="ArrayMesh" id=6]
+[ext_resource path="res://assets/proc_meshes/curve-Sinusoidal.mesh" type="ArrayMesh" id=7]
+[ext_resource path="res://assets/proc_meshes/curve-Sinusoidal6.mesh" type="ArrayMesh" id=8]
+[ext_resource path="res://assets/proc_meshes/curve-Sinusoidal10.mesh" type="ArrayMesh" id=9]
+[ext_resource path="res://assets/proc_meshes/curve-Sinusoidal3.mesh" type="ArrayMesh" id=10]
+[ext_resource path="res://assets/proc_meshes/curve-SinusoidalBowl.mesh" type="ArrayMesh" id=11]
+[ext_resource path="res://test_world/proc_mesh/CurvedSlope.gd" type="Script" id=12]
+[ext_resource path="res://assets/proc_meshes/curve-Cubic.mesh" type="ArrayMesh" id=13]
+[ext_resource path="res://assets/proc_meshes/curve-SinusoidalBowl3.mesh" type="ArrayMesh" id=14]
+[ext_resource path="res://assets/proc_meshes/curve-Sinusoidal2.mesh" type="ArrayMesh" id=15]
+[ext_resource path="res://assets/proc_meshes/curve-Sinusoidal8.mesh" type="ArrayMesh" id=16]
+[ext_resource path="res://assets/proc_meshes/curve-Linear.mesh" type="ArrayMesh" id=17]
+[ext_resource path="res://assets/proc_meshes/curve-Sinusoidal4.mesh" type="ArrayMesh" id=18]
 
 [node name="Curves" type="Spatial"]
 
@@ -28,11 +28,12 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 1.0
+point_count = 1
 slope_type = "linear"
 
 [node name="MeshInstance" type="MeshInstance" parent="Linear"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 13 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 17 )
 material/0 = null
 
 [node name="Quadratic" type="StaticBody" parent="."]
@@ -42,10 +43,11 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 0.02
+point_count = 50
 
 [node name="MeshInstance" type="MeshInstance" parent="Quadratic"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 3 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 6 )
 material/0 = null
 
 [node name="Cubic" type="StaticBody" parent="."]
@@ -55,11 +57,12 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 0.001
+point_count = 50
 slope_type = "cubic"
 
 [node name="MeshInstance" type="MeshInstance" parent="Cubic"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 4 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 13 )
 material/0 = null
 
 [node name="Sinusoidal" type="StaticBody" parent="."]
@@ -69,11 +72,12 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 5.0
+point_count = 15
 slope_type = "sinusoidal"
 
 [node name="MeshInstance" type="MeshInstance" parent="Sinusoidal"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 1 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 7 )
 material/0 = null
 
 [node name="Sinusoidal2" type="StaticBody" parent="."]
@@ -83,11 +87,12 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 7.5
+point_count = 15
 slope_type = "sinusoidal"
 
 [node name="MeshInstance" type="MeshInstance" parent="Sinusoidal2"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 8 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 15 )
 material/0 = null
 
 [node name="Sinusoidal3" type="StaticBody" parent="."]
@@ -97,11 +102,12 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 11.25
+point_count = 15
 slope_type = "sinusoidal"
 
 [node name="MeshInstance" type="MeshInstance" parent="Sinusoidal3"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 18 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 10 )
 material/0 = null
 
 [node name="Sinusoidal4" type="StaticBody" parent="."]
@@ -111,11 +117,12 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 15.0
+point_count = 15
 slope_type = "sinusoidal"
 
 [node name="MeshInstance" type="MeshInstance" parent="Sinusoidal4"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 6 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 18 )
 material/0 = null
 
 [node name="Sinusoidal5" type="StaticBody" parent="."]
@@ -125,11 +132,12 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 20.0
+point_count = 20
 slope_type = "sinusoidal"
 
 [node name="MeshInstance" type="MeshInstance" parent="Sinusoidal5"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 14 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 4 )
 material/0 = null
 
 [node name="Sinusoidal6" type="StaticBody" parent="."]
@@ -139,11 +147,12 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 25.0
+point_count = 30
 slope_type = "sinusoidal"
 
 [node name="MeshInstance" type="MeshInstance" parent="Sinusoidal6"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 15 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 8 )
 material/0 = null
 
 [node name="Sinusoidal7" type="StaticBody" parent="."]
@@ -153,11 +162,12 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 30.0
+point_count = 30
 slope_type = "sinusoidal"
 
 [node name="MeshInstance" type="MeshInstance" parent="Sinusoidal7"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 11 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 3 )
 material/0 = null
 
 [node name="Sinusoidal8" type="StaticBody" parent="."]
@@ -167,11 +177,12 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 35.0
+point_count = 30
 slope_type = "sinusoidal"
 
 [node name="MeshInstance" type="MeshInstance" parent="Sinusoidal8"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 7 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 16 )
 material/0 = null
 
 [node name="Sinusoidal9" type="StaticBody" parent="."]
@@ -181,10 +192,11 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 40.0
+point_count = 30
 slope_type = "sinusoidal"
 
 [node name="MeshInstance" type="MeshInstance" parent="Sinusoidal9"]
-material_override = ExtResource( 17 )
+material_override = ExtResource( 1 )
 mesh = ExtResource( 5 )
 material/0 = null
 
@@ -195,11 +207,12 @@ __meta__ = {
 "_edit_group_": true
 }
 gradient = 45.0
+point_count = 40
 slope_type = "sinusoidal"
 
 [node name="MeshInstance" type="MeshInstance" parent="Sinusoidal10"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 2 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 9 )
 material/0 = null
 
 [node name="SinusoidalBowl" type="StaticBody" parent="."]
@@ -210,11 +223,12 @@ __meta__ = {
 }
 gradient = 45.0
 width = 25.0
+point_count = 40
 slope_type = "sinusoidal_inv"
 
 [node name="MeshInstance" type="MeshInstance" parent="SinusoidalBowl"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 16 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 11 )
 material/0 = null
 
 [node name="SinusoidalBowl2" type="StaticBody" parent="."]
@@ -225,11 +239,12 @@ __meta__ = {
 }
 gradient = 20.0
 width = 25.0
+point_count = 30
 slope_type = "sinusoidal_inv"
 
 [node name="MeshInstance" type="MeshInstance" parent="SinusoidalBowl2"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 9 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 2 )
 material/0 = null
 
 [node name="SinusoidalBowl3" type="StaticBody" parent="."]
@@ -240,9 +255,10 @@ __meta__ = {
 }
 gradient = 10.0
 width = 25.0
+point_count = 15
 slope_type = "sinusoidal_inv"
 
 [node name="MeshInstance" type="MeshInstance" parent="SinusoidalBowl3"]
-material_override = ExtResource( 17 )
-mesh = ExtResource( 10 )
+material_override = ExtResource( 1 )
+mesh = ExtResource( 14 )
 material/0 = null

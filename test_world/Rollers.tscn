@@ -1,7 +1,9 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://test_world/SpinningDisk.gd" type="Script" id=1]
-[ext_resource path="res://test_world/ramp_material.tres" type="Material" id=2]
+[ext_resource path="res://assets/materials/ramp_material.tres" type="Material" id=2]
+
+
 
 [sub_resource type="CylinderMesh" id=1]
 top_radius = 20.0
@@ -35,7 +37,7 @@ extents = Vector3( 5, 5, 12.5 )
 [node name="Rollers" type="Spatial"]
 
 [node name="RollerDiskFast" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 10.442, -10.381, -39 )
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 10.442, -13.381, -39 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -60,7 +62,7 @@ mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
 
 [node name="RollerDiskMedium" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 10.442, -10.381, -45 )
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 10.442, -13.381, -45 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -86,7 +88,7 @@ mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
 
 [node name="RollerDiskSlow" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 10.442, -10.381, -51 )
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 10.442, -13.381, -51 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -112,7 +114,7 @@ mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
 
 [node name="RollerDiskSlower" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 10.442, -10.381, -57 )
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 10.442, -13.381, -57 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true

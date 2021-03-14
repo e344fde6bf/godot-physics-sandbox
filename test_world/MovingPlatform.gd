@@ -58,6 +58,6 @@ func _physics_process(delta):
 	
 	if is_printing:
 		var this_pos = global_transform.origin
-		var speed = ((this_pos - last_pos)/delta).length()
-		DebugInfo.plot_float("platform speed", speed)
+		var _speed = ((this_pos - last_pos)/delta).length()
+		# DebugInfo.plot_float("platform speed", _speed)
 		last_pos = this_pos

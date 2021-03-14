@@ -5,17 +5,10 @@ onready var name_node = $HBoxContainer/VariableName
 onready var pulse_label = $HBoxContainer/PulseLabel
 
 func _ready():
-	name_node.text = label
-	name_node.rect_min_size.x = max(name_node.rect_min_size.x, name_min_width)
-	graph.rect_min_size = Vector2(max_size, bot_y)
-	self.rect_min_size = graph.rect_min_size
-	
+	setup_common(name_node, graph)
+
 	pulse_label.text = "-"
 	
-	data.resize(max_size)
-	for i in range(max_size):
-		data[i] = null
-
 func _draw():
 	var last_i = 0
 	var last_val = data[(write_pos - 1) % max_size]

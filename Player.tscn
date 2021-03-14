@@ -7,10 +7,10 @@
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 2 )
 
-[sub_resource type="CapsuleMesh" id=5]
+[sub_resource type="CapsuleMesh" id=3]
 radius = 0.5
 
 [node name="Player" type="KinematicBody"]
@@ -22,14 +22,9 @@ shape = SubResource( 1 )
 
 [node name="Model" type="MeshInstance" parent="PlayerBody"]
 transform = Transform( 1, 0, 0, 0, 1, 3.12639e-13, 0, -3.12639e-13, 1, 0, -1.62921e-07, 2.65433e-14 )
-material_override = SubResource( 4 )
-mesh = SubResource( 5 )
+material_override = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = null
-
-[node name="RayCast" type="RayCast" parent="PlayerBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
-enabled = true
-cast_to = Vector3( 0, -1.2, 0 )
 
 [node name="CameraHelper" type="Spatial" parent="."]
 

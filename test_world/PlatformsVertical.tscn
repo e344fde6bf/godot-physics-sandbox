@@ -1,157 +1,35 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://test_world/linear-material.tres" type="Material" id=1]
-[ext_resource path="res://test_world/MovingPlatform.gd" type="Script" id=2]
-[ext_resource path="res://test_world/static-material.tres" type="Material" id=3]
-
-[sub_resource type="BoxShape" id=1]
-extents = Vector3( 5, 0.5, 5 )
-
-[sub_resource type="StreamTexture" id=3]
-flags = 23
-load_path = "res://.import/texture_08.png-ee93ef84c6b600ea619d18904a29b20a.s3tc.stex"
-
-[sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 1, 0, 1, 1 )
-albedo_texture = SubResource( 3 )
-uv1_scale = Vector3( 5, 5, 5 )
+[ext_resource path="res://test_world/platforms/SinePlatform.tscn" type="PackedScene" id=1]
+[ext_resource path="res://test_world/platforms/LinearPlatform.tscn" type="PackedScene" id=2]
+[ext_resource path="res://test_world/platforms/StaticPlatform.tscn" type="PackedScene" id=3]
 
 [node name="PlatformsVertical" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -57, 10.5, 59 )
 
-[node name="VerticalLinear" type="KinematicBody" parent="."]
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
-accel = 10.0
-motion_type = 0
-move_dir = Vector3( 0, 1, 0 )
-move_limit = 10.0
+[node name="StaticPlatform" parent="." instance=ExtResource( 3 )]
 
-[node name="CSGBox" type="CSGBox" parent="VerticalLinear"]
-material_override = ExtResource( 1 )
-width = 10.0
-height = 1.0
-depth = 10.0
-
-[node name="CollisionShape" type="CollisionShape" parent="VerticalLinear"]
-shape = SubResource( 1 )
-
-[node name="StaticPlatform" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7, -11 )
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
-accel = 0.0
-motion_type = 0
-move_dir = Vector3( 0, 1, 0 )
-move_limit = 10.0
-
-[node name="CSGBox" type="CSGBox" parent="StaticPlatform"]
-material_override = ExtResource( 3 )
-width = 10.0
-height = 1.0
-depth = 10.0
-
-[node name="CollisionShape" type="CollisionShape" parent="StaticPlatform"]
-shape = SubResource( 1 )
-
-[node name="StaticPlatform2" type="KinematicBody" parent="."]
+[node name="StaticPlatform2" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -4, -11 )
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
-accel = 0.0
-motion_type = 0
+
+[node name="VerticalLinearDiagonal" parent="." instance=ExtResource( 2 )]
+
+[node name="VerticalLinear" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 move_dir = Vector3( 0, 1, 0 )
 move_limit = 10.0
 
-[node name="CSGBox" type="CSGBox" parent="StaticPlatform2"]
-material_override = ExtResource( 3 )
-width = 10.0
-height = 1.0
-depth = 10.0
-
-[node name="CollisionShape" type="CollisionShape" parent="StaticPlatform2"]
-shape = SubResource( 1 )
-
-[node name="VerticalLinearDiagonal" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11 )
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
-accel = 10.0
-motion_type = 0
-move_dir = Vector3( 1, 1, 0 )
-move_limit = 14.0
-
-[node name="CSGBox" type="CSGBox" parent="VerticalLinearDiagonal"]
-material_override = ExtResource( 1 )
-width = 10.0
-height = 1.0
-depth = 10.0
-
-[node name="CollisionShape" type="CollisionShape" parent="VerticalLinearDiagonal"]
-shape = SubResource( 1 )
-
-[node name="VerticalSine" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 22 )
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
-accel = 1.0
-move_dir = Vector3( 0, 1, 0 )
-move_limit = 10.0
-
-[node name="CSGBox" type="CSGBox" parent="VerticalSine"]
-material_override = SubResource( 4 )
-width = 10.0
-height = 1.0
-depth = 10.0
-
-[node name="CollisionShape" type="CollisionShape" parent="VerticalSine"]
-shape = SubResource( 1 )
-
-[node name="VerticalSineDiagonal" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 33 )
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
-accel = 1.0
-move_dir = Vector3( 1, 1, 0 )
-move_limit = 14.0
-
-[node name="CSGBox" type="CSGBox" parent="VerticalSineDiagonal"]
-material_override = SubResource( 4 )
-width = 10.0
-height = 1.0
-depth = 10.0
-
-[node name="CollisionShape" type="CollisionShape" parent="VerticalSineDiagonal"]
-shape = SubResource( 1 )
-
-[node name="VerticalGentleDiagonal" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -4.5, 10.086 )
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="VerticalGentleDiagonal" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -4, 10 )
 accel = 15.0
-motion_type = 0
 move_dir = Vector3( 0, 0.1, 1 )
 move_limit = 35.0
 
-[node name="CSGBox" type="CSGBox" parent="VerticalGentleDiagonal"]
-material_override = ExtResource( 1 )
-width = 10.0
-height = 1.0
-depth = 10.0
+[node name="VerticalSine" parent="." instance=ExtResource( 1 )]
+accel = 1.5
 
-[node name="CollisionShape" type="CollisionShape" parent="VerticalGentleDiagonal"]
-shape = SubResource( 1 )
+[node name="VerticalSineDiagonal" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.53674e-07, 33 )
+accel = 1.5
+move_dir = Vector3( 1, 1, 0 )
+move_limit = 14.0

@@ -4,6 +4,6 @@
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/limit_angle_deg = 60.0
+shader_param/limit_angle_deg = 50.573
 shader_param/color_change_rate = 4.0
 shader_param/steep_color = Plane( 1, 0, 0, 0.854 )

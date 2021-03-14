@@ -73,18 +73,19 @@ func _physics_process(_delta):
 func add(label: String, value):
 	info_data.add(label, str(value))
 
-func plot_bool(label: String, value: bool):
+func plot_bool(label: String, value: bool, plot_size=20):
 	if plot_data.has_label(label):
 		plot_data.get(label).add_data_point(value)
 	else:
 		var plot = bool_plot.instance()
 		plot.label = label
 		plot.name_min_width = label_min_width
+		plot.set_graph_size(plot_size)
 		active_node.item_list_node.add_child(plot)
 		plot.add_data_point(value)
 		plot_data.add(label, plot)
 		
-func plot_float(label: String, value: float, y_min = 0.0, y_max = 1.0):
+func plot_float(label: String, value: float, y_min = 0.0, y_max = 1.0, plot_size=40):
 	if plot_data.has_label(label):
 		var plot = plot_data.get(label)
 		plot.set_default_bounds(y_min, y_max)
@@ -93,7 +94,7 @@ func plot_float(label: String, value: float, y_min = 0.0, y_max = 1.0):
 		var plot = float_plot.instance()
 		plot.label = label
 		plot.name_min_width = label_min_width
-		plot.bot_y = 50
+		plot.set_graph_size(plot_size)
 		plot.set_default_bounds(y_min, y_max)
 		active_node.item_list_node.add_child(plot)
 		plot.add_data_point(value)

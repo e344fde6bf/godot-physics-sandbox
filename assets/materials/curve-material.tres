@@ -1,5 +1,10 @@
-shader_type spatial;
-render_mode cull_disabled;
+[gd_resource type="SpatialMaterial" load_steps=4 format=2]
+
+[ext_resource path="res://assets/kenney_prototypetextures/PNG/Light/texture_08.png" type="Texture" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+// render_mode unshaded;
 
 const float PI = 3.14159265358979;
 uniform float limit_angle_deg = 60.0;
@@ -20,5 +25,18 @@ void fragment() {
 	ALBEDO.rgb = steep_color.rgb * exp(-steepness * color_change_rate);
 	// ALBEDO.rgb = steep_color.rgb * smoothstep(1.0, 0.0, steepness);
 	// ALPHA = steep_color.a * float((slope_angle > limit) && (slope_dot > 0.0));
-	ALPHA = steep_color.a * float(!(slope_angle <= limit));
-}
+	ALPHA = steep_color.a * float(!(slope_angle < limit));
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/limit_angle_deg = 50.0
+shader_param/color_change_rate = 4.0
+shader_param/steep_color = Plane( 1, 0, 0, 0.854 )
+
+[resource]
+next_pass = SubResource( 2 )
+albedo_color = Color( 0.992157, 0.741176, 0.741176, 1 )
+albedo_texture = ExtResource( 1 )
+metallic_specular = 0.1
+uv1_scale = Vector3( 5, 50, 1 )

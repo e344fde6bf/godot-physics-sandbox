@@ -17,6 +17,19 @@ var y_max
 var plot_min
 var plot_max
 
+func setup_common(name_node, graph):
+	name_node.text = label
+	name_node.rect_min_size.x = max(name_node.rect_min_size.x, name_min_width)
+	
+	graph.rect_min_size = Vector2(max_size, bot_y)
+	self.rect_min_size = graph.rect_min_size
+	
+	assert(bot_y >= 0)
+	
+	data.resize(max_size)
+	for i in range(max_size):
+		data[i] = null
+
 func set_default_bounds(y_min_, y_max_):
 	y_min = y_min_
 	y_max = y_max_

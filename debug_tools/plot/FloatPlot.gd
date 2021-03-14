@@ -7,24 +7,21 @@ onready var current_value_label = $HBoxContainer/VBoxContainer/CurrentValue
 onready var min_label = $HBoxContainer/VBoxMinMax/MinLabel
 onready var max_label = $HBoxContainer/VBoxMinMax/MaxLabel
 
-const PLOT_SIZE_MIN = 35
-
 func _ready():
-	name_node.text = label
-	name_node.rect_min_size.x = max(name_node.rect_min_size.x, name_min_width)
+	setup_common(name_node, graph)
+#	assert(bot_y >= 0)
+#	graph.rect_min_size = Vector2(max_size, bot_y)
+#	graph.rect_size = graph.rect_min_size
+#
+#	data.resize(max_size)
+#	for i in range(max_size):
+#		data[i] = null
 	
-	if bot_y < PLOT_SIZE_MIN:
-		bot_y = PLOT_SIZE_MIN
-	graph.rect_min_size = Vector2(max_size, bot_y)
-	graph.rect_size = graph.rect_min_size
-
+#	name_node.text = label
+#	name_node.rect_min_size.x = max(name_node.rect_min_size.x, name_min_width)
 	
 	min_label.text = "-"
 	max_label.text = "-"
-	
-	data.resize(max_size)
-	for i in range(max_size):
-		data[i] = null
 	
 	plot_min = y_min
 	plot_max = y_max

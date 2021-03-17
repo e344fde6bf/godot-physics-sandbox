@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://player_material.tres" type="Material" id=2]
@@ -7,28 +7,33 @@
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
 
-[sub_resource type="CapsuleMesh" id=3]
+[sub_resource type="CapsuleMesh" id=2]
 radius = 0.5
 
-[sub_resource type="SphereShape" id=4]
+[sub_resource type="SphereShape" id=3]
 radius = 0.5
 
-[sub_resource type="SphereMesh" id=5]
+[sub_resource type="SphereMesh" id=4]
 radius = 0.5
 height = 1.0
 
-[sub_resource type="CylinderShape" id=8]
+[sub_resource type="CylinderShape" id=5]
 radius = 0.5
 
-[sub_resource type="CylinderMesh" id=9]
+[sub_resource type="CylinderMesh" id=6]
 top_radius = 0.5
 bottom_radius = 0.5
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="BoxShape" id=7]
 extents = Vector3( 0.5, 0.5, 0.5 )
 
-[sub_resource type="CubeMesh" id=7]
+[sub_resource type="CubeMesh" id=8]
 size = Vector3( 1, 1, 1 )
+
+[sub_resource type="ConvexPolygonShape" id=9]
+points = PoolVector3Array( -1, -1, 1, 1, -1, 1, 0, -1, -1, -1, 1, 1, 1, 1, 1, 0, 1, -1 )
+
+[sub_resource type="PrismMesh" id=10]
 
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 1 )
@@ -53,32 +58,41 @@ shape = SubResource( 1 )
 [node name="Model" type="MeshInstance" parent="ObjectHolder/PlayerBodyCapsule"]
 transform = Transform( 1, 0, 0, 0, 1, 3.12639e-13, 0, -3.12639e-13, 1, 0, -1.62921e-07, 2.65433e-14 )
 material_override = ExtResource( 2 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="PlayerBodySphere" type="CollisionShape" parent="ObjectHolder"]
 visible = false
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 
 [node name="Model" type="MeshInstance" parent="ObjectHolder/PlayerBodySphere"]
 material_override = ExtResource( 2 )
-mesh = SubResource( 5 )
+mesh = SubResource( 4 )
 material/0 = null
 
 [node name="PlayerBodyCylinder" type="CollisionShape" parent="ObjectHolder"]
 visible = false
-shape = SubResource( 8 )
+shape = SubResource( 5 )
 
 [node name="Model" type="MeshInstance" parent="ObjectHolder/PlayerBodyCylinder"]
 material_override = ExtResource( 2 )
-mesh = SubResource( 9 )
+mesh = SubResource( 6 )
 material/0 = null
 
 [node name="PlayerBodyBox" type="CollisionShape" parent="ObjectHolder"]
 visible = false
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="Model" type="MeshInstance" parent="ObjectHolder/PlayerBodyBox"]
 material_override = ExtResource( 2 )
-mesh = SubResource( 7 )
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="PlayerBodyWedge" type="CollisionShape" parent="ObjectHolder"]
+shape = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ObjectHolder/PlayerBodyWedge"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
+material_override = ExtResource( 2 )
+mesh = SubResource( 10 )
 material/0 = null

@@ -10,6 +10,7 @@ enum PlayerShape {
 	BOX,
 	CYLINDER,
 	SPHERE,
+	WEDGE,
 }
 
 const FPS = 60

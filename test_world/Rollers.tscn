@@ -12,7 +12,6 @@ start_angular_velocity = 0.5
 
 [node name="RollerDiskMedium" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 10.442, -13.381, -45 )
-start_angular_velocity = 0.25
 
 [node name="RollerDiskSlow" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 10.442, -13.381, -51 )
@@ -21,6 +20,10 @@ start_angular_velocity = 0.125
 [node name="RollerDiskSlower" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 10.442, -13.381, -57 )
 start_angular_velocity = 0.062
+
+[node name="RollerDiskStopped" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 10.442, -13.381, -63 )
+start_angular_velocity = 0.0
 
 [node name="Spinner" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.134, 1.5, -21.68 )

@@ -42,23 +42,23 @@ size = Vector2( 400, 400 )
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 200, 1, 200 )
 
-[sub_resource type="CubeMesh" id=27]
+[sub_resource type="CubeMesh" id=3]
 size = Vector3( 5, 1, 25 )
 
-[sub_resource type="BoxShape" id=28]
+[sub_resource type="BoxShape" id=4]
 extents = Vector3( 2.5, 0.5, 12.5 )
 
-[sub_resource type="PhysicsMaterial" id=29]
+[sub_resource type="PhysicsMaterial" id=5]
 
-[sub_resource type="SpatialMaterial" id=30]
+[sub_resource type="SpatialMaterial" id=6]
 albedo_color = Color( 1, 0.56, 0.970667, 1 )
 albedo_texture = ExtResource( 2 )
 uv1_scale = Vector3( 1.5, 1, 1 )
 
-[sub_resource type="CubeMesh" id=31]
+[sub_resource type="CubeMesh" id=7]
 size = Vector3( 4, 4, 4 )
 
-[sub_resource type="BoxShape" id=32]
+[sub_resource type="BoxShape" id=8]
 extents = Vector3( 2, 2, 2 )
 
 [node name="TestWorld" type="Spatial"]
@@ -146,11 +146,11 @@ __meta__ = {
 
 [node name="MeshInstance" type="MeshInstance" parent="Curves/StandingPlatform"]
 material_override = ExtResource( 38 )
-mesh = SubResource( 27 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Curves/StandingPlatform"]
-shape = SubResource( 28 )
+shape = SubResource( 4 )
 
 [node name="StandingPlatform2" type="StaticBody" parent="Curves"]
 transform = Transform( 1, -1.1921e-07, -5.96046e-08, -1.1921e-07, -1, 1.62921e-07, -5.96046e-08, -1.62921e-07, -1, 52.5, 124.5, -65 )
@@ -160,11 +160,11 @@ __meta__ = {
 
 [node name="MeshInstance" type="MeshInstance" parent="Curves/StandingPlatform2"]
 material_override = ExtResource( 38 )
-mesh = SubResource( 27 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Curves/StandingPlatform2"]
-shape = SubResource( 28 )
+shape = SubResource( 4 )
 
 [node name="StandingPlatform3" type="StaticBody" parent="Curves"]
 transform = Transform( 1, -1.1921e-07, -5.96046e-08, -1.1921e-07, -1, 1.62921e-07, -5.96046e-08, -1.62921e-07, -1, 52.5, 44.6, 52.5 )
@@ -174,11 +174,11 @@ __meta__ = {
 
 [node name="MeshInstance" type="MeshInstance" parent="Curves/StandingPlatform3"]
 material_override = ExtResource( 38 )
-mesh = SubResource( 27 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Curves/StandingPlatform3"]
-shape = SubResource( 28 )
+shape = SubResource( 4 )
 
 [node name="StandingPlatform4" type="StaticBody" parent="Curves"]
 transform = Transform( 1, -1.1921e-07, -5.96046e-08, -1.1921e-07, -1, 1.62921e-07, -5.96046e-08, -1.62921e-07, -1, 52.5, 19.6, 77.5 )
@@ -188,11 +188,11 @@ __meta__ = {
 
 [node name="MeshInstance" type="MeshInstance" parent="Curves/StandingPlatform4"]
 material_override = ExtResource( 38 )
-mesh = SubResource( 27 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Curves/StandingPlatform4"]
-shape = SubResource( 28 )
+shape = SubResource( 4 )
 
 [node name="StandingPlatform5" type="StaticBody" parent="Curves"]
 transform = Transform( 1, -1.1921e-07, -5.96046e-08, -1.1921e-07, -1, 1.62921e-07, -5.96046e-08, -1.62921e-07, -1, 52.5, 9.6, 102.5 )
@@ -202,11 +202,11 @@ __meta__ = {
 
 [node name="MeshInstance" type="MeshInstance" parent="Curves/StandingPlatform5"]
 material_override = ExtResource( 38 )
-mesh = SubResource( 27 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Curves/StandingPlatform5"]
-shape = SubResource( 28 )
+shape = SubResource( 4 )
 
 [node name="Surfaces" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 539, 0, -52 )
@@ -282,8 +282,8 @@ c = -1.0
 d = 0.0
 range_x = Vector2( -35, 35 )
 range_y = Vector2( -35, 35 )
-segments_x = 10
-segments_y = 10
+segments_x = 20
+segments_y = 20
 surface_type = "quadratic"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Quadratic"]
@@ -482,7 +482,9 @@ rotation_axis = Vector3( 1, 0, 0 )
 
 [node name="CompanionCube" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 50.4, 3.09978, -56.013 )
-physics_material_override = SubResource( 29 )
+collision_layer = 4
+collision_mask = 5
+physics_material_override = SubResource( 5 )
 linear_damp = 0.0
 angular_damp = 0.0
 script = ExtResource( 31 )
@@ -491,15 +493,17 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="CompanionCube"]
-material_override = SubResource( 30 )
-mesh = SubResource( 31 )
+material_override = SubResource( 6 )
+mesh = SubResource( 7 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="CompanionCube"]
-shape = SubResource( 32 )
+shape = SubResource( 8 )
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5, 127, 3 )
+collision_layer = 2
+collision_mask = 5
 collision/safe_margin = 0.01
 
 [node name="RandomSteps" parent="." instance=ExtResource( 27 )]

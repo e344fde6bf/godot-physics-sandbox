@@ -47,7 +47,6 @@ transform = Transform( -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0, 1, 52, 21,
 
 [node name="FerrisWheel2" parent="." instance=ExtResource( 9 )]
 transform = Transform( -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0, 1, 52, 21, -93 )
-start_angular_velocity = 0.25
 rotation_axis = Vector3( 1, 1, 0 )
 
 [node name="MovingSpinningDisk" type="KinematicBody" parent="."]

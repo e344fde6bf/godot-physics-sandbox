@@ -2,6 +2,12 @@ extends RigidBody
 
 func _ready():
 	process_priority = 100000
+	
+	call_deferred("ignore_player_collisions")
+
+func ignore_player_collisions():
+	# add_collision_exception_with(get_node("../Player"))
+	pass
 
 func get_displacement():
 	var physics_pos = PhysicsServer.body_get_direct_state(get_rid()).transform.origin

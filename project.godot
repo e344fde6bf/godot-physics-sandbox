@@ -20,7 +20,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="move_and_slide-improvement"
+config/name="Godot Physics Sandbox"
 run/main_scene="res://test_world/TestWorld.tscn"
 config/icon="res://icon.png"
 
@@ -114,7 +114,7 @@ debug_button_3={
 
 [physics]
 
-3d/physics_engine="GodotPhysics"
+3d/physics_engine="Bullet"
 3d/default_linear_damp=0.0
 3d/default_angular_damp=0.0
 

@@ -210,7 +210,10 @@ func apply_rotations(delta, player_dir: Vector3):
 	
 	DebugInfo.add("angular_velocity", ang_vel)
 	
-	if ang_vertical != Vector3() and model_should_rotate:
+	if not model_should_rotate:
+		return
+	
+	if ang_vertical != Vector3():
 		player_body.transform.basis = player_body.transform.basis.rotated(ang_vertical.normalized(), ang_vertical.length()*delta)
 		player_body.transform.basis = player_body.transform.basis.orthonormalized()
 	
@@ -354,6 +357,28 @@ func move_no_clip(delta):
 		
 	global_transform = global_transform.translated(dir * SPEED_NO_CLIP * delta)
 
+func formated_vec(vec: Vector3):
+	return "(%+.4f, %+.4f, %+.4f)" % [vec.x, vec.y, vec.z]
+
+func print_slide_collisions():
+	var start_position = PhysicsServer.body_get_direct_state(get_rid()).transform.origin
+	for i in MAX_SLIDES:
+		var slide_pos_rel = ""
+		var slide_normal = ""
+		var slide_remainder = ""
+		var slide_travel = ""
+		if i < get_slide_count():
+			var collision = get_slide_collision(i)
+			slide_pos_rel = formated_vec(collision.position - start_position)
+			slide_normal = formated_vec(collision.normal)
+			slide_remainder = formated_vec(collision.remainder)
+			slide_travel = formated_vec(collision.travel)
+			
+		DebugInfo.add("slide%d.col_pos" % [i], slide_pos_rel)
+		DebugInfo.add("slide%d.remainder" % [i], slide_remainder)
+		DebugInfo.add("slide%d.travel" % [i], slide_travel)
+		# DebugInfo.add("slide%d.normal" % [i], slide_normal)
+
 func process_movement(delta):
 	
 	match move_mode:
@@ -383,6 +408,8 @@ func process_movement(delta):
 	# floor_angle behaviour seems weird when the ray cast hits a moving object
 	var floor_angle = rad2deg(acos(get_floor_normal().dot(Vector3.UP))) if is_on_floor() else 0.0
 	DebugInfo.plot_float("floor angle", floor_angle, 0, 90)
+	
+	print_slide_collisions()
 	
 	DebugInfo.plot_float("slide count", get_slide_count(), 0, 4)
 	DebugInfo.plot_bool("is_on_floor", is_on_floor())
@@ -438,7 +465,7 @@ func process_input():
 		current_player_shape = (current_player_shape+1) % PlayerShape.size()
 		if (current_player_shape == PlayerShape.CYLINDER
 				and (ProjectSettings.get_setting("physics/3d/physics_engine") == "GodotPhysics")
-				and (Engine.get_version_info()["hex"] < 0x030300)
+				and (Engine.get_version_info()["hex"] < 0x030204)
 			):
 			# skip cylinder shape if it is unsupported
 			current_player_shape = (current_player_shape+1) % PlayerShape.size()
@@ -448,9 +475,9 @@ func process_input():
 #		camera_rotation.x = 0
 #		camera_rotation.y = PI/2 * floor((camera_rotation.y + PI/4) / (PI/2))
 #		camera_helper.rotation = camera_rotation
-#	if Input.is_action_just_pressed("debug_button_2"):
-#		camera_rotation.y = PI/2 * floor((camera_rotation.y + PI/4) / (PI/2))
-#		camera_helper.rotation = camera_rotation
+	if Input.is_action_just_pressed("debug_button_2"):
+		camera_rotation.y = PI/2 * floor((camera_rotation.y + PI/4) / (PI/2))
+		camera_helper.rotation = camera_rotation
 	if Input.is_action_just_pressed("debug_button_3"):
 		use_pos_marker = !use_pos_marker
 	if Input.is_action_just_pressed("toggle_fixes"):

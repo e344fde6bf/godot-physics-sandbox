@@ -64,6 +64,7 @@ extents = Vector3( 2, 2, 2 )
 [node name="TestWorld" type="Spatial"]
 
 [node name="DebugInfo" parent="." instance=ExtResource( 30 )]
+rect_scale = Vector2( 1.5, 1.5 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 6 )
@@ -217,12 +218,20 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
+rebuild = false
+convex_collision_shape = false
+instance_locked = false
 a = 0.3
 b = 0.3
+c = 1.0
+d = 1.0
+noise_seed = 0
 range_x = Vector2( -35, 35 )
 range_y = Vector2( -35, 35 )
 segments_x = 1
 segments_y = 1
+thick = 5.0
+surface_type = "linear"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Linear"]
 material_override = ExtResource( 12 )
@@ -235,14 +244,19 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
+rebuild = false
+convex_collision_shape = false
+instance_locked = false
 a = 20.0
 b = 20.0
 c = 0.5
 d = 0.5
+noise_seed = 0
 range_x = Vector2( -35, 35 )
 range_y = Vector2( -35, 35 )
 segments_x = 2
 segments_y = 2
+thick = 5.0
 surface_type = "pyramid"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Pyramid"]
@@ -256,14 +270,19 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
+rebuild = false
+convex_collision_shape = false
+instance_locked = false
 a = 3.0
 b = 3.0
 c = 3.0
 d = 3.0
+noise_seed = 0
 range_x = Vector2( -35, 35 )
 range_y = Vector2( -35, 35 )
 segments_x = 40
 segments_y = 40
+thick = 5.0
 surface_type = "sinusoidal"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Sinusoidal"]
@@ -277,13 +296,19 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
+rebuild = false
+convex_collision_shape = false
+instance_locked = false
+a = 1.0
 b = 0.0
 c = -1.0
 d = 0.0
+noise_seed = 0
 range_x = Vector2( -35, 35 )
 range_y = Vector2( -35, 35 )
 segments_x = 20
 segments_y = 20
+thick = 5.0
 surface_type = "quadratic"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Quadratic"]
@@ -297,14 +322,19 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
+rebuild = false
+convex_collision_shape = false
+instance_locked = false
 a = 4.0
 b = 0.5
 c = 0.5
 d = 0.0
+noise_seed = 0
 range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
 segments_x = 50
 segments_y = 50
+thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise1"]
@@ -318,10 +348,19 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
+rebuild = false
+convex_collision_shape = false
+instance_locked = false
 a = 5.0
+b = 1.0
+c = 1.0
 d = 0.0
+noise_seed = 0
 range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
+segments_x = 100
+segments_y = 100
+thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise2"]
@@ -335,6 +374,9 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
+rebuild = false
+convex_collision_shape = false
+instance_locked = false
 a = 10.0
 b = 0.5
 c = 0.5
@@ -342,6 +384,9 @@ d = 0.0
 noise_seed = 3
 range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
+segments_x = 100
+segments_y = 100
+thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise3"]
@@ -355,12 +400,19 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
+rebuild = false
+convex_collision_shape = false
+instance_locked = false
 a = 7.0
 b = 1.25
 c = 1.25
 d = 0.0
+noise_seed = 0
 range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
+segments_x = 100
+segments_y = 100
+thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise4"]
@@ -374,6 +426,9 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
+rebuild = false
+convex_collision_shape = false
+instance_locked = false
 a = 30.0
 b = 0.2
 c = 0.2
@@ -383,6 +438,7 @@ range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
 segments_x = 50
 segments_y = 50
+thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise5"]
@@ -396,6 +452,9 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
+rebuild = false
+convex_collision_shape = false
+instance_locked = false
 a = 50.0
 b = 0.2
 c = 0.2
@@ -403,6 +462,9 @@ d = 0.0
 noise_seed = 3
 range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
+segments_x = 100
+segments_y = 100
+thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise6"]
@@ -416,6 +478,9 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
+rebuild = false
+convex_collision_shape = false
+instance_locked = false
 a = 80.0
 b = 0.2
 c = 0.2
@@ -423,6 +488,9 @@ d = 0.0
 noise_seed = 3
 range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
+segments_x = 100
+segments_y = 100
+thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise7"]
@@ -436,6 +504,9 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
+rebuild = false
+convex_collision_shape = false
+instance_locked = false
 a = 300.0
 b = 0.05
 c = 0.05
@@ -445,6 +516,7 @@ range_x = Vector2( -200, 200 )
 range_y = Vector2( -100, 100 )
 segments_x = 150
 segments_y = 75
+thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise8"]

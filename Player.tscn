@@ -89,6 +89,7 @@ mesh = SubResource( 8 )
 material/0 = null
 
 [node name="PlayerBodyWedge" type="CollisionShape" parent="ObjectHolder"]
+visible = false
 shape = SubResource( 9 )
 
 [node name="MeshInstance" type="MeshInstance" parent="ObjectHolder/PlayerBodyWedge"]

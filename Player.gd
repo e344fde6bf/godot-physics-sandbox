@@ -470,17 +470,15 @@ func process_input():
 			# skip cylinder shape if it is unsupported
 			current_player_shape = (current_player_shape+1) % PlayerShape.size()
 		set_player_shape(current_player_shape)
-		
-#	if Input.is_action_just_pressed("debug_button_1"):
-#		camera_rotation.x = 0
-#		camera_rotation.y = PI/2 * floor((camera_rotation.y + PI/4) / (PI/2))
-#		camera_helper.rotation = camera_rotation
 	if Input.is_action_just_pressed("debug_button_2"):
 		camera_rotation.y = PI/2 * floor((camera_rotation.y + PI/4) / (PI/2))
 		camera_helper.rotation = camera_rotation
+		#		camera_rotation.x = 0
+#		camera_rotation.y = PI/2 * floor((camera_rotation.y + PI/4) / (PI/2))
+#		camera_helper.rotation = camera_rotation
 	if Input.is_action_just_pressed("debug_button_3"):
 		use_pos_marker = !use_pos_marker
-	if Input.is_action_just_pressed("toggle_fixes"):
+	if Input.is_action_just_pressed("debug_button_4"):
 		last_floor_rotation = Basis()
 		enable_fixes = !enable_fixes
 

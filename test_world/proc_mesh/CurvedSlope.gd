@@ -135,6 +135,10 @@ func create_mesh():
 				z0 = call(height_func, step_point-1)
 				z1 = call(height_func, step_point)
 				is_stepping = false
+				
+				if is_equal_approx(z0, z1):
+					# too small to make a step
+					continue
 			else:
 				x0 = a*step_point
 				x1 = a*(step_point+1)

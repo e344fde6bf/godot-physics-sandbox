@@ -42,15 +42,15 @@ func _ready():
 		text_info_node = $TextPanel/VBoxContainer/TextInfo
 		item_list_node = $TextPanel/VBoxContainer/DebugPlots
 		set_process_method(UpdateMethod.NONE)
-		
+
 		# if we aren't the singleton and it exists, add ourself as its active node
 		if get_tree().root.get_node("DebugInfo") != null:
 			DebugInfo.active_node = self
 		self.active_node = self
-		
+
 	info_data = OrderedMap.new()
 	plot_data = OrderedMap.new()
-	
+
 func set_process_method(method):
 	set_physics_process(false)
 	set_process(false)
@@ -73,7 +73,22 @@ func _physics_process(_delta):
 	update()
 
 func add(label: String, value):
+	match typeof(value):
+		TYPE_VECTOR2:
+			add_vector2(label, value)
+		TYPE_VECTOR3:
+			add_vector3(label, value)
+		_:
+			add_stringify(label, value)
+
+func add_stringify(label: String, value):
 	info_data.add(label, str(value))
+
+func add_vector2(label: String, vec: Vector3):
+	info_data.add(label, "(%+.5f, %+.5f)" % [vec.x, vec.y])
+
+func add_vector3(label: String, vec: Vector3):
+	info_data.add(label, "(%+.5f, %+.5f, %+.5f)" % [vec.x, vec.y, vec.z])
 
 func plot_bool(label: String, value: bool, plot_size=20):
 	if plot_data.has_label(label):
@@ -86,7 +101,7 @@ func plot_bool(label: String, value: bool, plot_size=20):
 		active_node.item_list_node.add_child(plot)
 		plot.add_data_point(value)
 		plot_data.add(label, plot)
-		
+
 func plot_float(label: String, value: float, y_min = 0.0, y_max = 1.0, plot_size=40):
 	if plot_data.has_label(label):
 		var plot = plot_data.get(label)
@@ -101,7 +116,7 @@ func plot_float(label: String, value: float, y_min = 0.0, y_max = 1.0, plot_size
 		active_node.item_list_node.add_child(plot)
 		plot.add_data_point(value)
 		plot_data.add(label, plot)
-		
+
 func plot_vec3(label: String, value: Vector3, y_min = 0.0, y_max = 1.0):
 	if plot_data.has_label(label+".x"):
 		plot_data.get(label+".x").add_data_point(value.x, y_min, y_max)
@@ -131,7 +146,7 @@ func update():
 	if active_node == null:
 		# assert(false)
 		return
-	
+
 	var result = ""
 	if info_data.data.size() >= 1:
 		var label = info_data.index_to_label[0]
@@ -139,13 +154,13 @@ func update():
 	for i in info_data.data.size()-1:
 		var label = info_data.index_to_label[i+1]
 		result += "\n%s: %s" % [label, info_data.data[info_data.label_to_index[label]]]
-	
+
 
 	active_node.text_info_node.text = result
 	# active_node.text_bg_node.rect_size = active_node.text_info_node.rect_size
 	# active_node.text_bg_node.rect_min_size = active_node.text_bg_node.rect_size
 	# active_node.text_bg_node.rect_size.y += 3
-	
+
 	for i in plot_data.data.size():
 		plot_data.data[i].update()
 

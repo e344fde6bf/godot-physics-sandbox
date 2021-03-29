@@ -5,6 +5,7 @@ class_name ProcMesh
 
 export var rebuild: bool = false setget _rebuild_now
 export var convex_collision_shape: bool = false
+export var collision_margin: float = 0.04
 
 # TODO: find out how to stop instances from running this script, yet still
 # allow the master copy to run this script
@@ -42,11 +43,14 @@ func create_collision_mesh():
 	collision_shape.name = "CollisionShape"
 	if convex_collision_shape:
 		collision_shape.shape = $MeshInstance.mesh.create_convex_shape()
+		collision_shape.shape.margin = collision_margin
 	else:
 		collision_shape.shape = $MeshInstance.mesh.create_trimesh_shape()
+		collision_shape.shape.margin = collision_margin
 	# collision_shape.shape = $MeshInstance.mesh.smooth_trimesh_shape()
+
 	add_child(collision_shape, true)
-	
+
 func add_node_for_editor(node_name, node_type):
 	if get_tree() == null:
 		return
@@ -62,7 +66,7 @@ func add_node_for_editor(node_name, node_type):
 func _rebuild_now(should_build):
 	if not Engine.editor_hint: # or get_tree() == null:
 		return
-	
+
 	if (should_build \
 			or not ResourceLoader.exists(get_mesh_resource_path()) \
 			or get_node_or_null("MeshInstance") == null \
@@ -80,7 +84,7 @@ func _rebuild_now(should_build):
 
 	# rebuild = should_build
 	# rebuild=false
-	
+
 	return rebuild
 
 func build_and_save_meshes():
@@ -88,14 +92,14 @@ func build_and_save_meshes():
 	#var new_mesh = create_mesh(length, width, slope_type, thickness, steps)
 	# var new_mesh = create_mesh(surface_type)
 	var new_mesh = create_mesh()
-	
-	
+
+
 	# https://github.com/godotengine/godot/issues/24646
 	var res
 	if ResourceLoader.exists(get_mesh_resource_path()):
 		res = ResourceLoader.load(get_mesh_resource_path())
 	res = new_mesh
-	
+
 	var fname = get_mesh_resource_path()
 	new_mesh.take_over_path(fname)
 	var flags = ResourceSaver.FLAG_OMIT_EDITOR_PROPERTIES | \

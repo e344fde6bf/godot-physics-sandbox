@@ -21,4 +21,4 @@ opened.
 * <kbd>C</kbd> toggle position markers
 * <kbd>V</kbd> toggle some bug workarounds for moving platforms
 * <kbd>Right Click</kbd> summon rigid body cube
-
+* <kbd>F</kbd> cycle rigid body collision shape

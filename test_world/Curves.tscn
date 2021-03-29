@@ -27,6 +27,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.04
 gradient = 1.0
 point_count = 1
 slope_type = "linear"
@@ -42,6 +43,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 0.02
 point_count = 50
 
@@ -56,6 +58,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 0.001
 point_count = 50
 slope_type = "cubic"
@@ -71,6 +74,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 5.0
 point_count = 15
 slope_type = "sinusoidal"
@@ -86,6 +90,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 7.5
 point_count = 15
 slope_type = "sinusoidal"
@@ -101,6 +106,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 11.25
 point_count = 15
 slope_type = "sinusoidal"
@@ -116,6 +122,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 15.0
 point_count = 15
 slope_type = "sinusoidal"
@@ -131,6 +138,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 20.0
 point_count = 20
 slope_type = "sinusoidal"
@@ -146,6 +154,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 25.0
 point_count = 30
 slope_type = "sinusoidal"
@@ -161,6 +170,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 30.0
 point_count = 30
 slope_type = "sinusoidal"
@@ -176,6 +186,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 35.0
 point_count = 30
 slope_type = "sinusoidal"
@@ -191,6 +202,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 40.0
 point_count = 30
 slope_type = "sinusoidal"
@@ -206,6 +218,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 45.0
 point_count = 40
 slope_type = "sinusoidal"
@@ -221,6 +234,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 45.0
 width = 25.0
 point_count = 40
@@ -237,6 +251,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 20.0
 width = 25.0
 point_count = 30
@@ -253,6 +268,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
+collision_margin = 0.0
 gradient = 10.0
 width = 25.0
 point_count = 15

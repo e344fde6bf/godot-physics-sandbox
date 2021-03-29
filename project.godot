@@ -33,6 +33,10 @@ DebugInfo="*res://debug_tools/DebugInfo.gd"
 window/size/width=1920
 window/size/height=1080
 
+[global]
+
+physics/3d/smooth_trimesh_collision=false
+
 [input]
 
 movement_forward={
@@ -99,6 +103,11 @@ debug_button_4={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":86,"unicode":0,"echo":false,"script":null)
  ]
 }
+change_rigid_shape={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":70,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [layer_names]
 
@@ -109,8 +118,11 @@ debug_button_4={
 [physics]
 
 3d/physics_engine="Bullet"
+3d/active_soft_world=false
+3d/default_gravity=10.0
 3d/default_linear_damp=0.0
 3d/default_angular_damp=0.0
+3d/smooth_trimesh_collision=true
 
 [rendering]
 

@@ -26,15 +26,15 @@ func _ready():
 	start_pos = transform.origin
 	last_pos = global_transform.origin
 	move_dir = move_dir.normalized()
-	
+
 	if motion_type == MOTION_TYPE.STATIC:
 		set_physics_process(false)
-	
+
 func _physics_process(delta):
 	if !enabled:
 		return
 	t += delta
-		
+
 	var current_pos = (transform.origin - start_pos).dot(move_dir)
 	if (current_pos > move_limit and accel > 0) or (current_pos < -move_limit and accel < 0):
 		vel = 0
@@ -51,11 +51,11 @@ func _physics_process(delta):
 		vel += accel * delta
 		var vel_step
 		if accel < 0.0:
-			vel_step = ceil(vel / step) * step 
+			vel_step = ceil(vel / step) * step
 		else:
-			vel_step = floor(vel / step) * step 
+			vel_step = floor(vel / step) * step
 		transform.origin += move_dir * vel_step * delta
-	
+
 	if is_printing:
 		var this_pos = global_transform.origin
 		var _speed = ((this_pos - last_pos)/delta).length()

@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://player_material.tres" type="Material" id=2]
 [ext_resource path="res://debug_tools/DebugDrawer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ShapeSelector.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
@@ -48,51 +49,51 @@ far = 400.0
 
 [node name="DebugDrawer" parent="." instance=ExtResource( 3 )]
 
-[node name="ObjectHolder" type="Node" parent="."]
+[node name="ShapeSelector" parent="." instance=ExtResource( 4 )]
 
-[node name="PlayerBodyCapsule" type="CollisionShape" parent="ObjectHolder"]
+[node name="ShapeCapsule" type="CollisionShape" parent="ShapeSelector"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 visible = false
 shape = SubResource( 1 )
 
-[node name="Model" type="MeshInstance" parent="ObjectHolder/PlayerBodyCapsule"]
+[node name="Model" type="MeshInstance" parent="ShapeSelector/ShapeCapsule"]
 transform = Transform( 1, 0, 0, 0, 1, 3.12639e-13, 0, -3.12639e-13, 1, 0, -1.62921e-07, 2.65433e-14 )
 material_override = ExtResource( 2 )
 mesh = SubResource( 2 )
 material/0 = null
 
-[node name="PlayerBodySphere" type="CollisionShape" parent="ObjectHolder"]
+[node name="ShapeSphere" type="CollisionShape" parent="ShapeSelector"]
 visible = false
 shape = SubResource( 3 )
 
-[node name="Model" type="MeshInstance" parent="ObjectHolder/PlayerBodySphere"]
+[node name="Model" type="MeshInstance" parent="ShapeSelector/ShapeSphere"]
 material_override = ExtResource( 2 )
 mesh = SubResource( 4 )
 material/0 = null
 
-[node name="PlayerBodyCylinder" type="CollisionShape" parent="ObjectHolder"]
+[node name="ShapeCylinder" type="CollisionShape" parent="ShapeSelector"]
 visible = false
 shape = SubResource( 5 )
 
-[node name="Model" type="MeshInstance" parent="ObjectHolder/PlayerBodyCylinder"]
+[node name="Model" type="MeshInstance" parent="ShapeSelector/ShapeCylinder"]
 material_override = ExtResource( 2 )
 mesh = SubResource( 6 )
 material/0 = null
 
-[node name="PlayerBodyBox" type="CollisionShape" parent="ObjectHolder"]
+[node name="ShapeBox" type="CollisionShape" parent="ShapeSelector"]
 visible = false
 shape = SubResource( 7 )
 
-[node name="Model" type="MeshInstance" parent="ObjectHolder/PlayerBodyBox"]
+[node name="Model" type="MeshInstance" parent="ShapeSelector/ShapeBox"]
 material_override = ExtResource( 2 )
 mesh = SubResource( 8 )
 material/0 = null
 
-[node name="PlayerBodyWedge" type="CollisionShape" parent="ObjectHolder"]
+[node name="ShapeWedge" type="CollisionShape" parent="ShapeSelector"]
 visible = false
 shape = SubResource( 9 )
 
-[node name="MeshInstance" type="MeshInstance" parent="ObjectHolder/PlayerBodyWedge"]
+[node name="MeshInstance" type="MeshInstance" parent="ShapeSelector/ShapeWedge"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
 material_override = ExtResource( 2 )
 mesh = SubResource( 10 )

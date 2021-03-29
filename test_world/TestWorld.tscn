@@ -1,7 +1,7 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://test_world/Steps.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/kenney_prototypetextures/PNG/Light/texture_08.png" type="Texture" id=2]
+[ext_resource path="res://CompanionCube.tscn" type="PackedScene" id=2]
 [ext_resource path="res://test_world/MovingPlatform.gd" type="Script" id=3]
 [ext_resource path="res://test_world/SpinningDisk.gd" type="Script" id=4]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=5]
@@ -30,10 +30,10 @@
 [ext_resource path="res://test_world/VerticalDisks.tscn" type="PackedScene" id=28]
 [ext_resource path="res://test_world/Disks.tscn" type="PackedScene" id=29]
 [ext_resource path="res://debug_tools/DebugInfo.tscn" type="PackedScene" id=30]
-[ext_resource path="res://test_world/CompanionCube.gd" type="Script" id=31]
 [ext_resource path="res://test_world/Walls.tscn" type="PackedScene" id=32]
 [ext_resource path="res://test_world/materials/floor_material.tres" type="Material" id=33]
 [ext_resource path="res://test_world/platforms/Ramp.tscn" type="PackedScene" id=34]
+[ext_resource path="res://test_world/platforms/SinePlatform.tscn" type="PackedScene" id=35]
 [ext_resource path="res://assets/materials/ramp_material.tres" type="Material" id=38]
 
 [sub_resource type="PlaneMesh" id=1]
@@ -47,19 +47,6 @@ size = Vector3( 5, 1, 25 )
 
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 2.5, 0.5, 12.5 )
-
-[sub_resource type="PhysicsMaterial" id=5]
-
-[sub_resource type="SpatialMaterial" id=6]
-albedo_color = Color( 1, 0.56, 0.970667, 1 )
-albedo_texture = ExtResource( 2 )
-uv1_scale = Vector3( 1.5, 1, 1 )
-
-[sub_resource type="CubeMesh" id=7]
-size = Vector3( 4, 4, 4 )
-
-[sub_resource type="BoxShape" id=8]
-extents = Vector3( 2, 2, 2 )
 
 [node name="TestWorld" type="Spatial"]
 
@@ -217,20 +204,13 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
-rebuild = false
-convex_collision_shape = false
-instance_locked = false
+collision_margin = 0.0
 a = 0.3
 b = 0.3
-c = 1.0
-d = 1.0
-noise_seed = 0
 range_x = Vector2( -35, 35 )
 range_y = Vector2( -35, 35 )
-segments_x = 1
-segments_y = 1
-thick = 5.0
-surface_type = "linear"
+segments_x = 10
+segments_y = 10
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Linear"]
 material_override = ExtResource( 12 )
@@ -243,19 +223,15 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
-rebuild = false
-convex_collision_shape = false
-instance_locked = false
+collision_margin = 0.1
 a = 20.0
 b = 20.0
 c = 0.5
 d = 0.5
-noise_seed = 0
 range_x = Vector2( -35, 35 )
 range_y = Vector2( -35, 35 )
-segments_x = 2
-segments_y = 2
-thick = 5.0
+segments_x = 10
+segments_y = 10
 surface_type = "pyramid"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Pyramid"]
@@ -269,19 +245,15 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
-rebuild = false
-convex_collision_shape = false
-instance_locked = false
+collision_margin = 0.0
 a = 3.0
 b = 3.0
 c = 3.0
 d = 3.0
-noise_seed = 0
 range_x = Vector2( -35, 35 )
 range_y = Vector2( -35, 35 )
 segments_x = 40
 segments_y = 40
-thick = 5.0
 surface_type = "sinusoidal"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Sinusoidal"]
@@ -295,19 +267,14 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
-rebuild = false
-convex_collision_shape = false
-instance_locked = false
-a = 1.0
+collision_margin = 0.0
 b = 0.0
 c = -1.0
 d = 0.0
-noise_seed = 0
 range_x = Vector2( -35, 35 )
 range_y = Vector2( -35, 35 )
 segments_x = 20
 segments_y = 20
-thick = 5.0
 surface_type = "quadratic"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Quadratic"]
@@ -321,19 +288,15 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
-rebuild = false
-convex_collision_shape = false
-instance_locked = false
+collision_margin = 0.0
 a = 4.0
 b = 0.5
 c = 0.5
 d = 0.0
-noise_seed = 0
 range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
 segments_x = 50
 segments_y = 50
-thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise1"]
@@ -347,19 +310,11 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
-rebuild = false
-convex_collision_shape = false
-instance_locked = false
+collision_margin = 0.0
 a = 5.0
-b = 1.0
-c = 1.0
 d = 0.0
-noise_seed = 0
 range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
-segments_x = 100
-segments_y = 100
-thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise2"]
@@ -373,9 +328,7 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
-rebuild = false
-convex_collision_shape = false
-instance_locked = false
+collision_margin = 0.0
 a = 10.0
 b = 0.5
 c = 0.5
@@ -383,9 +336,6 @@ d = 0.0
 noise_seed = 3
 range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
-segments_x = 100
-segments_y = 100
-thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise3"]
@@ -399,19 +349,13 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
-rebuild = false
-convex_collision_shape = false
-instance_locked = false
+collision_margin = 0.0
 a = 7.0
 b = 1.25
 c = 1.25
 d = 0.0
-noise_seed = 0
 range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
-segments_x = 100
-segments_y = 100
-thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise4"]
@@ -425,9 +369,7 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
-rebuild = false
-convex_collision_shape = false
-instance_locked = false
+collision_margin = 0.0
 a = 30.0
 b = 0.2
 c = 0.2
@@ -437,7 +379,6 @@ range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
 segments_x = 50
 segments_y = 50
-thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise5"]
@@ -451,9 +392,7 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
-rebuild = false
-convex_collision_shape = false
-instance_locked = false
+collision_margin = 0.0
 a = 50.0
 b = 0.2
 c = 0.2
@@ -461,9 +400,6 @@ d = 0.0
 noise_seed = 3
 range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
-segments_x = 100
-segments_y = 100
-thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise6"]
@@ -477,9 +413,7 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
-rebuild = false
-convex_collision_shape = false
-instance_locked = false
+collision_margin = 0.0
 a = 80.0
 b = 0.2
 c = 0.2
@@ -487,9 +421,6 @@ d = 0.0
 noise_seed = 3
 range_x = Vector2( -70, 70 )
 range_y = Vector2( -70, 70 )
-segments_x = 100
-segments_y = 100
-thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise7"]
@@ -503,9 +434,7 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
 }
-rebuild = false
-convex_collision_shape = false
-instance_locked = false
+collision_margin = 0.0
 a = 300.0
 b = 0.05
 c = 0.05
@@ -515,7 +444,6 @@ range_x = Vector2( -200, 200 )
 range_y = Vector2( -100, 100 )
 segments_x = 150
 segments_y = 75
-thick = 5.0
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise8"]
@@ -551,31 +479,19 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 85, 17.
 script = ExtResource( 4 )
 rotation_axis = Vector3( 1, 0, 0 )
 
-[node name="CompanionCube" type="RigidBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 50.4, 3.09978, -56.013 )
-collision_layer = 4
-collision_mask = 5
-physics_material_override = SubResource( 5 )
-linear_damp = 0.0
-angular_damp = 0.0
-script = ExtResource( 31 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="CompanionCube" parent="." instance=ExtResource( 2 )]
+linear_velocity = Vector3( -23, 42, 41 )
 
-[node name="MeshInstance" type="MeshInstance" parent="CompanionCube"]
-material_override = SubResource( 6 )
-mesh = SubResource( 7 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="CompanionCube"]
-shape = SubResource( 8 )
+[node name="PlatformSine" parent="." instance=ExtResource( 35 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -40.5, 85, -183.35 )
+move_limit = 50.0
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5, 127, 3 )
 collision_layer = 2
 collision_mask = 5
 collision/safe_margin = 0.01
+camera_follows_rotation = false
 
 [node name="RandomSteps" parent="." instance=ExtResource( 27 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -197.283, 0.757154, 39.8323 )

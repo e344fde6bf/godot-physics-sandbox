@@ -40,24 +40,24 @@ func my_rand2(i):
 	var r = (random_seed + i*12512423823)
 	r ^= r << 13
 	r ^= r >> 17
-	r ^= r << 5 
+	r ^= r << 5
 	return r
 
 func steps_rand(i):
 	return my_rand(i) % int(b)
-	
+
 func steps_rand2(i):
 	return my_rand2(i) % int(b)
-	
+
 func steps_pulses(i):
 	return b * (i % 2)
 
 func quadratic(x):
 	return gradient*x*x
-	
+
 func cubic(x):
 	return gradient*x*x*x
-	
+
 func sinusoidal(x):
 	return gradient*abs(sin(PI*x/length))
 
@@ -78,7 +78,7 @@ func get_material_path():
 
 func create_mesh():
 	var height_func = slope_type
-	
+
 	var st = SurfaceTool.new()
 
 	var h = float(length) / point_count
@@ -90,7 +90,7 @@ func create_mesh():
 	var is_stepping = false
 
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	
+
 	var norm = Vector3(-1, 0, 0)
 	# first tri
 	st.add_normal(norm)
@@ -125,7 +125,7 @@ func create_mesh():
 			x1 = (i+1) * h
 			z0 = call(height_func, x0)
 			z1 = call(height_func, x1)
-			
+
 		var is_stepping_now = is_stepping
 		if step_mode:
 			if is_stepping:
@@ -135,10 +135,11 @@ func create_mesh():
 				z0 = call(height_func, step_point-1)
 				z1 = call(height_func, step_point)
 				is_stepping = false
-				
+
 				if is_equal_approx(z0, z1):
 					# too small to make a step
-					continue
+#					continue
+					print("zero area triangle")
 			else:
 				x0 = a*step_point
 				x1 = a*(step_point+1)
@@ -150,7 +151,7 @@ func create_mesh():
 			norm = Vector3(-(z1 - z0), h, 0).normalized()
 		else:
 			norm = Vector3(-1, 0, 0)
-		
+
 		var z0_b = z0-thick
 		var z1_b = z1-thick
 		var u0 = 0
@@ -184,7 +185,7 @@ func create_mesh():
 		st.add_normal(norm)
 		st.add_uv(Vector2(u1, v1))
 		st.add_vertex(Vector3(x1, z1, width))
-		
+
 		norm = -norm
 		# third tri (bottom)
 		st.add_normal(norm)
@@ -206,7 +207,7 @@ func create_mesh():
 		st.add_normal(norm)
 		st.add_uv(Vector2(u1, v1))
 		st.add_vertex(Vector3(x1, z1_b, width))
-		
+
 		if not is_stepping_now:
 			norm = Vector3(0, 0, -1.0)
 			# side-tri tri 1
@@ -229,7 +230,7 @@ func create_mesh():
 			st.add_normal(norm)
 			st.add_uv(Vector2(x1, z1_b))
 			st.add_vertex(Vector3(x1, z1_b, 0))
-			
+
 			norm = -norm
 			# side-tri tri 3
 			st.add_normal(norm)
@@ -273,7 +274,7 @@ func create_mesh():
 	st.add_normal(norm)
 	st.add_uv(Vector2(z1-thick, width))
 	st.add_vertex(Vector3(x1, z1-thick, width))
-	
+
 	# Create indices, indices are optional.
 	st.index()
 

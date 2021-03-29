@@ -9,7 +9,7 @@ var vector_data
 
 func _ready():
 	vector_data = OrderedMap.new()
-	
+
 func draw_vector(label: String, parent: Node, vector: Vector3, offset=Vector3(), color=null, scale_=1.0, max_size=null):
 	if !vector_data.has_label(label):
 		var vec = DebugVector.instance()

@@ -231,10 +231,13 @@ func get_floor_normal_fixed():
 
 ## The rotation the floor under went from the start of frame
 func set_floor_normal_fixup_rotation():
-	if floor_node is KinematicBody:
-		floor_normal_fixup_rotation = get_rotation_difference_kinematic(floor_node)
+	if floor_node is  RigidBody:
+		# rigid body
+		var old_basis = floor_last_transform.basis
+		var new_basis = PhysicsServer.body_get_direct_state(floor_node.get_rid()).transform.basis
+		floor_normal_fixup_rotation = get_rotation_difference(old_basis, new_basis)
 	else:
-		floor_normal_fixup_rotation = Basis()
+		floor_normal_fixup_rotation = get_rotation_difference_kinematic(floor_node)
 
 ## Rotate the players model, and rotate the camera if we are standing on a floor that is rotating
 func apply_rotations(delta, player_dir: Vector3):
@@ -267,18 +270,27 @@ func apply_rotations(delta, player_dir: Vector3):
 		return
 
 	var ang_vertical = ang_vel.project(Vector3.UP)
-	if ang_vertical != Vector3():
+	if not ang_vertical.is_equal_approx(Vector3()):
 		player_body.transform.basis = player_body.transform.basis.rotated(ang_vertical.normalized(), ang_vertical.length()*delta)
 		player_body.transform.basis = player_body.transform.basis.orthonormalized()
 
 	if camera_follows_rotation:
-		camera_rotation += ang_vel.project(Vector3.UP)*delta
+		camera_rotation += ang_vertical*delta
 		camera_helper.rotation = camera_rotation
 
 func move_basic(delta):
 	var cam_basis = camera.get_global_transform().basis
 	dir = Vector3.ZERO
 	model_should_rotate = true
+
+	var floor_vel_adjust = -get_floor_velocity()
+	if !enable_fixes:
+		floor_vel_adjust = Vector3()
+	else:
+		if floor_node is RigidBody and not cube_grabbed:
+			set_floor_normal_fixup_rotation()
+			var disp = get_floor_displacement_rigid(self.global_transform.origin)
+			move_with_floor_displacement(disp)
 
 	# compute the players movement unit vector
 	if input_movement_vector != Vector2():
@@ -320,14 +332,6 @@ func move_basic(delta):
 
 	var stop_on_slope = !is_on_floor()
 	var start_transform = global_transform
-
-	var floor_vel_adjust = -get_floor_velocity()
-	if !enable_fixes:
-		floor_vel_adjust = Vector3()
-	else:
-		if floor_node is RigidBody and not cube_grabbed:
-			var disp = get_floor_displacement_rigid(self.global_transform.origin)
-			move_with_floor_displacement(disp)
 
 	var this_dir
 	if dir != Vector3():
@@ -377,11 +381,11 @@ func move_basic(delta):
 
 	is_squished = false
 	if follow_platform and enable_fixes:
-		set_floor_normal_fixup_rotation()
 		if not (floor_node is RigidBody):
 			# Since we collided with the kinematic/static body using its start
 			# of frame position, we need to update our position based on where
 			# the floor node moved to this frame
+			set_floor_normal_fixup_rotation()
 			var disp = get_floor_displacement_kinematic(floor_node, self.global_transform.origin)
 			move_with_floor_displacement(disp)
 
@@ -437,7 +441,6 @@ func toggle_cube_grabbed():
 	cube_grabbed = !cube_grabbed
 	companion_cube.set_cube_grabbed(cube_grabbed)
 	if cube_grabbed and floor_node == companion_cube:
-		print("here")
 		floor_node = null
 		floor_last_transform = null
 
@@ -516,6 +519,8 @@ func process_input():
 	if Input.is_action_just_pressed("no_clip_mode"):
 		move_mode = move_mode ^ 1
 		gravity_vel = Vector3()
+		floor_node = null
+		move_and_slide(Vector3()) # clear move_and_slide is_on_floor() etc
 
 	if Input.is_action_just_pressed("debug_button_1"):
 		current_player_shape = shape_selector.next_shape_id(current_player_shape)

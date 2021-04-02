@@ -3,9 +3,10 @@
 [ext_resource path="res://test_world/platforms/SinePlatform.tscn" type="PackedScene" id=1]
 [ext_resource path="res://test_world/platforms/materials/disk_tower_lvl2.tres" type="Material" id=2]
 [ext_resource path="res://test_world/platforms/materials/disk_tower_lvl0.tres" type="Material" id=3]
-[ext_resource path="res://test_world/SpinningDisk.gd" type="Script" id=4]
+[ext_resource path="res://test_world/RotatingPlatform.gd" type="Script" id=4]
 [ext_resource path="res://test_world/platforms/materials/disk_tower_lvl1.tres" type="Material" id=5]
 [ext_resource path="res://test_world/platforms/materials/disk_tower_lvl3.tres" type="Material" id=6]
+
 
 [sub_resource type="CylinderMesh" id=1]
 top_radius = 40.0

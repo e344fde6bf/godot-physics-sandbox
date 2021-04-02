@@ -1,0 +1,99 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://test_world/rigid-experiments/BridgeEnd.tscn" type="PackedScene" id=1]
+[ext_resource path="res://test_world/rigid-experiments/Plank.tscn" type="PackedScene" id=2]
+
+[node name="Bridge" type="Spatial"]
+
+[node name="LedgeLeft" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6 )
+
+[node name="LedgeLeft2" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 8 )
+
+[node name="LedgeLeft3" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 10 )
+
+[node name="PinJoint1" type="Generic6DOFJoint" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5 )
+nodes/node_a = NodePath("../LedgeLeft")
+nodes/node_b = NodePath("../Plank1")
+angular_limit_x/enabled = false
+linear_limit_y/restitution = 0.26
+angular_limit_z/upper_angle = 1.5
+angular_limit_z/lower_angle = -1.5
+
+[node name="Plank1" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4 )
+mass = 2.0
+angular_damp = 1.0
+
+[node name="PinJoint2" type="Generic6DOFJoint" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
+nodes/node_a = NodePath("../Plank1")
+nodes/node_b = NodePath("../Plank2")
+angular_limit_x/enabled = false
+angular_limit_z/upper_angle = 1.5
+angular_limit_z/lower_angle = -1.5
+
+[node name="Plank2" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
+mass = 5.0
+angular_damp = 1.0
+
+[node name="PinJoint3" type="Generic6DOFJoint" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+nodes/node_a = NodePath("../Plank2")
+nodes/node_b = NodePath("../Plank3")
+angular_limit_x/enabled = false
+linear_limit_y/restitution = 16.0
+angular_limit_z/upper_angle = 1.5
+angular_limit_z/lower_angle = -1.5
+
+[node name="Plank3" parent="." instance=ExtResource( 2 )]
+mass = 5.0
+angular_damp = 1.0
+
+[node name="PinJoint4" type="Generic6DOFJoint" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+nodes/node_a = NodePath("../Plank3")
+nodes/node_b = NodePath("../Plank4")
+angular_limit_x/enabled = false
+linear_limit_y/restitution = 16.0
+angular_limit_z/upper_angle = 1.5
+angular_limit_z/lower_angle = -1.5
+
+[node name="Plank4" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
+mass = 5.0
+angular_damp = 1.0
+
+[node name="PinJoint5" type="Generic6DOFJoint" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
+nodes/node_a = NodePath("../Plank4")
+nodes/node_b = NodePath("../Plank5")
+angular_limit_x/enabled = false
+angular_limit_z/upper_angle = 1.5
+angular_limit_z/lower_angle = -1.5
+
+[node name="Plank5" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4 )
+mass = 5.0
+angular_damp = 1.0
+
+[node name="PinJoint6" type="Generic6DOFJoint" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5 )
+nodes/node_a = NodePath("../Plank5")
+nodes/node_b = NodePath("../LedgeRight")
+angular_limit_x/enabled = false
+angular_limit_z/upper_angle = 1.5
+angular_limit_z/lower_angle = -1.5
+
+[node name="LedgeRight" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6 )
+
+[node name="LedgeRight2" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -8 )
+
+[node name="LedgeRight3" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, -10 )

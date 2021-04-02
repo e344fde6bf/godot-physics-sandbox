@@ -1,7 +1,7 @@
 extends Spatial
 
 enum ObjectShape {
-	CAPSULE,
+	CAPSULE = 0,
 	BOX,
 	CYLINDER,
 	SPHERE,
@@ -35,7 +35,6 @@ func set_shape(parent, player_shape: int):
 	var new_shape_name = (ObjectShape.keys()[player_shape]).capitalize().replace(" ", "")
 	var node_name = "Shape" + new_shape_name
 	if node_name.find("Compound") != -1:
-		print(node_name)
 		var compound_shape = get_node(node_name)
 		for child in compound_shape.get_children():
 			copy_shape(parent, child)

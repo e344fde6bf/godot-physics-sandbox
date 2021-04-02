@@ -30,6 +30,8 @@ func _ready():
 	if motion_type == MOTION_TYPE.STATIC:
 		set_physics_process(false)
 
+	process_priority = Globals.ProcessPriorities.Platforms
+
 func _physics_process(delta):
 	if !enabled:
 		return

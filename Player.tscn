@@ -37,6 +37,7 @@ points = PoolVector3Array( -1, -1, 1, 1, -1, 1, 0, -1, -1, -1, 1, 1, 1, 1, 1, 0,
 [sub_resource type="PrismMesh" id=10]
 
 [node name="Player" type="KinematicBody"]
+collision_layer = 2
 script = ExtResource( 1 )
 camera_follows_rotation = true
 

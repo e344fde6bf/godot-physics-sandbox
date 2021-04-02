@@ -3,7 +3,7 @@
 [ext_resource path="res://test_world/Steps.tscn" type="PackedScene" id=1]
 [ext_resource path="res://CompanionCube.tscn" type="PackedScene" id=2]
 [ext_resource path="res://test_world/MovingPlatform.gd" type="Script" id=3]
-[ext_resource path="res://test_world/SpinningDisk.gd" type="Script" id=4]
+[ext_resource path="res://test_world/RotatingPlatform.gd" type="Script" id=4]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://default_env.tres" type="Environment" id=6]
 [ext_resource path="res://test_world/Curves.tscn" type="PackedScene" id=7]
@@ -30,17 +30,13 @@
 [ext_resource path="res://test_world/VerticalDisks.tscn" type="PackedScene" id=28]
 [ext_resource path="res://test_world/Disks.tscn" type="PackedScene" id=29]
 [ext_resource path="res://debug_tools/DebugInfo.tscn" type="PackedScene" id=30]
+[ext_resource path="res://test_world/rigid-experiments/Bridge.tscn" type="PackedScene" id=31]
 [ext_resource path="res://test_world/Walls.tscn" type="PackedScene" id=32]
-[ext_resource path="res://test_world/materials/floor_material.tres" type="Material" id=33]
+[ext_resource path="res://test_world/platforms/Floor.tscn" type="PackedScene" id=33]
 [ext_resource path="res://test_world/platforms/Ramp.tscn" type="PackedScene" id=34]
 [ext_resource path="res://test_world/platforms/SinePlatform.tscn" type="PackedScene" id=35]
+[ext_resource path="res://test_world/TestWorld.gd" type="Script" id=36]
 [ext_resource path="res://assets/materials/ramp_material.tres" type="Material" id=38]
-
-[sub_resource type="PlaneMesh" id=1]
-size = Vector2( 400, 400 )
-
-[sub_resource type="BoxShape" id=2]
-extents = Vector3( 200, 1, 200 )
 
 [sub_resource type="CubeMesh" id=3]
 size = Vector3( 5, 1, 25 )
@@ -49,6 +45,7 @@ size = Vector3( 5, 1, 25 )
 extents = Vector3( 2.5, 0.5, 12.5 )
 
 [node name="TestWorld" type="Spatial"]
+script = ExtResource( 36 )
 
 [node name="DebugInfo" parent="." instance=ExtResource( 30 )]
 
@@ -60,20 +57,10 @@ transform = Transform( -0.999998, -5.82076e-11, 0.00178006, 0.000985227, 0.83286
 light_energy = 0.55
 shadow_enabled = true
 
-[node name="Floor" type="StaticBody" parent="."]
-__meta__ = {
-"_edit_group_": true,
-"_edit_lock_": true
-}
+[node name="Floor" parent="." instance=ExtResource( 33 )]
 
-[node name="PlaneMesh" type="MeshInstance" parent="Floor"]
-material_override = ExtResource( 33 )
-mesh = SubResource( 1 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Floor"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
-shape = SubResource( 2 )
+[node name="Floor2" parent="." instance=ExtResource( 33 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 400 )
 
 [node name="Disks" parent="." instance=ExtResource( 29 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -127, 0, -67 )
@@ -429,7 +416,7 @@ mesh = ExtResource( 13 )
 material/0 = null
 
 [node name="Noise8" type="StaticBody" parent="Surfaces"]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -841.5, 4, 52.334 )
+transform = Transform( -5.96046e-08, 0, 1, 0, 1, 0, -1, 0, -5.96046e-08, -841.5, 4, 52.334 )
 script = ExtResource( 23 )
 __meta__ = {
 "_edit_group_": true
@@ -439,11 +426,11 @@ a = 300.0
 b = 0.05
 c = 0.05
 d = 0.0
-noise_seed = 6
+noise_seed = 16
 range_x = Vector2( -200, 200 )
 range_y = Vector2( -100, 100 )
-segments_x = 150
-segments_y = 75
+segments_x = 300
+segments_y = 150
 surface_type = "simplex"
 
 [node name="MeshInstance" type="MeshInstance" parent="Surfaces/Noise8"]
@@ -480,7 +467,8 @@ script = ExtResource( 4 )
 rotation_axis = Vector3( 1, 0, 0 )
 
 [node name="CompanionCube" parent="." instance=ExtResource( 2 )]
-linear_velocity = Vector3( -23, 42, 41 )
+mass = 100.0
+linear_velocity = Vector3( -23, 40, 41 )
 
 [node name="PlatformSine" parent="." instance=ExtResource( 35 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -40.5, 85, -183.35 )
@@ -488,10 +476,7 @@ move_limit = 50.0
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5, 127, 3 )
-collision_layer = 2
-collision_mask = 5
 collision/safe_margin = 0.01
-camera_follows_rotation = false
 
 [node name="RandomSteps" parent="." instance=ExtResource( 27 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -197.283, 0.757154, 39.8323 )
@@ -501,3 +486,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -110, 0, 80 )
 
 [node name="Walls" parent="." instance=ExtResource( 32 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -183, 0, 142 )
+
+[node name="Bridge" parent="." instance=ExtResource( 31 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 5, 210 )
+
+[node name="Bridge2" parent="." instance=ExtResource( 31 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -53, 5, 210 )
+
+[node name="Bridge3" parent="." instance=ExtResource( 31 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -59, 5, 210 )

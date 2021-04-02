@@ -21,12 +21,14 @@ func _ready():
 	if use_angular_accel:
 		assert(rotate_limit == 0)
 
+	process_priority = Globals.ProcessPriorities.Platforms
+
 func _physics_process(delta):
 	t += delta
-	
+
 	if not enabled:
 		return
-		
+
 	if rotate_limit != 0:
 		if current_angle > deg2rad(rotate_limit):
 			dir *= -1
@@ -34,13 +36,13 @@ func _physics_process(delta):
 		elif current_angle < 0.0:
 			dir *= -1
 			current_angle = 0.0
-	
+
 	if use_angular_accel:
 		angular_velocity += dir * angular_accel * delta
 		if dir*angular_velocity > angular_velocity_limit:
 			angular_velocity = angular_velocity_limit
 			dir *= -1
-	
+
 	var rotate_delta = 2 * PI * dir * angular_velocity * delta
 	current_angle += rotate_delta
 	self.transform.basis = self.transform.basis.rotated(rotation_axis, rotate_delta)

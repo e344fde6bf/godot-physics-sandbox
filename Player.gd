@@ -5,11 +5,6 @@ enum MoveMode {
 	NO_CLIP = 1,
 }
 
-enum PhysicsEngine {
-	BULLET,
-	GODOT,
-}
-
 const FPS = 60
 const JUMP_BUFFER_FRAME_COUNT = int(FPS * 0.08)
 const FLOOR_BUFFER_FRAME_COUNT = int(FPS * 0.2)
@@ -20,7 +15,14 @@ const JUMP_SPEED = 25 * PHYSICS_SPEED
 const PLAYER_MAX_SPEED = 15 * PHYSICS_SPEED
 const PLAYER_ACCEL = 30 * PHYSICS_SPEED
 const PLAYER_STOPPING_TIME = 0.75 # in seconds
-const SPEED_NO_CLIP = 100
+const NO_CLIP_ACCEL = 150
+const NO_CLIP_SPEED = 100
+
+const CUBE_GRAB_DISTANCE_MIN = 4
+const CUBE_GRAB_DISTANCE_MAX = 50
+const CUBE_PUSH_PULL_SPEED = 1
+const CUBE_CLONE_REPEAT_DELAY = 0.5
+const CUBE_CLONE_REPEAT_RATE = 0.1
 # const MAX_SLOPE_ANGLE = deg2rad(1)
 # const MAX_SLOPE_ANGLE = deg2rad(40)
 const FLOOR_ANGLE_THRESHOLD = 0.01 # radians, this value is used internally by move_and_slide
@@ -67,62 +69,38 @@ var floor_normal_fixup_rotation: Basis
 var floor_last_transform
 
 var cube_grabbed = false
+var cube_grab_distance = 5.0
+var cube_grab_height = 0.0
+var cube_clone_repeat_time = 0.0
+var cube_clone_pressed = false
 var move_mode = MoveMode.BASIC
 var is_squished
 var model_should_rotate = false
 
 var marker_timer: float = 0.0
 var last_marker_state = false
-var physics_engine
 var ignored_floor_body = null
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	call_deferred("set_camera_distance", camera_distance)
-
-	physics_engine = get_physics_engine()
 	set_shape(shape_selector.ObjectShape.CAPSULE)
-
-	DebugInfo.add("fps", 0)
-	DebugInfo.add("time", 0)
-	DebugInfo.add("godot", godot_version_string())
-	DebugInfo.add("Physics", PhysicsEngine.keys()[physics_engine].capitalize())
-	DebugInfo.add("move_mode", move_mode)
 
 	var steepness_mat = load("res://assets/materials/steepness_material.tres")
 	steepness_mat.set_shader_param("limit_angle_deg", rad2deg(MAX_SLOPE_ANGLE + FLOOR_ANGLE_THRESHOLD))
-	DebugInfo.add("max slope deg", rad2deg(MAX_SLOPE_ANGLE + FLOOR_ANGLE_THRESHOLD))
 
-	process_priority = 100
+	process_priority = Globals.ProcessPriorities.Player
 	assert(player_body != null)
 
 func _physics_process(delta):
-	DebugInfo.add("fps", Engine.get_frames_per_second())
-	DebugInfo.add("time", OS.get_ticks_msec() / 1000.0)
-	DebugInfo.add("move_mode", MoveMode.keys()[move_mode])
 	DebugInfo.add("enable_fixes", enable_fixes)
+	DebugInfo.add("max slope deg", rad2deg(MAX_SLOPE_ANGLE + FLOOR_ANGLE_THRESHOLD))
 	process_input()
 	process_movement(delta)
 	add_position_marker(delta)
 
 func set_shape(shape_id):
 	player_body = shape_selector.set_shape(self, shape_id)
-
-func get_physics_engine():
-	match ProjectSettings.get_setting("physics/3d/physics_engine"):
-		"GodotPhysics":
-			return PhysicsEngine.GODOT
-		"Default", "Bullet":
-			return PhysicsEngine.BULLET
-		_:
-			assert(false)
-
-func godot_version_string():
-	var version = Engine.get_version_info()
-	return "%s-%s"% [
-		version["string"],
-		version["hash"].substr(0, 8)
-	]
 
 func set_camera_distance(new_distance):
 	assert(new_distance > 0)
@@ -216,13 +194,22 @@ func get_floor_node():
 		return collision.collider
 	assert(false)
 
-func apply_floor_collision_exceptions():
-	# TODO:
-	add_collision_exception_with(companion_cube)
+func ignore_rigid_collisions():
+	set_collision_mask_bit(Globals.CollisionLayers.RIGID, false)
 
-func clear_floor_collision_exceptions():
-	# TODO:
-	remove_collision_exception_with(companion_cube)
+func enable_rigid_collisions():
+	set_collision_mask_bit(Globals.CollisionLayers.RIGID, true)
+
+func apply_rigid_forces():
+	for i in get_slide_count():
+		var col = get_slide_collision(i)
+		if col.collider is RigidBody:
+			var collider := (col.collider as RigidBody)
+			var pos = (col.position - collider.global_transform.origin)
+			# TODO: do this better
+			# take into account collision angle
+			# our velocity etc
+			collider.add_force(Vector3(0, -10 * 50, 0), pos)
 
 ## Since we collided with the floor using its start of frame position, need to
 ## rotate the floor normal to match the floors new orientation
@@ -264,10 +251,20 @@ func apply_rotations(delta, player_dir: Vector3):
 	if !is_on_floor() or move_mode != MoveMode.BASIC:
 		return
 
-	var ang_vel = get_angular_velocity(floor_node)
+	var ang_vel = Vector3()
+	if floor_node is RigidBody:
+		ang_vel = floor_node.angular_velocity
+	else:
+		ang_vel = get_angular_velocity(floor_node)
+
 	DebugInfo.add("angular_velocity", ang_vel)
-	if ang_vel == Vector3() or not model_should_rotate:
+	if ang_vel == Vector3() or not model_should_rotate or floor_node is RigidBody:
 		return
+
+	# TODO: can't really handle angular velocity of rigid bodies this way since
+	# the amount that they have rotate doesn't correspond to angular_velocity * delta
+	# Instead should use the differece between their bases between frames to figure
+	# out how much to rotate the player/camera
 
 	var ang_vertical = ang_vel.project(Vector3.UP)
 	if not ang_vertical.is_equal_approx(Vector3()):
@@ -282,6 +279,8 @@ func move_basic(delta):
 	var cam_basis = camera.get_global_transform().basis
 	dir = Vector3.ZERO
 	model_should_rotate = true
+
+	enable_rigid_collisions()
 
 	var floor_vel_adjust = -get_floor_velocity()
 	if !enable_fixes:
@@ -344,8 +343,6 @@ func move_basic(delta):
 	var start_vel = player_vel + gravity_vel
 	var vel = start_vel + floor_vel_adjust
 
-	clear_floor_collision_exceptions()
-
 	var _out_vel = move_and_slide(\
 			vel,
 			Vector3.UP,
@@ -394,7 +391,10 @@ func move_basic(delta):
 		floor_node = null
 		floor_last_transform = null
 
-	apply_floor_collision_exceptions()
+	# apply rigid forces
+	apply_rigid_forces()
+
+	ignore_rigid_collisions()
 
 func move_no_clip(delta):
 	var cam_transform = self.transform.inverse() * camera.global_transform
@@ -413,7 +413,12 @@ func move_no_clip(delta):
 
 		last_dir = dir
 
-	global_transform = global_transform.translated(dir * SPEED_NO_CLIP * delta)
+	if dir != Vector3():
+		fake_speed += NO_CLIP_ACCEL * delta
+	else:
+		fake_speed = 0
+	fake_speed = clamp(fake_speed, 0, NO_CLIP_SPEED)
+	global_transform = global_transform.translated(dir * fake_speed * delta)
 
 func print_slide_collisions():
 	if move_mode == MoveMode.NO_CLIP:
@@ -451,9 +456,18 @@ func drag_cube():
 	var forward = -camera_helper.global_transform.basis.z
 	forward.y = 0
 	forward = forward.normalized()
-	var cube_pos = self.global_transform.translated(forward * 5)
+	var cube_pos = self.global_transform.translated(forward * cube_grab_distance + Vector3.UP * cube_grab_height)
 	cube_pos.basis = self.player_body.transform.basis
 	companion_cube.global_transform = cube_pos
+
+func clone_cube(delta):
+	if not cube_clone_pressed:
+		return
+
+	cube_clone_repeat_time -= delta
+	if cube_clone_repeat_time < 0.0:
+		companion_cube.clone()
+		cube_clone_repeat_time = CUBE_CLONE_REPEAT_RATE
 
 func process_movement(delta):
 	match move_mode:
@@ -463,6 +477,7 @@ func process_movement(delta):
 			move_no_clip(delta)
 
 	drag_cube()
+	clone_cube(delta)
 	apply_rotations(delta, dir)
 
 	# debug_drawer.draw_vector("dir", self, dir, Vector3(0, 2.5, 0))
@@ -516,11 +531,21 @@ func process_input():
 
 	if Input.is_action_just_pressed("cube_hold_mode"):
 		toggle_cube_grabbed()
+		cube_grab_height = 0.0
+	if Input.is_action_just_pressed("cube_hold_clone"):
+		if cube_grabbed:
+			companion_cube.clone()
+			cube_clone_repeat_time = CUBE_CLONE_REPEAT_DELAY
+			cube_clone_pressed = true
+	if Input.is_action_just_released("cube_hold_clone"):
+		cube_clone_pressed = false
+	if Input.is_action_just_pressed("change_rigid_shape"):
+		companion_cube.next_shape()
 	if Input.is_action_just_pressed("no_clip_mode"):
 		move_mode = move_mode ^ 1
 		gravity_vel = Vector3()
 		floor_node = null
-		move_and_slide(Vector3()) # clear move_and_slide is_on_floor() etc
+		var _ignore = move_and_slide(Vector3()) # clear move_and_slide is_on_floor() etc
 
 	if Input.is_action_just_pressed("debug_button_1"):
 		current_player_shape = shape_selector.next_shape_id(current_player_shape)
@@ -563,4 +588,16 @@ func _input(event):
 		camera_rotation = Vector3(pitch, yaw, 0)
 
 		camera_helper.rotation = camera_rotation
-	# process_input()
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_WHEEL_DOWN:
+			if Input.is_action_pressed("cube_hold_push_pull_vertical_modifier"):
+				cube_grab_height -= CUBE_PUSH_PULL_SPEED
+			else:
+				cube_grab_distance -= CUBE_PUSH_PULL_SPEED
+				cube_grab_distance = clamp(cube_grab_distance, CUBE_GRAB_DISTANCE_MIN, CUBE_GRAB_DISTANCE_MAX)
+		if event.button_index == BUTTON_WHEEL_UP:
+			if Input.is_action_pressed("cube_hold_push_pull_vertical_modifier"):
+				cube_grab_height += CUBE_PUSH_PULL_SPEED
+			else:
+				cube_grab_distance += CUBE_PUSH_PULL_SPEED
+				cube_grab_distance = clamp(cube_grab_distance, CUBE_GRAB_DISTANCE_MIN, CUBE_GRAB_DISTANCE_MAX)
